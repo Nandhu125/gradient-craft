@@ -150,6 +150,31 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Studio color input */
+  .studio-color-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+  }
+  .studio-color-input::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  .studio-color-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+  }
+  .studio-color-input::-moz-color-swatch {
+    border: none;
+    border-radius: 6px;
+  }
 }
 
 @keyframes heroGrad {
