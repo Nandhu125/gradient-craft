@@ -1,53 +1,60 @@
-# GradientCraft — Animated CSS Backgrounds for the Modern Web
+# GradientCraft — CSS Background Studio
 
 > **Live site → [gradientcraft.fun](https://gradientcraft.fun)**
 
-A curated collection of **production-ready animated CSS backgrounds** you can drop into any project in seconds. Browse, preview full-page, tune the animation live, and copy the complete CSS + `@keyframes` in one click.
+A visual **CSS background composer** that lets you stack gradients, patterns, noise textures, and animations into layered backgrounds. Preview changes live, then copy production-ready CSS in one click.
 
-### 🎥 Video Demo
+### Video Demo
 
 <p align="center">
   <video src="public/gradient-craft.mp4" width="100%" controls autoplay loop muted></video>
 </p>
 
 <p align="center">
-  <img src="public/slide_1.webp" width="100%" alt="GradientCraft Preview" />
+  <img src="public/slide_1.webp" width="100%" alt="GradientCraft Studio" />
 </p>
 
 <p align="center">
-  <img src="public/slide_2.webp" width="49%" alt="GradientCraft Collection" />
+  <img src="public/slide_2.webp" width="49%" alt="GradientCraft Layers" />
   <img src="public/slide_3.webp" width="49%" alt="GradientCraft Controls" />
 </p>
 
 ---
 
-## What makes this different from pattern libraries?
+## What is this?
 
-Tools like PatternCraft give you static CSS patterns (grids, dots, stripes). GradientCraft is focused entirely on **animated** backgrounds — every gradient is alive, breathing, and running at 60FPS using pure CSS keyframes with zero JavaScript on the animation thread.
+Most CSS background tools only handle one thing — a gradient picker, a pattern generator, or a noise tool. GradientCraft Studio combines all of them into a single layered compositor. You toggle layers on/off, adjust their properties with sliders, and the studio generates one clean CSS block that stacks everything together.
 
-| Feature | GradientCraft | Static Pattern Libraries |
+| Feature | GradientCraft Studio | Single-purpose tools |
 |---|---|---|
-| Animated backgrounds | ✅ | ❌ |
-| Full-page live preview | ✅ | ❌ |
-| Real-time animation controls | ✅ | ❌ |
-| Zero JS runtime overhead | ✅ | ✅ |
-| One-click CSS copy | ✅ | ✅ |
+| Layered background composing | Yes | No |
+| Gradient + Pattern + Noise + Animation | Yes | One at a time |
+| Live preview | Yes | Varies |
+| One-click CSS export | Yes | Yes |
+| Zero JS in output | Yes | Yes |
 
 ---
 
-## ✨ Features
+## Features
 
-- **Zero JS Runtime** — Every animation runs on pure CSS keyframes. No libraries, no main-thread blocking, consistent 60FPS.
-- **Full-Page Preview** — Click any gradient to apply it as your page background and experience it at full scale.
-- **Real-Time Controls** — Adjust speed, direction (normal / reverse / alternate), timing function, and pause — all live before you copy.
-- **One-Click Copy** — Copies the complete `background`, `animation`, and `@keyframes` CSS. Works in React, Next.js, Vue, or plain HTML.
-- **6 Curated Categories** — Aurora, Warm, Cool, Neon, Pastel, and Shimmer.
-- **Surprise Me** — Instantly jumps to a random gradient for quick inspiration.
-- **Ultra Responsive** — Fully optimized from mobile to ultrawide.
+**5 composable layers** — each toggleable independently:
+
+- **Base Color** — Solid background color with hex input and preset swatches
+- **Gradient** — Linear, radial, or conic with custom angles, 2-6 color stops, and 25+ presets
+- **Pattern** — Dots, grids, lines, diagonals, checkerboards, crosses — adjustable size, color, and opacity
+- **Noise / Grain** — SVG-based feTurbulence noise with intensity and opacity controls
+- **Animation** — GPU-powered CSS keyframe animations with speed (0.25x-3x) and direction control
+
+**Studio UX:**
+
+- Accordion-based right sidebar — all layers visible, expand to edit, visibility toggle on each header
+- Live preview takes up the main canvas area
+- One-click Copy CSS generates stacked `background-image`, `background-size`, `background-color`, `animation`, and `@keyframes`
+- Output is pure CSS — no JavaScript, no dependencies, works anywhere
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | | |
 |---|---|
@@ -59,7 +66,7 @@ Tools like PatternCraft give you static CSS patterns (grids, dots, stripes). Gra
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Requires [Bun](https://bun.sh/) installed on your machine.
 
@@ -75,7 +82,7 @@ bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) for the landing page, or go directly to [http://localhost:3000/studio](http://localhost:3000/studio) for the editor.
 
 ```bash
 # Production build
@@ -85,38 +92,55 @@ bun start
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 src/
-├── app/           # Next.js App Router, global styles
+├── app/
+│   ├── page.tsx           # Landing page (studio marketing)
+│   └── studio/page.tsx    # Studio editor (main tool)
 ├── components/
-│   ├── gradients/ # GradientCard, GradientCollection, AnimationControls, GradientBackground
-│   ├── home/      # Hero, About sections
-│   ├── layout/    # Navbar, Footer
-│   └── ui/        # Logo, Icons, shared primitives
+│   ├── studio/            # Preview panel, controls panel, layer controls
+│   │   └── layers/        # Base, gradient, pattern, noise, animation controls
+│   ├── home/              # Hero, HowItWorks, Features, About sections
+│   ├── layout/            # Navbar, Footer
+│   └── ui/                # Logo, Icons, shared primitives
 ├── data/
-│   └── gradients.ts  # All gradient definitions (CSS + keyframes registry)
-└── types/         # TypeScript interfaces
+│   └── gradients.ts       # Gradient presets + keyframes registry
+├── lib/
+│   └── studio-css.ts      # CSS generation: generateCSS(), computePreviewStyle()
+└── types/
+    └── studio.ts          # StudioState, layer interfaces, defaults
 ```
 
 ---
 
-## 🤝 Contributing
+## How the CSS generation works
 
-Got a beautiful animated gradient to share? PRs are welcome.
+The studio maintains a `StudioState` object with 5 layer configs. Two pure functions handle output:
+
+- `computePreviewStyle(state)` — returns a `CSSProperties` object for the live preview
+- `generateCSS(state)` — returns a formatted CSS string for copy/export
+
+Layers stack as a `background-image` array: noise (top) → pattern → gradient (bottom), with matching `background-size` values. Noise uses an inline SVG data URI with `feTurbulence`. Animations reference keyframes from the preset library.
+
+---
+
+## Contributing
+
+PRs are welcome — whether it's new gradient presets, pattern types, or UX improvements.
 
 1. Fork the repo
-2. Create a branch: `git checkout -b feature/YourGradientName`
-3. Add your gradient to `src/data/gradients.ts` following the existing schema
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Make your changes
 4. Open a Pull Request
 
 ---
 
-## 📄 License
+## License
 
 MIT — free to use in personal and commercial projects. See [`LICENSE`](LICENSE).
 
 ---
 
-<p align="center">Handcrafted with ❤️ for the creative web · <a href="https://gradientcraft.fun">gradientcraft.fun</a></p>
+<p align="center">Built by <a href="https://github.com/Nandhu125">Nandhu</a> · <a href="https://gradientcraft.fun">gradientcraft.fun</a></p>
