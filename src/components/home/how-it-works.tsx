@@ -1,44 +1,49 @@
 "use client";
 
+import Link from "next/link";
+
 interface Props {
   hasActive: boolean;
-  onScrollToCollection: () => void;
 }
 
 const STEPS = [
   {
     num: "01",
-    title: "Browse",
-    desc: "Explore 28 handcrafted gradients across 6 categories. Search by name, tag, or vibe.",
+    title: "Layer",
+    desc: "Stack gradients, patterns, noise, and base colors. Toggle each layer on or off independently.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+        <polyline points="2 17 12 22 22 17" />
+        <polyline points="2 12 12 17 22 12" />
       </svg>
     ),
   },
   {
     num: "02",
-    title: "Preview",
-    desc: "Click any gradient to see it full-screen. Tune speed, timing, and direction in real-time.",
+    title: "Customize",
+    desc: "Fine-tune every property — gradient angles, pattern sizes, noise intensity, animation speed and direction.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
       </svg>
     ),
   },
   {
     num: "03",
-    title: "Copy & Ship",
-    desc: "One click copies the CSS + keyframes. Paste into your project. Zero dependencies.",
+    title: "Export",
+    desc: "One click copies production-ready CSS — background layers, noise SVG, keyframes. Paste and ship.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
       </svg>
     ),
   },
 ];
 
-export function HowItWorks({ hasActive, onScrollToCollection }: Props) {
+export function HowItWorks({ hasActive }: Props) {
   return (
     <section
       className={`py-16 sm:py-24 px-5 sm:px-[4vw] relative z-[1] transition-colors duration-500 ${
@@ -64,7 +69,7 @@ export function HowItWorks({ hasActive, onScrollToCollection }: Props) {
               hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
             }`}
           >
-            Three steps. Zero friction.
+            Three layers. One click. Done.
           </h2>
         </div>
 
@@ -73,10 +78,9 @@ export function HowItWorks({ hasActive, onScrollToCollection }: Props) {
           {STEPS.map((step, i) => (
             <div
               key={step.num}
-              className={`reveal-node text-center flex flex-col items-center`}
+              className="reveal-node text-center flex flex-col items-center"
               style={{ animationDelay: `${0.2 + i * 0.1}s` }}
             >
-              {/* Icon circle */}
               <div
                 className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-500 ${
                   hasActive
@@ -87,7 +91,6 @@ export function HowItWorks({ hasActive, onScrollToCollection }: Props) {
                 {step.icon}
               </div>
 
-              {/* Step number */}
               <div className={`font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-2 ${
                 hasActive ? "text-white/30" : "text-[#bbb]"
               }`}>
@@ -111,16 +114,16 @@ export function HowItWorks({ hasActive, onScrollToCollection }: Props) {
 
         {/* CTA */}
         <div className="text-center reveal-node" style={{ animationDelay: "0.5s" }}>
-          <button
-            onClick={onScrollToCollection}
-            className={`px-7 py-3.5 rounded-full text-[15px] font-bold cursor-pointer transition-all duration-300 border-none hover:-translate-y-0.5 ${
+          <Link
+            href="/studio"
+            className={`inline-block px-7 py-3.5 rounded-full text-[15px] font-bold cursor-pointer transition-all duration-300 border-none hover:-translate-y-0.5 no-underline ${
               hasActive
                 ? "bg-white/10 text-white hover:bg-white/20"
                 : "bg-[#4f46e5] text-white hover:bg-[#4338ca] shadow-[0_8px_24px_-8px_rgba(79,70,229,0.4)]"
             }`}
           >
-            Try It Now
-          </button>
+            Try the Studio
+          </Link>
         </div>
       </div>
     </section>
