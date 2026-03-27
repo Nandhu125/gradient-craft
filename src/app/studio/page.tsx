@@ -6,14 +6,13 @@ import type { StudioState, StudioTab } from "@/types/studio";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
 import { generateCSS } from "@/lib/studio-css";
-import { Logo } from "@/components/ui/logo";
 import { PreviewPanel } from "@/components/studio/preview-panel";
 import { ControlsPanel } from "@/components/studio/controls-panel";
 import { CssOutput } from "@/components/studio/css-output";
 
 export default function StudioPage() {
   const [state, setState] = useState<StudioState>(DEFAULT_STUDIO_STATE);
-  const [activeTab, setActiveTab] = useState<StudioTab>("gradient");
+  const [expandedSections, setExpandedSections] = useState<StudioTab[]>(["gradient"]);
   const [copied, setCopied] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -51,45 +50,81 @@ export default function StudioPage() {
     copyTimer.current = setTimeout(() => setCopied(false), 2000);
   }, [state]);
 
+  const toggleSection = useCallback((tab: StudioTab) => {
+    setExpandedSections((prev) =>
+      prev.includes(tab) ? prev.filter((t) => t !== tab) : [...prev, tab]
+    );
+  }, []);
+
+  const activeLayers = [
+    state.baseColor.enabled && "Base",
+    state.gradient.enabled && "Gradient",
+    state.pattern.enabled && "Pattern",
+    state.noise.enabled && "Noise",
+    state.animation.enabled && "Anim",
+  ].filter(Boolean);
+
   return (
     <>
       <style>{ALL_KEYFRAMES}</style>
-      <div className="h-screen flex flex-col bg-[#0a0a0a] text-white overflow-hidden">
-        {/* Navbar */}
-        <nav className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/8 bg-[#0a0a0a]/80 backdrop-blur-xl z-50 shrink-0">
-          <Link href="/" className="flex items-center gap-2.5 no-underline">
-            <Logo size={24} active />
-            <span className="font-mono text-[13.5px] font-extrabold tracking-[-0.03em] text-white hidden sm:block">
-              GradientCraft
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link
-              href="/"
-              className="text-white/50 hover:text-white/80 text-[12.5px] font-medium no-underline transition-colors duration-300 hidden sm:block"
-            >
-              Home
+      <div
+        className="h-screen flex flex-col overflow-hidden"
+        style={{ fontFamily: "'Inter', sans-serif", background: "#0e0e0f", color: "#fff" }}
+      >
+        {/* Top Navbar */}
+        <nav className="flex items-center justify-between px-5 py-3 border-b border-[#484849]/40 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shrink-0">
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-2 no-underline">
+              <span
+                className="text-[18px] font-extrabold tracking-[-0.03em] italic"
+                style={{ fontFamily: "'Manrope', sans-serif", color: "#cc97ff" }}
+              >
+                GradientCraft
+              </span>
             </Link>
-            <div className="w-px h-3.5 bg-white/10 hidden sm:block" />
+            <div className="hidden sm:flex items-center gap-4">
+              <Link
+                href="/"
+                className="text-[13px] font-medium text-[#adaaab] hover:text-white no-underline transition-colors"
+              >
+                Home
+              </Link>
+              <span className="text-[13px] font-medium text-white">Studio</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleReset}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#767576] hover:text-[#adaaab] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
+            >
+              <span className="material-symbols-rounded text-[16px]">restart_alt</span>
+              Reset
+            </button>
             <button
               onClick={() => setShowCode(true)}
-              className="px-3 py-1.5 rounded-lg text-[12.5px] font-medium bg-white/8 hover:bg-white/12 text-white/70 hover:text-white border border-white/8 transition-all duration-300 cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#adaaab] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
             >
+              <span className="material-symbols-rounded text-[16px]">code</span>
               View CSS
             </button>
             <button
               onClick={handleCopy}
-              className="px-3.5 py-1.5 rounded-lg text-[12.5px] font-semibold bg-white text-[#0a0a0a] hover:bg-white/90 border-none transition-all duration-300 cursor-pointer flex items-center gap-1.5"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[12.5px] font-semibold border-none transition-all duration-200 cursor-pointer"
+              style={{
+                background: "#cc97ff",
+                color: "#0e0e0f",
+                boxShadow: "0 0 20px rgba(204, 151, 255, 0.3)",
+              }}
             >
               {copied ? (
                 <>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                  <span className="material-symbols-rounded text-[16px]">check</span>
                   Copied!
                 </>
               ) : (
                 <>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
+                  <span className="material-symbols-rounded text-[16px]">content_copy</span>
                   Copy CSS
                 </>
               )}
@@ -97,36 +132,44 @@ export default function StudioPage() {
           </div>
         </nav>
 
-        {/* Main content */}
-        <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-          <PreviewPanel state={state} />
+        {/* Main Area — Preview + Single Right Sidebar */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Preview Canvas */}
+          <div className="flex-1 relative overflow-hidden">
+            <PreviewPanel state={state} />
+          </div>
+
+          {/* Right Sidebar — Accordion Layers */}
           <ControlsPanel
             state={state}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            expandedSections={expandedSections}
+            toggleSection={toggleSection}
             updateLayer={updateLayer}
           />
         </div>
 
-        {/* Bottom bar */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-t border-white/8 bg-[#0a0a0a]/90 backdrop-blur-xl shrink-0">
-          <span className="text-[11px] text-white/30 font-mono">
-            {[
-              state.baseColor.enabled && "base",
-              state.gradient.enabled && "gradient",
-              state.pattern.enabled && "pattern",
-              state.noise.enabled && "noise",
-              state.animation.enabled && "anim",
-            ]
-              .filter(Boolean)
-              .join(" + ") || "no layers"}
+        {/* Bottom HUD */}
+        <div className="flex items-center justify-between px-5 py-2.5 border-t border-[#484849]/40 bg-[#131314]/90 backdrop-blur-xl shrink-0">
+          <span className="text-[11px] text-[#767576] font-mono">
+            {activeLayers.length > 0 ? activeLayers.join(" + ") : "No layers active"}
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            {state.gradient.enabled && (
+              <div className="flex items-center gap-1">
+                {state.gradient.stops.slice(0, 4).map((stop, i) => (
+                  <span
+                    key={i}
+                    className="w-3 h-3 rounded-full border border-[#484849]"
+                    style={{ background: stop.color }}
+                  />
+                ))}
+              </div>
+            )}
             <button
               onClick={handleReset}
-              className="px-3 py-1.5 rounded-lg text-[11.5px] font-medium text-white/40 hover:text-white/70 hover:bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-300 cursor-pointer"
+              className="sm:hidden px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#767576] hover:text-[#adaaab] hover:bg-[#201f21] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
             >
-              Reset All
+              Reset
             </button>
           </div>
         </div>
