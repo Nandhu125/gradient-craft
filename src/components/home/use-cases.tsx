@@ -7,11 +7,56 @@ interface Props {
   hasActive: boolean;
 }
 
-const SHOWCASE = [
-  { gradientId: "sunset-blaze", label: "Landing Pages", desc: "Eye-catching hero sections that grab attention instantly" },
-  { gradientId: "cosmic-nebula", label: "Card Backgrounds", desc: "Elevate UI cards with subtle animated depth" },
-  { gradientId: "neon-pulse", label: "Call-to-Action Buttons", desc: "High-conversion buttons that demand clicks" },
-  { gradientId: "holographic", label: "Brand Identity", desc: "Unique gradient palettes for standout branding" },
+const FEATURES = [
+  {
+    gradientId: "sunset-blaze",
+    label: "Gradients",
+    desc: "Linear, radial, or conic — pick a type, set angle, add up to 6 color stops, or load from 25+ presets.",
+    overlay: (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="h-3 w-24 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg" />
+          <div className="text-white/80 text-[11px] font-mono bg-black/30 px-2 py-1 rounded backdrop-blur-sm">135°</div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    gradientId: "cosmic-nebula",
+    label: "Patterns",
+    desc: "Dots, grids, lines, diagonals, checkerboards, and crosses. Adjust size, color, and opacity per-pattern.",
+    overlay: (
+      <div className="absolute inset-0" style={{
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)",
+        backgroundSize: "16px 16px",
+      }} />
+    ),
+  },
+  {
+    gradientId: "neon-pulse",
+    label: "Noise & Grain",
+    desc: "Add texture with SVG-based noise. Control intensity and opacity for film grain, frosted glass, or subtle texture.",
+    overlay: (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="bg-black/20 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/15">
+          <div className="text-white/70 text-[11px] font-mono">feTurbulence · fractalNoise</div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    gradientId: "holographic",
+    label: "Animation",
+    desc: "Bring backgrounds to life with GPU-powered CSS animations. Choose presets, control speed and direction.",
+    overlay: (
+      <div className="absolute inset-0 flex items-center justify-center gap-3">
+        <div className="bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 text-white text-[11px] font-bold flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-[pulse_1.5s_ease-in-out_infinite]" />
+          Animating
+        </div>
+      </div>
+    ),
+  },
 ];
 
 function getGradient(id: string) {
@@ -35,7 +80,7 @@ export function UseCases({ hasActive }: Props) {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-[#ec4899]" />
             <span className="font-mono text-[11px] font-bold text-[#ec4899] tracking-[0.15em] uppercase">
-              Use Cases
+              Features
             </span>
           </div>
 
@@ -44,19 +89,19 @@ export function UseCases({ hasActive }: Props) {
               hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
             }`}
           >
-            Not just pretty colors.
+            Everything you need.
             <br />
-            <span className={hasActive ? "opacity-50" : "opacity-30"}>Real use cases, real impact.</span>
+            <span className={hasActive ? "opacity-50" : "opacity-30"}>Nothing you don&apos;t.</span>
           </h2>
 
           <p className={`reveal-node text-[15px] sm:text-[17px] max-w-[500px] mx-auto [animation-delay:0.15s] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
-            See how developers use GradientCraft in production.
+            Five composable layers. One visual editor. Zero dependencies in the output.
           </p>
         </div>
 
-        {/* Showcase Grid */}
+        {/* Feature Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-          {SHOWCASE.map(({ gradientId, label, desc }, idx) => {
+          {FEATURES.map(({ gradientId, label, desc, overlay }, idx) => {
             const g = getGradient(gradientId);
             return (
               <div
@@ -68,61 +113,14 @@ export function UseCases({ hasActive }: Props) {
                 }`}
                 style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
               >
-                {/* Mini gradient preview */}
                 <div className="relative h-[140px] sm:h-[160px] overflow-hidden">
                   <div
                     className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
                     style={safeStyle(g.style)}
                   />
-
-                  {/* Mockup overlay based on use case */}
-                  {idx === 0 && (
-                    /* Landing page mockup */
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-white/15 backdrop-blur-sm rounded-xl px-6 py-4 text-center border border-white/20">
-                        <div className="text-white text-[13px] font-bold mb-1">Your Next Big Thing</div>
-                        <div className="text-white/60 text-[10px] mb-3">The future starts here</div>
-                        <div className="bg-white text-black text-[10px] font-bold px-4 py-1.5 rounded-full inline-block">Get Started</div>
-                      </div>
-                    </div>
-                  )}
-                  {idx === 1 && (
-                    /* Card mockup */
-                    <div className="absolute inset-4 flex items-end">
-                      <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3 w-full border border-white/10">
-                        <div className="flex gap-2 items-center">
-                          <div className="w-8 h-8 rounded-full bg-white/20" />
-                          <div>
-                            <div className="h-2 w-20 bg-white/40 rounded-full mb-1" />
-                            <div className="h-1.5 w-14 bg-white/20 rounded-full" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {idx === 2 && (
-                    /* CTA button mockup */
-                    <div className="absolute inset-0 flex items-center justify-center gap-3">
-                      <div className="bg-white text-[11px] font-bold px-5 py-2.5 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:scale-105 transition-transform">
-                        Sign Up Free
-                      </div>
-                      <div className="border border-white/40 text-white text-[11px] font-bold px-5 py-2.5 rounded-full">
-                        Learn More
-                      </div>
-                    </div>
-                  )}
-                  {idx === 3 && (
-                    /* Brand identity mockup */
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-white text-center">
-                        <div className="text-[24px] font-[800] tracking-[-0.03em] mb-1 drop-shadow-lg">Acme</div>
-                        <div className="text-white/60 text-[10px] tracking-[0.2em] uppercase">Studio</div>
-                      </div>
-                    </div>
-                  )}
+                  {overlay}
                 </div>
 
-                {/* Label */}
                 <div className="p-5">
                   <h3 className={`text-[16px] font-bold mb-1 ${hasActive ? "text-white" : "text-[#111]"}`}>
                     {label}
