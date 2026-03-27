@@ -157,7 +157,7 @@
     appearance: none;
     width: 36px;
     height: 36px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(204, 151, 255, 0.2);
     border-radius: 8px;
     cursor: pointer;
     padding: 0;
@@ -174,6 +174,80 @@
   .studio-color-input::-moz-color-swatch {
     border: none;
     border-radius: 6px;
+  }
+
+  /* Studio slider — purple theme */
+  .studio-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(204, 151, 255, 0.15);
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  .studio-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #cc97ff;
+    border: none;
+    box-shadow: 0 0 8px rgba(204, 151, 255, 0.4);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .studio-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(204, 151, 255, 0.6);
+  }
+  .studio-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #cc97ff;
+    border: none;
+    box-shadow: 0 0 8px rgba(204, 151, 255, 0.4);
+    cursor: pointer;
+  }
+
+  /* Studio glass panel */
+  .studio-glass {
+    background: rgba(14, 14, 15, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(204, 151, 255, 0.08);
+  }
+
+  /* Studio toggle — purple */
+  .studio-toggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .studio-toggle[data-on="true"] {
+    background: #cc97ff;
+  }
+  .studio-toggle[data-on="false"] {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .studio-toggle .studio-toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .studio-toggle[data-on="true"] .studio-toggle-knob {
+    transform: translateX(18px);
   }
 }
 
@@ -242,8 +316,19 @@
   50% { transform: scale(1.15); }
 }
 
-/* Base keyframes for gradients are still injected via ALL_KEYFRAMES in page.tsx or we could move them here. 
-   Since they are many and dynamic, keeping them in the data file for now might be easier, 
-   but the goal is migration to Tailwind. 
-   Actually, I can just include ALL_KEYFRAMES in the style tag in layout.tsx or page.tsx as it was. 
-*/
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, 30px) scale(0.9); }
+  66% { transform: translate(25px, -35px) scale(1.05); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(35px, 25px) scale(1.1); }
+}
