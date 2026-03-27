@@ -2,8 +2,6 @@
 
 const NOISE_SVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
 
-const LAYERS = ["Base Color", "Gradient", "Pattern", "Noise", "Animation"];
-
 interface Props {
   hasActive: boolean;
 }
@@ -40,7 +38,7 @@ export function About({ hasActive }: Props) {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-[#4f46e5]" />
             <span className="font-mono text-[11px] font-bold text-[#4f46e5] tracking-[0.15em] uppercase">
-              Why GradientCraft Studio
+              Why This Tool
             </span>
           </div>
 
@@ -49,18 +47,18 @@ export function About({ hasActive }: Props) {
               hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111] mix-blend-normal brightness-100"
             }`}
           >
-            Visual composing. Pure CSS output.
+            The output is pure CSS.
             <br />
-            <span className="opacity-30">No runtime. No dependencies.</span>
+            <span className="opacity-30">No runtime. No JavaScript. No bloat.</span>
           </h2>
 
           <p className={`reveal-node text-[15px] sm:text-[17px] max-w-[520px] mx-auto [animation-delay:0.15s] ${hasActive ? "text-white/50 mix-blend-difference brightness-[2]" : "text-[#888]"}`}>
-            Everything you design exports as clean, production-ready CSS that runs anywhere — no JavaScript, no build step, no overhead.
+            Everything you create in the studio exports as standard CSS that works in any browser, any framework, any project. Zero dependencies in the final output.
           </p>
         </div>
 
         <div className="bento-grid gap-4 sm:gap-5">
-          {/* Main card - Visual Composer */}
+          {/* Main card */}
           <div className="bento-span-2 bento-row-2 reveal-node" style={{ animationDelay: "0.2s" }}>
             <div className={`h-full p-6 sm:p-10 flex flex-col justify-between ${cardBase} ${hasActive ? cardDark : cardLight}`}>
               <div>
@@ -73,18 +71,18 @@ export function About({ hasActive }: Props) {
                 </div>
 
                 <h3 className={`text-[22px] sm:text-[28px] font-extrabold mb-3 tracking-[-0.03em] ${hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"}`}>
-                  Stack layers visually. Export pure CSS.
+                  Layered backgrounds, composed visually.
                 </h3>
 
                 <p className={`text-[14px] sm:text-[16px] leading-[1.6] max-w-[400px] ${hasActive ? "text-white/60 mix-blend-difference brightness-[2]" : "text-[#666]"}`}>
-                  Compose complex backgrounds by stacking independent layers — gradients, patterns, noise, and animations. See changes live. Copy one CSS block.
+                  Instead of hand-writing stacked background-image rules, pattern SVGs, and animation keyframes — just toggle layers on, adjust sliders, and let the studio generate the CSS for you.
                 </p>
               </div>
 
               <div className="mt-8 sm:mt-10 flex items-end gap-4 sm:gap-5">
                 <div>
                   <div className="text-[32px] sm:text-[42px] font-extrabold text-[#4f46e5] font-mono leading-none">5</div>
-                  <div className="text-[9px] sm:text-[10px] text-[#999] font-mono uppercase tracking-[0.15em] mt-2">Composable Layers</div>
+                  <div className="text-[9px] sm:text-[10px] text-[#999] font-mono uppercase tracking-[0.15em] mt-2">Layer Types</div>
                 </div>
                 <div className="flex-1 h-px bg-[#4f46e5]/10 mb-2.5" />
                 <div className="text-right">
@@ -95,7 +93,7 @@ export function About({ hasActive }: Props) {
             </div>
           </div>
 
-          {/* CSS Output preview */}
+          {/* CSS Output card */}
           <div className="bento-span-2 reveal-node" style={{ animationDelay: "0.3s" }}>
             <div className={`p-6 sm:p-8 h-full ${cardBase} ${hasActive ? cardDark : cardLight}`}>
               <div className="flex flex-col sm:flex-row gap-5 sm:gap-6 items-start sm:items-center mb-5">
@@ -107,42 +105,44 @@ export function About({ hasActive }: Props) {
                 </div>
                 <div>
                   <h3 className={`text-[18px] sm:text-[20px] font-extrabold tracking-[-0.02em] mb-1 ${hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"}`}>
-                    Production-Ready CSS Output
+                    One-click CSS export
                   </h3>
                   <p className={`text-[14px] sm:text-[15px] leading-[1.5] ${hasActive ? "text-white/60 mix-blend-difference brightness-[2]" : "text-[#666]"}`}>
-                    Every design exports as layered CSS — background-image stacks, noise SVGs, and @keyframes. One click, one paste.
+                    The generated CSS includes stacked background-image layers, background-size values, noise as an inline SVG data URI, and animation keyframes. Paste it and it works.
                   </p>
                 </div>
               </div>
 
               <div className={`rounded-xl p-4 font-mono text-[11px] sm:text-[12px] leading-[1.7] overflow-hidden ${hasActive ? "bg-white/5 text-white/70" : "bg-[#1a1a2e] text-[#a5b4fc]"}`}>
-                <div><span className="text-[#c084fc]">background-image</span>: </div>
-                <div className="pl-4">url(&quot;data:image/svg+xml,...&quot;), {/* noise */}</div>
-                <div className="pl-4">radial-gradient(...), {/* pattern */}</div>
-                <div className="pl-4">linear-gradient(135deg, ...); {/* gradient */}</div>
+                <div><span className="text-[#c084fc]">background-image</span>:</div>
+                <div className="pl-4 text-[#e2e8f0]/60">url(&quot;data:image/svg+xml,...&quot;), {/* noise */}</div>
+                <div className="pl-4 text-[#e2e8f0]/60">radial-gradient(...), {/* dots pattern */}</div>
+                <div className="pl-4 text-[#e2e8f0]/60">linear-gradient(135deg, #667eea, #764ba2);</div>
                 <div><span className="text-[#c084fc]">background-color</span>: #0a0a0a;</div>
+                <div><span className="text-[#c084fc]">animation</span>: gradient 8s ease infinite;</div>
               </div>
             </div>
           </div>
 
-          {/* Layers count */}
+          {/* What's included */}
           <div className="reveal-node" style={{ animationDelay: "0.4s" }}>
             <div className={`p-6 sm:p-8 flex flex-col justify-center items-center text-center h-full ${cardBase} ${hasActive ? cardDark : cardLight}`}>
               <div className="text-[#4f46e5] mb-3">
                 <svg width="28" height="28" className="sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               </div>
               <h3 className={`text-[14px] sm:text-[15px] font-bold mb-2 ${hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"}`}>
-                Layer Types
+                Included in output
               </h3>
               <div className="flex flex-wrap gap-1.5 justify-center mt-1">
-                {LAYERS.map((layer) => (
+                {["background-image", "background-size", "background-color", "animation", "@keyframes"].map((item) => (
                   <span
-                    key={layer}
+                    key={item}
                     className={`text-[10px] font-mono px-2.5 py-1 rounded-full ${hasActive ? "bg-white/8 text-white/50" : "bg-[#4f46e5]/[0.06] text-[#4f46e5]"}`}
                   >
-                    {layer}
+                    {item}
                   </span>
                 ))}
               </div>
