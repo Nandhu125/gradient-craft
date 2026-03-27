@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import type { StudioState, StudioTab } from "@/types/studio";
+import { Logo } from "@/components/ui/logo";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
 import { generateCSS } from "@/lib/studio-css";
@@ -74,18 +75,16 @@ export default function StudioPage() {
         {/* Top Navbar */}
         <nav className="flex items-center justify-between px-5 py-3 border-b border-[#484849]/40 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shrink-0">
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2 no-underline">
-              <span
-                className="text-[18px] font-extrabold tracking-[-0.03em] italic"
-                style={{ fontFamily: "'Manrope', sans-serif", color: "#cc97ff" }}
-              >
+            <Link href="/" className="flex items-center gap-2.5 no-underline">
+              <Logo size={26} active />
+              <span className="font-mono text-[14.5px] font-extrabold tracking-[-0.03em] text-white hidden sm:block">
                 GradientCraft
               </span>
             </Link>
             <div className="hidden sm:flex items-center gap-4">
               <Link
                 href="/"
-                className="text-[13px] font-medium text-[#adaaab] hover:text-white no-underline transition-colors"
+                className="text-[13px] font-medium text-[#ccc] hover:text-white no-underline transition-colors"
               >
                 Home
               </Link>
@@ -96,14 +95,14 @@ export default function StudioPage() {
           <div className="flex items-center gap-2.5">
             <button
               onClick={handleReset}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#767576] hover:text-[#adaaab] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#999] hover:text-[#ccc] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
             >
               <span className="material-symbols-rounded text-[16px]">restart_alt</span>
               Reset
             </button>
             <button
               onClick={() => setShowCode(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#adaaab] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
             >
               <span className="material-symbols-rounded text-[16px]">code</span>
               View CSS
@@ -150,7 +149,7 @@ export default function StudioPage() {
 
         {/* Bottom HUD */}
         <div className="flex items-center justify-between px-5 py-2.5 border-t border-[#484849]/40 bg-[#131314]/90 backdrop-blur-xl shrink-0">
-          <span className="text-[11px] text-[#767576] font-mono">
+          <span className="text-[11px] text-[#999] font-mono">
             {activeLayers.length > 0 ? activeLayers.join(" + ") : "No layers active"}
           </span>
           <div className="flex items-center gap-3">
@@ -167,7 +166,7 @@ export default function StudioPage() {
             )}
             <button
               onClick={handleReset}
-              className="sm:hidden px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#767576] hover:text-[#adaaab] hover:bg-[#201f21] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
+              className="sm:hidden px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#999] hover:text-[#ccc] hover:bg-[#201f21] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
             >
               Reset
             </button>
