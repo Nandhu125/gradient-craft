@@ -23,7 +23,7 @@ export function BaseColorControls({ layer, onChange }: Props) {
   return (
     <div className="space-y-5">
       <div className="space-y-3">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Color
         </label>
         <div className="flex items-center gap-3">
@@ -44,7 +44,7 @@ export function BaseColorControls({ layer, onChange }: Props) {
             style={{
               background: "#201f21",
               border: "1px solid rgba(72, 72, 73, 0.4)",
-              color: "#adaaab",
+              color: "#ccc",
             }}
             maxLength={7}
           />
@@ -52,7 +52,7 @@ export function BaseColorControls({ layer, onChange }: Props) {
       </div>
 
       <div className="space-y-3">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Presets
         </label>
         <div className="flex flex-wrap gap-2">

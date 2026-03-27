@@ -62,7 +62,7 @@ export function ControlsPanel({
         >
           Layers
         </span>
-        <span className="text-[10px] font-mono" style={{ color: "#767576" }}>
+        <span className="text-[10px] font-mono" style={{ color: "#999" }}>
           {SECTIONS.filter((s) => state[s.layerKey].enabled).length}/5 active
         </span>
       </div>
@@ -92,7 +92,7 @@ export function ControlsPanel({
                   className="w-7 h-7 flex items-center justify-center rounded-md border-none cursor-pointer transition-all duration-200"
                   style={{
                     background: isEnabled ? "rgba(204, 151, 255, 0.12)" : "transparent",
-                    color: isEnabled ? "#cc97ff" : "#484849",
+                    color: isEnabled ? "#cc97ff" : "#666",
                   }}
                   title={isEnabled ? "Hide layer" : "Show layer"}
                 >
@@ -108,13 +108,13 @@ export function ControlsPanel({
                 >
                   <span
                     className="material-symbols-rounded text-[18px]"
-                    style={{ color: isExpanded ? "#cc97ff" : "#767576" }}
+                    style={{ color: isExpanded ? "#cc97ff" : "#999" }}
                   >
                     {section.icon}
                   </span>
                   <span
                     className="text-[12.5px] font-medium"
-                    style={{ color: isExpanded ? "#fff" : "#adaaab" }}
+                    style={{ color: isExpanded ? "#fff" : "#ccc" }}
                   >
                     {section.label}
                   </span>
@@ -124,7 +124,7 @@ export function ControlsPanel({
                 <span
                   className="material-symbols-rounded text-[18px] transition-transform duration-200 cursor-pointer"
                   style={{
-                    color: "#767576",
+                    color: "#999",
                     transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
                   }}
                   onClick={() => toggleSection(section.id)}

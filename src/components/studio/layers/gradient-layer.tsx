@@ -102,7 +102,7 @@ export function GradientLayerControls({ layer, onChange }: Props) {
       {/* Color Stops */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+          <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
             Color Stops
           </label>
           {layer.stops.length < 6 && (
@@ -137,7 +137,7 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                 style={{
                   background: "#201f21",
                   border: "1px solid rgba(72, 72, 73, 0.4)",
-                  color: "#adaaab",
+                  color: "#ccc",
                 }}
                 maxLength={7}
               />
@@ -152,14 +152,14 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                 }
                 className="studio-slider flex-1"
               />
-              <span className="text-[10px] font-mono w-7 text-right" style={{ color: "#767576" }}>
+              <span className="text-[10px] font-mono w-7 text-right" style={{ color: "#999" }}>
                 {stop.position}%
               </span>
               {layer.stops.length > 2 && (
                 <button
                   onClick={() => removeStop(idx)}
                   className="w-6 h-6 flex items-center justify-center rounded border-none cursor-pointer transition-all text-[14px] bg-transparent"
-                  style={{ color: "#767576" }}
+                  style={{ color: "#999" }}
                 >
                   ×
                 </button>
@@ -182,7 +182,7 @@ export function GradientLayerControls({ layer, onChange }: Props) {
 
       {/* Presets */}
       <div className="space-y-3">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Presets
         </label>
         <div className="flex flex-wrap gap-2">

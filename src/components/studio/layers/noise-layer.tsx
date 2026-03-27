@@ -33,7 +33,7 @@ export function NoiseLayerControls({ layer, onChange }: Props) {
 
       {/* Preview swatch */}
       <div className="space-y-2">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Preview
         </label>
         <div

@@ -35,7 +35,7 @@ export function PatternLayerControls({ layer, onChange }: Props) {
     <div className="space-y-5">
       {/* Pattern selector */}
       <div className="space-y-2">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Style
         </label>
         <div className="grid grid-cols-3 gap-2">
@@ -77,7 +77,7 @@ export function PatternLayerControls({ layer, onChange }: Props) {
 
       {/* Color */}
       <div className="space-y-2">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Color
         </label>
         <div className="flex items-center gap-3">

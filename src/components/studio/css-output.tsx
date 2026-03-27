@@ -59,7 +59,7 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
             <button
               onClick={onClose}
               className="w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-200 cursor-pointer border-none"
-              style={{ color: "#767576", background: "transparent" }}
+              style={{ color: "#999", background: "transparent" }}
             >
               <span className="material-symbols-rounded text-[18px]">close</span>
             </button>
@@ -70,7 +70,7 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
         <div className="p-5 max-h-[60vh] overflow-y-auto scrollbar-hide">
           <pre
             className="text-[12.5px] leading-[1.7] font-mono whitespace-pre-wrap break-words m-0"
-            style={{ color: "#adaaab" }}
+            style={{ color: "#ccc" }}
           >
             <code>{css}</code>
           </pre>

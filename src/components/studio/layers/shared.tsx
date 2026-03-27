@@ -45,10 +45,10 @@ export function SliderRow({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           {label}
         </label>
-        <span className="text-[11px] font-mono" style={{ color: "#adaaab" }}>
+        <span className="text-[11px] font-mono" style={{ color: "#ccc" }}>
           {displayValue ?? `${value}${unit}`}
         </span>
       </div>
@@ -80,7 +80,7 @@ export function PillGroup<T extends string>({
 }: PillGroupProps<T>) {
   return (
     <div className="space-y-2">
-      <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
+      <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
         {label}
       </label>
       <div className="flex flex-wrap gap-1.5">
@@ -92,7 +92,7 @@ export function PillGroup<T extends string>({
             style={{
               background: selected === opt.value ? "rgba(204, 151, 255, 0.12)" : "transparent",
               borderColor: selected === opt.value ? "rgba(204, 151, 255, 0.3)" : "rgba(72, 72, 73, 0.4)",
-              color: selected === opt.value ? "#cc97ff" : "#adaaab",
+              color: selected === opt.value ? "#cc97ff" : "#ccc",
             }}
           >
             {opt.label}
