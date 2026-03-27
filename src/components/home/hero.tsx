@@ -11,14 +11,6 @@ interface Props {
 
 const PREVIEW_GRADIENTS = GRADIENTS.slice(0, 6);
 
-const FEATURES = [
-  { icon: "gradient", label: "Gradients" },
-  { icon: "grid_view", label: "Patterns" },
-  { icon: "grain", label: "Noise" },
-  { icon: "animation", label: "Animation" },
-  { icon: "code", label: "CSS Export" },
-];
-
 export function Hero({ hasActive }: Props) {
   const [previewIdx, setPreviewIdx] = useState(0);
 
@@ -44,9 +36,9 @@ export function Hero({ hasActive }: Props) {
                 : "bg-white border-black/5 text-[#444]"
             }`}
           >
-            <span className={`w-2 h-2 rounded-full bg-[#4f46e5] animate-[pulse_2s_ease-in-out_infinite]`} />
+            <span className="w-2 h-2 rounded-full bg-[#4f46e5] animate-[pulse_2s_ease-in-out_infinite]" />
             <span className="font-semibold tracking-tight whitespace-nowrap">
-              CSS Background Studio
+              Visual CSS Background Builder
             </span>
             <span className={`w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full ${hasActive ? "bg-white/40" : "bg-black/20"}`} />
             <span className={`font-mono text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold ${hasActive ? "text-white/80" : "text-[#888]"}`}>
@@ -57,25 +49,24 @@ export function Hero({ hasActive }: Props) {
 
         {/* Headline */}
         <h1
-          className={`text-[clamp(28px,8vw,72px)] font-[800] leading-[1.1] sm:leading-[1.05] tracking-[-0.03em] mb-4 transition-colors duration-400 ease-in-out [animation-delay:0.1s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
+          className={`text-[clamp(26px,7vw,64px)] font-[800] leading-[1.1] sm:leading-[1.1] tracking-[-0.03em] mb-5 transition-colors duration-400 ease-in-out [animation-delay:0.1s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
             hasActive ? "text-white" : "text-[#111]"
           }`}
         >
-          Design. Layer.{" "}
+          Build complex CSS backgrounds{" "}
           <span className="text-nowrap bg-[linear-gradient(90deg,#4f46e5_0%,#ec4899_25%,#f59e0b_50%,#ec4899_75%,#4f46e5_100%)] bg-[length:200%_auto] bg-clip-text text-transparent animate-[shine_8s_linear_infinite] inline-block">
-            Ship.
+            visually
           </span>
         </h1>
 
         {/* Subtitle */}
         <p
-          className={`text-[15px] sm:text-[clamp(16px,2vw,20px)] leading-[1.6] max-w-[600px] mx-auto mb-8 transition-colors duration-400 ease-in-out [animation-delay:0.2s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
+          className={`text-[15px] sm:text-[clamp(16px,2vw,19px)] leading-[1.65] max-w-[580px] mx-auto mb-8 transition-colors duration-400 ease-in-out [animation-delay:0.2s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
             hasActive ? "text-white/70" : "text-[#666]"
           }`}
         >
-          The all-in-one CSS background composer. Stack gradients, patterns,
-          <br className="hidden sm:block" />
-          noise, and animations — then copy production-ready CSS.
+          Stack gradients, patterns, noise textures, and animations into layered backgrounds.
+          Preview changes live, then copy production-ready CSS in one click.
         </p>
 
         {/* CTAs */}
@@ -86,7 +77,7 @@ export function Hero({ hasActive }: Props) {
               hasActive ? "bg-white text-black" : "bg-[#111] text-white"
             }`}
           >
-            Open Studio
+            Open the Studio
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -107,7 +98,7 @@ export function Hero({ hasActive }: Props) {
           </a>
         </div>
 
-        {/* Interactive Preview Card — Studio mockup */}
+        {/* Interactive Preview Card */}
         <div className="w-full max-w-[680px] [animation-delay:0.4s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both]">
           <div
             className={`rounded-[24px] overflow-hidden border backdrop-blur-[24px] transition-all duration-500 ${
@@ -116,7 +107,7 @@ export function Hero({ hasActive }: Props) {
                 : "bg-white/80 border-black/[0.06] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]"
             }`}
           >
-            {/* Preview gradient area — cycling through gradients */}
+            {/* Cycling gradient preview */}
             <div className="relative h-[200px] sm:h-[240px] overflow-hidden">
               {PREVIEW_GRADIENTS.map((g, i) => (
                 <div
@@ -128,13 +119,15 @@ export function Hero({ hasActive }: Props) {
                   }}
                 />
               ))}
-              {/* Overlay with layer icons */}
+              {/* Layer stack indicator */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/20">
-                  {FEATURES.map((f, i) => (
-                    <div key={f.icon} className="flex items-center gap-1.5">
-                      {i > 0 && <span className="text-white/20 text-[10px]">+</span>}
-                      <span className="text-white/90 text-[11px] font-medium">{f.label}</span>
+                <div className="flex flex-col gap-1.5 px-5 py-3 rounded-2xl bg-black/25 backdrop-blur-sm border border-white/15">
+                  {["Gradient", "Pattern", "Noise", "Animation"].map((layer, i) => (
+                    <div key={layer} className="flex items-center gap-2.5">
+                      <span className={`w-2 h-2 rounded-full ${i < 2 ? "bg-green-400" : "bg-white/25"}`} />
+                      <span className="text-white/80 text-[11px] font-medium w-16">{layer}</span>
+                      <span className="h-px flex-1 bg-white/10 min-w-[40px]" />
+                      <span className="text-white/40 text-[9px] font-mono">{i < 2 ? "ON" : "OFF"}</span>
                     </div>
                   ))}
                 </div>
@@ -155,10 +148,10 @@ export function Hero({ hasActive }: Props) {
                 </div>
                 <div className="text-left">
                   <div className={`text-[13px] font-bold ${hasActive ? "text-white" : "text-[#111]"}`}>
-                    5 Composable Layers
+                    25+ gradient presets included
                   </div>
                   <div className={`text-[11px] ${hasActive ? "text-white/40" : "text-[#999]"}`}>
-                    Gradient · Pattern · Noise · Animation · Base
+                    Or build your own from scratch
                   </div>
                 </div>
               </div>
@@ -191,9 +184,8 @@ export function Hero({ hasActive }: Props) {
             </div>
           </div>
 
-          {/* Quick hint */}
           <p className={`text-[12px] mt-4 transition-colors duration-400 ${hasActive ? "text-white/40" : "text-[#aaa]"}`}>
-            No sign-up required. Works with React, Vue, Svelte, or plain HTML &amp; CSS.
+            No sign-up. No downloads. Works with any framework or plain HTML &amp; CSS.
           </p>
         </div>
       </div>
@@ -202,11 +194,6 @@ export function Hero({ hasActive }: Props) {
         @keyframes pulseGlow {
           0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
           100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-        }
-        @keyframes gradientText {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
         }
       `}} />
     </section>
