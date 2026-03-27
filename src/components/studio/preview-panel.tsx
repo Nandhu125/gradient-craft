@@ -15,11 +15,46 @@ export function PreviewPanel({ state }: Props) {
     state.noise.opacity
   );
 
+  const hasAnyLayer =
+    state.baseColor.enabled ||
+    state.gradient.enabled ||
+    state.pattern.enabled ||
+    state.noise.enabled;
+
   return (
-    <div className="flex-1 relative overflow-hidden min-h-[40vh] lg:min-h-0">
-      {/* Background layers */}
+    <div className="absolute inset-0 overflow-hidden">
+      {/* Ambient orbs — always visible behind everything */}
       <div
-        className="absolute inset-0 transition-[background-color] duration-300"
+        className="absolute w-[300px] h-[300px] rounded-full opacity-20 blur-[100px]"
+        style={{
+          background: "#cc97ff",
+          top: "15%",
+          left: "20%",
+          animation: "orbFloat1 12s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute w-[250px] h-[250px] rounded-full opacity-15 blur-[80px]"
+        style={{
+          background: "#699cff",
+          bottom: "20%",
+          right: "25%",
+          animation: "orbFloat2 15s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute w-[200px] h-[200px] rounded-full opacity-10 blur-[60px]"
+        style={{
+          background: "#8ce7ff",
+          top: "50%",
+          left: "50%",
+          animation: "orbFloat3 10s ease-in-out infinite",
+        }}
+      />
+
+      {/* Composed background layers */}
+      <div
+        className="absolute inset-0 transition-all duration-300"
         style={style}
       />
 
@@ -32,21 +67,34 @@ export function PreviewPanel({ state }: Props) {
       )}
 
       {/* Label */}
-      <div className="absolute top-4 left-4 text-white/20 text-[10px] font-mono uppercase tracking-[0.15em]">
-        Live Preview
+      <div className="absolute top-4 left-4 flex items-center gap-2">
+        <span
+          className="text-[10px] font-mono uppercase tracking-[0.15em]"
+          style={{ color: "rgba(204, 151, 255, 0.3)" }}
+        >
+          Live Preview
+        </span>
       </div>
 
       {/* Center indicator when nothing enabled */}
-      {!state.baseColor.enabled &&
-        !state.gradient.enabled &&
-        !state.pattern.enabled &&
-        !state.noise.enabled && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-white/15 text-sm font-medium">
+      {!hasAnyLayer && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <span
+              className="material-symbols-rounded text-[40px]"
+              style={{ color: "rgba(204, 151, 255, 0.15)" }}
+            >
+              layers
+            </span>
+            <p
+              className="text-sm font-medium"
+              style={{ color: "rgba(204, 151, 255, 0.2)" }}
+            >
               Enable a layer to start
             </p>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }
