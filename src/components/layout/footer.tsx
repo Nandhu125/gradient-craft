@@ -1,14 +1,11 @@
 "use client";
 
 import { Logo } from "@/components/ui/logo";
-import { GRADIENTS } from "@/data/gradients";
 import { GitHubIcon, XSocialIcon } from "@/components/ui/icons";
 
 interface Props {
   hasActive: boolean;
 }
-
-const CATEGORIES = [...new Set(GRADIENTS.map((g) => g.category))];
 
 export function Footer({ hasActive }: Props) {
   return (
@@ -43,24 +40,24 @@ export function Footer({ hasActive }: Props) {
               hasActive ? "text-white/60" : "text-[#888]"
             }`}
           >
-            {GRADIENTS.length} production-ready animated CSS gradients.
+            The all-in-one CSS background composer.
             <br />
             Free, open source, zero dependencies.
           </p>
 
           {/* Quick links */}
           <div className="flex flex-wrap justify-center gap-2 mt-6">
-            {CATEGORIES.map((cat) => (
+            {["Gradients", "Patterns", "Noise", "Animation", "CSS Export"].map((feature) => (
               <a
-                key={cat}
-                href="#collection"
+                key={feature}
+                href="/studio"
                 className={`text-[11px] font-mono px-3 py-1.5 rounded-full transition-all duration-300 no-underline ${
                   hasActive
                     ? "bg-white/8 text-white/50 hover:bg-white/15 hover:text-white/80"
                     : "bg-black/[0.03] text-[#999] hover:bg-[#4f46e5]/[0.08] hover:text-[#4f46e5]"
                 }`}
               >
-                {cat}
+                {feature}
               </a>
             ))}
           </div>
