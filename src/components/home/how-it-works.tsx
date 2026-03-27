@@ -9,8 +9,8 @@ interface Props {
 const STEPS = [
   {
     num: "01",
-    title: "Layer",
-    desc: "Stack gradients, patterns, noise, and base colors. Toggle each layer on or off independently.",
+    title: "Pick your layers",
+    desc: "Toggle on the layers you need — base color, gradient, pattern, noise, or animation. Each layer is independent.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -21,23 +21,24 @@ const STEPS = [
   },
   {
     num: "02",
-    title: "Customize",
-    desc: "Fine-tune every property — gradient angles, pattern sizes, noise intensity, animation speed and direction.",
+    title: "Adjust properties",
+    desc: "Tweak gradient angles, pattern sizes, noise intensity, animation speed — all with sliders and live preview.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
+        <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
+        <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" />
       </svg>
     ),
   },
   {
     num: "03",
-    title: "Export",
-    desc: "One click copies production-ready CSS — background layers, noise SVG, keyframes. Paste and ship.",
+    title: "Copy the CSS",
+    desc: "Hit 'Copy CSS' and paste into your project. You get clean background-image stacks, SVG noise, and @keyframes — ready to use.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
       </svg>
     ),
   },
@@ -69,7 +70,9 @@ export function HowItWorks({ hasActive }: Props) {
               hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
             }`}
           >
-            Three layers. One click. Done.
+            From blank canvas to finished background
+            <br />
+            <span className={hasActive ? "opacity-50" : "opacity-30"}>in under a minute.</span>
           </h2>
         </div>
 
@@ -122,7 +125,7 @@ export function HowItWorks({ hasActive }: Props) {
                 : "bg-[#4f46e5] text-white hover:bg-[#4338ca] shadow-[0_8px_24px_-8px_rgba(79,70,229,0.4)]"
             }`}
           >
-            Try the Studio
+            Open the Studio
           </Link>
         </div>
       </div>
