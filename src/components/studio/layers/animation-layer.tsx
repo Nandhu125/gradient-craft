@@ -2,7 +2,7 @@
 
 import type { AnimationLayer } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
-import { LayerToggle, SliderRow, PillGroup } from "./shared";
+import { SliderRow, PillGroup } from "./shared";
 
 interface Props {
   layer: AnimationLayer;
@@ -17,21 +17,22 @@ export function AnimationLayerControls({
 }: Props) {
   return (
     <div className="space-y-5">
-      <LayerToggle
-        label="Animation"
-        enabled={layer.enabled}
-        onToggle={() => onChange({ enabled: !layer.enabled })}
-      />
-
       {!gradientEnabled && layer.enabled && (
-        <div className="px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-400/80">
+        <div
+          className="px-3 py-2 rounded-lg text-[11px]"
+          style={{
+            background: "rgba(204, 151, 255, 0.08)",
+            border: "1px solid rgba(204, 151, 255, 0.15)",
+            color: "rgba(204, 151, 255, 0.7)",
+          }}
+        >
           Enable the Gradient layer to see animations
         </div>
       )}
 
       {/* Preset selector */}
       <div className="space-y-2">
-        <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
           Animation Preset
         </label>
         <div className="flex flex-col gap-1.5 max-h-[200px] overflow-y-auto scrollbar-hide">
@@ -43,21 +44,25 @@ export function AnimationLayerControls({
               <button
                 key={g.id}
                 onClick={() => onChange({ presetId: g.id })}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg border cursor-pointer transition-all duration-200 text-left ${
-                  layer.presetId === g.id
-                    ? "border-white/25 bg-white/8"
-                    : "border-white/6 bg-transparent hover:border-white/12 hover:bg-white/3"
-                }`}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 text-left"
+                style={{
+                  border: layer.presetId === g.id
+                    ? "1px solid rgba(204, 151, 255, 0.25)"
+                    : "1px solid rgba(72, 72, 73, 0.3)",
+                  background: layer.presetId === g.id
+                    ? "rgba(204, 151, 255, 0.08)"
+                    : "transparent",
+                }}
               >
                 <div
                   className="w-6 h-6 rounded-md shrink-0"
                   style={{ background: g.style.background }}
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="text-[11.5px] text-white/70 truncate">
+                  <div className="text-[11.5px] truncate" style={{ color: "#adaaab" }}>
                     {g.name}
                   </div>
-                  <div className="text-[9.5px] text-white/30 font-mono">
+                  <div className="text-[9.5px] font-mono" style={{ color: "#767576" }}>
                     {name} · {dur}
                   </div>
                 </div>

@@ -2,7 +2,7 @@
 
 import type { GradientLayer, GradientStop } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
-import { LayerToggle, SliderRow, PillGroup } from "./shared";
+import { SliderRow, PillGroup } from "./shared";
 
 interface Props {
   layer: GradientLayer;
@@ -76,12 +76,6 @@ export function GradientLayerControls({ layer, onChange }: Props) {
 
   return (
     <div className="space-y-5">
-      <LayerToggle
-        label="Gradient"
-        enabled={layer.enabled}
-        onToggle={() => onChange({ enabled: !layer.enabled })}
-      />
-
       <PillGroup
         label="Type"
         options={[
@@ -108,13 +102,14 @@ export function GradientLayerControls({ layer, onChange }: Props) {
       {/* Color Stops */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+          <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
             Color Stops
           </label>
           {layer.stops.length < 6 && (
             <button
               onClick={addStop}
-              className="text-[10.5px] font-medium text-emerald-400/70 hover:text-emerald-400 border-none bg-transparent cursor-pointer transition-colors"
+              className="text-[10.5px] font-medium border-none bg-transparent cursor-pointer transition-colors"
+              style={{ color: "rgba(204, 151, 255, 0.7)" }}
             >
               + Add
             </button>
@@ -138,7 +133,12 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                   if (/^#[0-9a-fA-F]{0,6}$/.test(v))
                     updateStop(idx, { color: v });
                 }}
-                className="w-[80px] bg-white/5 border border-white/10 rounded-md px-2 py-1.5 text-[11px] font-mono text-white/60 outline-none focus:border-white/20 transition-colors"
+                className="w-[80px] rounded-md px-2 py-1.5 text-[11px] font-mono outline-none transition-colors"
+                style={{
+                  background: "#201f21",
+                  border: "1px solid rgba(72, 72, 73, 0.4)",
+                  color: "#adaaab",
+                }}
                 maxLength={7}
               />
               <input
@@ -150,15 +150,16 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                 onChange={(e) =>
                   updateStop(idx, { position: parseInt(e.target.value) })
                 }
-                className="ctrl-slider flex-1"
+                className="studio-slider flex-1"
               />
-              <span className="text-[10px] text-white/30 font-mono w-7 text-right">
+              <span className="text-[10px] font-mono w-7 text-right" style={{ color: "#767576" }}>
                 {stop.position}%
               </span>
               {layer.stops.length > 2 && (
                 <button
                   onClick={() => removeStop(idx)}
-                  className="w-6 h-6 flex items-center justify-center rounded text-white/20 hover:text-red-400 hover:bg-white/5 border-none cursor-pointer transition-all text-[14px] bg-transparent"
+                  className="w-6 h-6 flex items-center justify-center rounded border-none cursor-pointer transition-all text-[14px] bg-transparent"
+                  style={{ color: "#767576" }}
                 >
                   ×
                 </button>
@@ -170,17 +171,18 @@ export function GradientLayerControls({ layer, onChange }: Props) {
 
       {/* Gradient Preview Bar */}
       <div
-        className="h-3 rounded-full border border-white/10"
+        className="h-3 rounded-full"
         style={{
           background: `linear-gradient(90deg, ${layer.stops
             .map((s) => `${s.color} ${s.position}%`)
             .join(", ")})`,
+          border: "1px solid rgba(72, 72, 73, 0.4)",
         }}
       />
 
       {/* Presets */}
       <div className="space-y-3">
-        <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
           Presets
         </label>
         <div className="flex flex-wrap gap-2">
@@ -189,12 +191,14 @@ export function GradientLayerControls({ layer, onChange }: Props) {
               key={g.id}
               onClick={() => loadPreset(g.id)}
               title={g.name}
-              className={`w-8 h-8 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:scale-110 shrink-0 ${
-                layer.presetId === g.id
-                  ? "border-white/60 scale-105"
-                  : "border-white/10 hover:border-white/25"
-              }`}
-              style={{ background: g.style.background }}
+              className="w-8 h-8 rounded-lg cursor-pointer transition-all duration-200 hover:scale-110 shrink-0"
+              style={{
+                background: g.style.background,
+                border: layer.presetId === g.id
+                  ? "2px solid #cc97ff"
+                  : "2px solid rgba(72, 72, 73, 0.4)",
+                boxShadow: layer.presetId === g.id ? "0 0 10px rgba(204, 151, 255, 0.3)" : "none",
+              }}
             />
           ))}
         </div>

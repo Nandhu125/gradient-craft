@@ -1,7 +1,7 @@
 "use client";
 
 import type { NoiseLayer } from "@/types/studio";
-import { LayerToggle, SliderRow } from "./shared";
+import { SliderRow } from "./shared";
 
 interface Props {
   layer: NoiseLayer;
@@ -11,12 +11,6 @@ interface Props {
 export function NoiseLayerControls({ layer, onChange }: Props) {
   return (
     <div className="space-y-5">
-      <LayerToggle
-        label="Noise / Grain"
-        enabled={layer.enabled}
-        onToggle={() => onChange({ enabled: !layer.enabled })}
-      />
-
       <SliderRow
         label="Intensity"
         value={layer.intensity}
@@ -39,11 +33,14 @@ export function NoiseLayerControls({ layer, onChange }: Props) {
 
       {/* Preview swatch */}
       <div className="space-y-2">
-        <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
           Preview
         </label>
-        <div className="relative h-16 rounded-lg overflow-hidden border border-white/8">
-          <div className="absolute inset-0 bg-[#1a1a1a]" />
+        <div
+          className="relative h-16 rounded-lg overflow-hidden"
+          style={{ border: "1px solid rgba(72, 72, 73, 0.4)" }}
+        >
+          <div className="absolute inset-0" style={{ background: "#1a191b" }} />
           <div
             className="absolute inset-0"
             style={{

@@ -2,7 +2,7 @@
 
 import type { PatternLayer, PatternType } from "@/types/studio";
 import { buildPatternValue, buildPatternSize } from "@/lib/studio-css";
-import { LayerToggle, SliderRow } from "./shared";
+import { SliderRow } from "./shared";
 
 interface Props {
   layer: PatternLayer;
@@ -18,7 +18,7 @@ const PATTERNS: { type: PatternType; label: string }[] = [
   { type: "crosses", label: "Crosses" },
 ];
 
-const COLOR_PRESETS = ["#ffffff", "#000000", "#4f46e5", "#10b981", "#f59e0b", "#ef4444"];
+const COLOR_PRESETS = ["#ffffff", "#000000", "#cc97ff", "#699cff", "#8ce7ff", "#ef4444"];
 
 function patternPreviewStyle(type: PatternType) {
   const bgImage = buildPatternValue(type, "#ffffff", 0.4);
@@ -26,22 +26,16 @@ function patternPreviewStyle(type: PatternType) {
   return {
     backgroundImage: bgImage,
     backgroundSize: bgSize === "auto" ? undefined : bgSize,
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#1a191b",
   };
 }
 
 export function PatternLayerControls({ layer, onChange }: Props) {
   return (
     <div className="space-y-5">
-      <LayerToggle
-        label="Pattern"
-        enabled={layer.enabled}
-        onToggle={() => onChange({ enabled: !layer.enabled })}
-      />
-
       {/* Pattern selector */}
       <div className="space-y-2">
-        <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
           Style
         </label>
         <div className="grid grid-cols-3 gap-2">
@@ -49,17 +43,23 @@ export function PatternLayerControls({ layer, onChange }: Props) {
             <button
               key={p.type}
               onClick={() => onChange({ type: p.type })}
-              className={`flex flex-col items-center gap-1.5 p-2 rounded-lg border cursor-pointer transition-all duration-200 ${
-                layer.type === p.type
-                  ? "border-white/30 bg-white/8"
-                  : "border-white/8 bg-transparent hover:border-white/15 hover:bg-white/3"
-              }`}
+              className="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer transition-all duration-200"
+              style={{
+                border: layer.type === p.type
+                  ? "1px solid rgba(204, 151, 255, 0.3)"
+                  : "1px solid rgba(72, 72, 73, 0.4)",
+                background: layer.type === p.type
+                  ? "rgba(204, 151, 255, 0.08)"
+                  : "transparent",
+              }}
             >
               <div
                 className="w-full h-10 rounded-md"
                 style={patternPreviewStyle(p.type)}
               />
-              <span className="text-[10px] text-white/50">{p.label}</span>
+              <span className="text-[10px]" style={{ color: layer.type === p.type ? "#cc97ff" : "#767576" }}>
+                {p.label}
+              </span>
             </button>
           ))}
         </div>
@@ -77,7 +77,7 @@ export function PatternLayerControls({ layer, onChange }: Props) {
 
       {/* Color */}
       <div className="space-y-2">
-        <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
           Color
         </label>
         <div className="flex items-center gap-3">
@@ -92,12 +92,13 @@ export function PatternLayerControls({ layer, onChange }: Props) {
               <button
                 key={c}
                 onClick={() => onChange({ color: c })}
-                className={`w-6 h-6 rounded-md border cursor-pointer transition-all duration-200 hover:scale-110 ${
-                  layer.color === c
-                    ? "border-white/50"
-                    : "border-white/10"
-                }`}
-                style={{ backgroundColor: c }}
+                className="w-6 h-6 rounded-md cursor-pointer transition-all duration-200 hover:scale-110"
+                style={{
+                  backgroundColor: c,
+                  border: layer.color === c
+                    ? "2px solid #cc97ff"
+                    : "2px solid rgba(72, 72, 73, 0.4)",
+                }}
               />
             ))}
           </div>
