@@ -10,49 +10,52 @@ interface Props {
 const FEATURES = [
   {
     gradientId: "sunset-blaze",
-    label: "Gradients",
-    desc: "Linear, radial, or conic — pick a type, set angle, add up to 6 color stops, or load from 25+ presets.",
+    label: "Gradient Builder",
+    desc: "Choose linear, radial, or conic gradients. Set custom angles, add up to 6 color stops, or pick from 25+ built-in presets.",
     overlay: (
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="flex items-center gap-3">
-          <div className="h-3 w-24 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg" />
-          <div className="text-white/80 text-[11px] font-mono bg-black/30 px-2 py-1 rounded backdrop-blur-sm">135°</div>
+          <div className="h-3 w-28 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg" />
+          <div className="text-white/80 text-[11px] font-mono bg-black/30 px-2.5 py-1 rounded backdrop-blur-sm">135deg</div>
         </div>
       </div>
     ),
   },
   {
     gradientId: "cosmic-nebula",
-    label: "Patterns",
-    desc: "Dots, grids, lines, diagonals, checkerboards, and crosses. Adjust size, color, and opacity per-pattern.",
+    label: "Pattern Overlay",
+    desc: "Layer dot grids, lines, diagonals, checkerboards, or crosses on top of any background. Control size, color, and opacity.",
     overlay: (
       <div className="absolute inset-0" style={{
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)",
-        backgroundSize: "16px 16px",
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px)",
+        backgroundSize: "14px 14px",
       }} />
     ),
   },
   {
     gradientId: "neon-pulse",
-    label: "Noise & Grain",
-    desc: "Add texture with SVG-based noise. Control intensity and opacity for film grain, frosted glass, or subtle texture.",
+    label: "Noise Texture",
+    desc: "Add SVG-based grain for film-like texture, frosted glass effects, or subtle depth. Dial intensity and opacity independently.",
     overlay: (
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/15">
-          <div className="text-white/70 text-[11px] font-mono">feTurbulence · fractalNoise</div>
+        <div className="flex flex-col items-center gap-2 bg-black/20 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/15">
+          <div className="text-white/80 text-[12px] font-medium">Noise Intensity</div>
+          <div className="w-32 h-1.5 rounded-full bg-white/20 overflow-hidden">
+            <div className="h-full w-2/3 rounded-full bg-white/70" />
+          </div>
         </div>
       </div>
     ),
   },
   {
     gradientId: "holographic",
-    label: "Animation",
-    desc: "Bring backgrounds to life with GPU-powered CSS animations. Choose presets, control speed and direction.",
+    label: "CSS Animation",
+    desc: "Animate your gradient with GPU-powered CSS keyframes. Pick a preset, set speed (0.25x-3x), and choose direction.",
     overlay: (
       <div className="absolute inset-0 flex items-center justify-center gap-3">
         <div className="bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 text-white text-[11px] font-bold flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-green-400 animate-[pulse_1.5s_ease-in-out_infinite]" />
-          Animating
+          1.5x speed · alternate
         </div>
       </div>
     ),
@@ -80,7 +83,7 @@ export function UseCases({ hasActive }: Props) {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-[#ec4899]" />
             <span className="font-mono text-[11px] font-bold text-[#ec4899] tracking-[0.15em] uppercase">
-              Features
+              What You Can Build
             </span>
           </div>
 
@@ -89,13 +92,11 @@ export function UseCases({ hasActive }: Props) {
               hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
             }`}
           >
-            Everything you need.
-            <br />
-            <span className={hasActive ? "opacity-50" : "opacity-30"}>Nothing you don&apos;t.</span>
+            Four layer types, one output.
           </h2>
 
-          <p className={`reveal-node text-[15px] sm:text-[17px] max-w-[500px] mx-auto [animation-delay:0.15s] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
-            Five composable layers. One visual editor. Zero dependencies in the output.
+          <p className={`reveal-node text-[15px] sm:text-[17px] max-w-[540px] mx-auto [animation-delay:0.15s] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
+            Each layer stacks on top of the previous one. Enable what you need, disable what you don&apos;t. The studio composes them into a single CSS block.
           </p>
         </div>
 
@@ -125,7 +126,7 @@ export function UseCases({ hasActive }: Props) {
                   <h3 className={`text-[16px] font-bold mb-1 ${hasActive ? "text-white" : "text-[#111]"}`}>
                     {label}
                   </h3>
-                  <p className={`text-[13px] leading-[1.5] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
+                  <p className={`text-[13px] leading-[1.6] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
                     {desc}
                   </p>
                 </div>
