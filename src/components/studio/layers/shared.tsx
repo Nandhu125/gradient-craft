@@ -12,15 +12,10 @@ export function LayerToggle({ label, enabled, onToggle }: LayerToggleProps) {
       <span className="text-[13px] font-semibold text-white/90">{label}</span>
       <button
         onClick={onToggle}
-        className={`relative w-10 h-[22px] rounded-full border-none cursor-pointer transition-colors duration-200 ${
-          enabled ? "bg-emerald-500" : "bg-white/15"
-        }`}
+        className="studio-toggle"
+        data-on={enabled ? "true" : "false"}
       >
-        <span
-          className={`absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            enabled ? "translate-x-[18px]" : "translate-x-0"
-          }`}
-        />
+        <span className="studio-toggle-knob" />
       </button>
     </div>
   );
@@ -50,10 +45,10 @@ export function SliderRow({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+        <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
           {label}
         </label>
-        <span className="text-[11px] text-white/50 font-mono">
+        <span className="text-[11px] font-mono" style={{ color: "#adaaab" }}>
           {displayValue ?? `${value}${unit}`}
         </span>
       </div>
@@ -64,7 +59,7 @@ export function SliderRow({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="ctrl-slider"
+        className="studio-slider"
       />
     </div>
   );
@@ -85,7 +80,7 @@ export function PillGroup<T extends string>({
 }: PillGroupProps<T>) {
   return (
     <div className="space-y-2">
-      <label className="text-[11px] text-white/40 font-medium uppercase tracking-wider">
+      <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#767576" }}>
         {label}
       </label>
       <div className="flex flex-wrap gap-1.5">
@@ -93,11 +88,12 @@ export function PillGroup<T extends string>({
           <button
             key={opt.value}
             onClick={() => onChange(opt.value)}
-            className={`px-3 py-1.5 rounded-lg text-[11.5px] font-medium border cursor-pointer transition-all duration-200 ${
-              selected === opt.value
-                ? "bg-white/15 border-white/20 text-white"
-                : "bg-transparent border-white/8 text-white/40 hover:text-white/60 hover:border-white/15"
-            }`}
+            className="px-3 py-1.5 rounded-lg text-[11.5px] font-medium border cursor-pointer transition-all duration-200"
+            style={{
+              background: selected === opt.value ? "rgba(204, 151, 255, 0.12)" : "transparent",
+              borderColor: selected === opt.value ? "rgba(204, 151, 255, 0.3)" : "rgba(72, 72, 73, 0.4)",
+              color: selected === opt.value ? "#cc97ff" : "#adaaab",
+            }}
           >
             {opt.label}
           </button>
