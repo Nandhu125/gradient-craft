@@ -1,25 +1,26 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import type { Gradient } from "@/types";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { GRADIENTS } from "@/data/gradients";
-import { ArrowDownIcon, CopyIcon, CheckIcon } from "@/components/ui/icons";
 import { safeStyle } from "@/lib/utils";
 
 interface Props {
   hasActive: boolean;
-  onScrollToCollection: () => void;
-  onCopy: (g: Gradient) => void;
-  copiedId: string | null;
-  onApply: (g: Gradient) => void;
 }
 
 const PREVIEW_GRADIENTS = GRADIENTS.slice(0, 6);
-const CATEGORIES = [...new Set(GRADIENTS.map((g) => g.category))];
 
-export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onApply }: Props) {
+const FEATURES = [
+  { icon: "gradient", label: "Gradients" },
+  { icon: "grid_view", label: "Patterns" },
+  { icon: "grain", label: "Noise" },
+  { icon: "animation", label: "Animation" },
+  { icon: "code", label: "CSS Export" },
+];
+
+export function Hero({ hasActive }: Props) {
   const [previewIdx, setPreviewIdx] = useState(0);
-  const activePreview = PREVIEW_GRADIENTS[previewIdx];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,32 +38,20 @@ export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onAppl
         {/* Badge */}
         <div className="animate-[reveal_0.8s_cubic-bezier(0.16,1,0.3,1)_both] mb-6 sm:mb-8 w-fit">
           <div
-            className={`inline-flex items-center gap-2 sm:gap-3 pr-4 sm:pr-5 pl-1.5 py-1.5 rounded-full border text-[11px] sm:text-[13px] font-medium transition-colors duration-400 backdrop-blur-[10px] shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${
+            className={`inline-flex items-center gap-2 sm:gap-3 pr-4 sm:pr-5 pl-3 sm:pl-4 py-1.5 rounded-full border text-[11px] sm:text-[13px] font-medium transition-colors duration-400 backdrop-blur-[10px] shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${
               hasActive
                 ? "bg-white/10 border-white/20 text-white"
                 : "bg-white border-black/5 text-[#444]"
             }`}
           >
-            <div className="flex pl-0.5 sm:pl-1">
-              {GRADIENTS.slice(0, 5).map((g, i) => (
-                <div
-                  key={g.id}
-                  className={`w-[22px] h-[22px] sm:w-[26px] sm:h-[26px] rounded-full border-[2px] transition-transform duration-300 ease-in-out shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${
-                    hasActive ? "border-[#222]" : "border-white"
-                  }`}
-                  style={{
-                    ...safeStyle(g.style),
-                    marginLeft: i === 0 ? 0 : "-8px",
-                    zIndex: 10 - i,
-                  }}
-                />
-              ))}
-            </div>
-            <div className="flex items-center gap-1 sm:gap-1.5">
-              <span className={`font-mono text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold ${hasActive ? "text-white/80" : "text-[#888]"}`}>Free &amp; Open Source</span>
-              <span className={`w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full ${hasActive ? "bg-white/40" : "bg-black/20"}`} />
-              <span className="font-semibold tracking-tight whitespace-nowrap">{GRADIENTS.length} Animated Gradients</span>
-            </div>
+            <span className={`w-2 h-2 rounded-full bg-[#4f46e5] animate-[pulse_2s_ease-in-out_infinite]`} />
+            <span className="font-semibold tracking-tight whitespace-nowrap">
+              CSS Background Studio
+            </span>
+            <span className={`w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full ${hasActive ? "bg-white/40" : "bg-black/20"}`} />
+            <span className={`font-mono text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold ${hasActive ? "text-white/80" : "text-[#888]"}`}>
+              Free &amp; Open Source
+            </span>
           </div>
         </div>
 
@@ -72,33 +61,36 @@ export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onAppl
             hasActive ? "text-white" : "text-[#111]"
           }`}
         >
-          Copy. Paste.{" "}
+          Design. Layer.{" "}
           <span className="text-nowrap bg-[linear-gradient(90deg,#4f46e5_0%,#ec4899_25%,#f59e0b_50%,#ec4899_75%,#4f46e5_100%)] bg-[length:200%_auto] bg-clip-text text-transparent animate-[shine_8s_linear_infinite] inline-block">
             Ship.
           </span>
         </h1>
 
-        {/* Subtitle - clear value prop */}
+        {/* Subtitle */}
         <p
           className={`text-[15px] sm:text-[clamp(16px,2vw,20px)] leading-[1.6] max-w-[600px] mx-auto mb-8 transition-colors duration-400 ease-in-out [animation-delay:0.2s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
             hasActive ? "text-white/70" : "text-[#666]"
           }`}
         >
-          Production-ready animated CSS gradients for developers and designers.
+          The all-in-one CSS background composer. Stack gradients, patterns,
           <br className="hidden sm:block" />
-          Browse. Preview full-screen. Copy the CSS. Done.
+          noise, and animations — then copy production-ready CSS.
         </p>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-10 [animation-delay:0.3s] w-full sm:w-auto animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both]">
-          <button
-            onClick={onScrollToCollection}
-            className={`px-8 py-4 rounded-full border-none text-[17px] font-bold cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_4px_14px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] ${
+          <Link
+            href="/studio"
+            className={`px-8 py-4 rounded-full border-none text-[17px] font-bold cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_4px_14px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] no-underline ${
               hasActive ? "bg-white text-black" : "bg-[#111] text-white"
             }`}
           >
-            Browse {GRADIENTS.length} Gradients <ArrowDownIcon size={18} />
-          </button>
+            Open Studio
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
 
           <a
             href="https://github.com/Nandhu125/gradient-craft"
@@ -115,7 +107,7 @@ export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onAppl
           </a>
         </div>
 
-        {/* Interactive Preview Card */}
+        {/* Interactive Preview Card — Studio mockup */}
         <div className="w-full max-w-[680px] [animation-delay:0.4s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both]">
           <div
             className={`rounded-[24px] overflow-hidden border backdrop-blur-[24px] transition-all duration-500 ${
@@ -124,8 +116,8 @@ export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onAppl
                 : "bg-white/80 border-black/[0.06] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]"
             }`}
           >
-            {/* Preview gradient area */}
-            <div className="relative h-[200px] sm:h-[240px] overflow-hidden cursor-pointer" onClick={() => onApply(activePreview)}>
+            {/* Preview gradient area — cycling through gradients */}
+            <div className="relative h-[200px] sm:h-[240px] overflow-hidden">
               {PREVIEW_GRADIENTS.map((g, i) => (
                 <div
                   key={g.id}
@@ -136,54 +128,55 @@ export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onAppl
                   }}
                 />
               ))}
-              {/* Overlay hint */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <span className="px-5 py-2.5 rounded-full bg-white/90 text-[#111] text-[14px] font-bold shadow-lg">
-                  Click to Preview Full-Screen
-                </span>
+              {/* Overlay with layer icons */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/20">
+                  {FEATURES.map((f, i) => (
+                    <div key={f.icon} className="flex items-center gap-1.5">
+                      {i > 0 && <span className="text-white/20 text-[10px]">+</span>}
+                      <span className="text-white/90 text-[11px] font-medium">{f.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Info bar */}
             <div className={`px-5 py-4 flex items-center justify-between ${hasActive ? "border-t border-white/10" : "border-t border-black/[0.06]"}`}>
               <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-full flex-shrink-0"
-                  style={safeStyle(activePreview.style)}
-                />
+                <div className="flex -space-x-1">
+                  {PREVIEW_GRADIENTS.slice(0, 4).map((g) => (
+                    <div
+                      key={g.id}
+                      className="w-6 h-6 rounded-full border-2 border-white"
+                      style={safeStyle(g.style)}
+                    />
+                  ))}
+                </div>
                 <div className="text-left">
-                  <div className={`text-[14px] font-bold ${hasActive ? "text-white" : "text-[#111]"}`}>
-                    {activePreview.name}
+                  <div className={`text-[13px] font-bold ${hasActive ? "text-white" : "text-[#111]"}`}>
+                    5 Composable Layers
                   </div>
-                  <div className={`text-[11px] font-mono ${hasActive ? "text-white/40" : "text-[#999]"}`}>
-                    {activePreview.category}
+                  <div className={`text-[11px] ${hasActive ? "text-white/40" : "text-[#999]"}`}>
+                    Gradient · Pattern · Noise · Animation · Base
                   </div>
                 </div>
               </div>
 
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onCopy(activePreview);
-                }}
-                className={`px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2 transition-all duration-300 cursor-pointer border-none ${
-                  copiedId === activePreview.id
-                    ? "bg-[#16a34a] text-white"
-                    : hasActive
-                      ? "bg-white text-black hover:bg-white/90"
-                      : "bg-[#111] text-white hover:bg-[#222]"
+              <Link
+                href="/studio"
+                className={`px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2 transition-all duration-300 cursor-pointer border-none no-underline ${
+                  hasActive
+                    ? "bg-white text-black hover:bg-white/90"
+                    : "bg-[#111] text-white hover:bg-[#222]"
                 }`}
               >
-                {copiedId === activePreview.id ? (
-                  <><CheckIcon size={14} /> Copied!</>
-                ) : (
-                  <><CopyIcon size={14} /> Copy CSS</>
-                )}
-              </button>
+                Try It Free
+              </Link>
             </div>
 
             {/* Dot indicators */}
-            <div className={`px-5 pb-4 flex items-center justify-center gap-1.5 ${hasActive ? "" : ""}`}>
+            <div className="px-5 pb-4 flex items-center justify-center gap-1.5">
               {PREVIEW_GRADIENTS.map((_, i) => (
                 <button
                   key={i}
@@ -200,7 +193,7 @@ export function Hero({ hasActive, onScrollToCollection, onCopy, copiedId, onAppl
 
           {/* Quick hint */}
           <p className={`text-[12px] mt-4 transition-colors duration-400 ${hasActive ? "text-white/40" : "text-[#aaa]"}`}>
-            Works with React, Vue, Svelte, or plain HTML &amp; CSS
+            No sign-up required. Works with React, Vue, Svelte, or plain HTML &amp; CSS.
           </p>
         </div>
       </div>
