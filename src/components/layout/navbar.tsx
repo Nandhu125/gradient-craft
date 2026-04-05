@@ -14,6 +14,7 @@ interface Props {
 const NAV_LINKS = [
   { label: "Home", href: "#" },
   { label: "Features", href: "#features" },
+  { label: "Templates", href: "/templates" },
   { label: "Studio", href: "/studio" },
   { label: "About", href: "#about" },
 ];

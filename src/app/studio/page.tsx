@@ -1,18 +1,29 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { StudioState, StudioTab } from "@/types/studio";
 import { Logo } from "@/components/ui/logo";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
+import { TEMPLATES } from "@/data/templates";
 import { generateCSS } from "@/lib/studio-css";
 import { PreviewPanel } from "@/components/studio/preview-panel";
 import { ControlsPanel } from "@/components/studio/controls-panel";
 import { CssOutput } from "@/components/studio/css-output";
 
-export default function StudioPage() {
-  const [state, setState] = useState<StudioState>(DEFAULT_STUDIO_STATE);
+function StudioInner() {
+  const searchParams = useSearchParams();
+  const getInitialState = (): StudioState => {
+    const id = searchParams.get("template");
+    if (id) {
+      const tpl = TEMPLATES.find((t) => t.id === id);
+      if (tpl?.studioState) return tpl.studioState;
+    }
+    return DEFAULT_STUDIO_STATE;
+  };
+  const [state, setState] = useState<StudioState>(getInitialState);
   const [expandedSections, setExpandedSections] = useState<StudioTab[]>(["gradient"]);
   const [copied, setCopied] = useState(false);
   const [showCode, setShowCode] = useState(false);
@@ -87,6 +98,12 @@ export default function StudioPage() {
                 className="text-[13px] font-medium text-[#ccc] hover:text-white no-underline transition-colors"
               >
                 Home
+              </Link>
+              <Link
+                href="/templates"
+                className="text-[13px] font-medium text-[#ccc] hover:text-white no-underline transition-colors"
+              >
+                Templates
               </Link>
               <span className="text-[13px] font-medium text-white">Studio</span>
             </div>
@@ -184,5 +201,13 @@ export default function StudioPage() {
         )}
       </div>
     </>
+  );
+}
+
+export default function StudioPage() {
+  return (
+    <Suspense>
+      <StudioInner />
+    </Suspense>
   );
 }
