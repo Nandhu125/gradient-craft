@@ -1,135 +1,127 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import Link from "next/link";
-import { Logo } from "@/components/ui/logo";
-import { DARK_TEMPLATES, LIGHT_TEMPLATES, type Template } from "@/data/templates";
+import { TEMPLATES, type Template } from "@/data/templates";
 
-function TemplateCard({ template }: { template: Template }) {
-  const [copied, setCopied] = useState(false);
-  const [hovered, setHovered] = useState(false);
+const FILTERS = [
+  { label: "All", value: "all" },
+  { label: "Dark", value: "dark" },
+  { label: "Light", value: "light" },
+  { label: "Mesh", value: "mesh" },
+  { label: "Grid", value: "grid" },
+  { label: "Pattern", value: "pattern" },
+];
+
+function TemplateCard({
+  template,
+  onCopy,
+}: {
+  template: Template;
+  onCopy: (name: string) => void;
+}) {
+  const [copyState, setCopyState] = useState(false);
 
   const handleCopy = useCallback(async () => {
+    const css = `/* ${template.name} — Made with GradientCraft */\n${template.css}`;
     try {
-      await navigator.clipboard.writeText(template.css);
+      await navigator.clipboard.writeText(css);
     } catch {
       const ta = document.createElement("textarea");
-      ta.value = template.css;
+      ta.value = css;
       ta.style.cssText = "position:fixed;opacity:0";
       document.body.appendChild(ta);
       ta.select();
       document.execCommand("copy");
       document.body.removeChild(ta);
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, [template.css]);
+    setCopyState(true);
+    onCopy(template.name);
+    setTimeout(() => setCopyState(false), 2000);
+  }, [template.css, template.name, onCopy]);
 
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        borderRadius: 18,
-        overflow: "hidden",
-        border: `1px solid ${hovered ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.06)"}`,
-        background: "rgba(255,255,255,0.03)",
-        transform: hovered ? "translateY(-3px)" : "translateY(0)",
-        boxShadow: hovered ? "0 16px 48px rgba(0,0,0,0.4)" : "none",
-        transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
-      }}
-    >
-      {/* Preview */}
-      <div style={{ height: 220, position: "relative", ...template.previewStyle }}>
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-            background: "rgba(0,0,0,0.45)",
-            backdropFilter: "blur(4px)",
-            opacity: hovered ? 1 : 0,
-            transition: "opacity 0.2s ease",
-          }}
-        >
-          <button
-            onClick={handleCopy}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              padding: "8px 16px",
-              borderRadius: 10,
-              border: "1px solid rgba(255,255,255,0.15)",
-              background: "rgba(255,255,255,0.1)",
-              color: "#fff",
-              fontSize: 12.5,
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "inherit",
-            }}
-          >
-            <span className="material-symbols-rounded" style={{ fontSize: 15 }}>
-              {copied ? "check" : "content_copy"}
+    <div className="group bg-white rounded-2xl overflow-hidden border border-black/[0.06] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(0,0,0,0.1)] hover:border-black/[0.12]">
+      <div className="h-[240px] relative overflow-hidden" style={template.previewStyle} />
+      <div className="p-4 px-[18px]">
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-[15px] font-semibold text-[#1a1a1a]">{template.name}</span>
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.05em] text-[#999] bg-[#f4f4f2] px-2.5 py-[3px] rounded-full">
+            {template.category}
+          </span>
+        </div>
+        <div className="flex gap-[5px] flex-wrap mb-3">
+          {template.layers.map((l) => (
+            <span
+              key={l}
+              className="font-mono text-[10px] text-[#888] bg-[#f8f8f6] px-2 py-[3px] rounded-md border border-black/[0.04]"
+            >
+              {l}
             </span>
-            {copied ? "Copied!" : "Copy CSS"}
-          </button>
-
-          {template.studioState && (
+          ))}
+        </div>
+        <div className="flex gap-2">
+          {template.studioState ? (
             <Link
               href={`/studio?template=${template.id}`}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "8px 16px",
-                borderRadius: 10,
-                border: "none",
-                background: "#cc97ff",
-                color: "#0e0e0f",
-                fontSize: 12.5,
-                fontWeight: 600,
-                cursor: "pointer",
-                textDecoration: "none",
-                fontFamily: "inherit",
-              }}
+              className="flex-1 py-[9px] rounded-[10px] bg-[#1a1a1a] text-white text-xs font-semibold no-underline flex items-center justify-center gap-1.5 hover:opacity-85 transition-opacity"
             >
-              <span className="material-symbols-rounded" style={{ fontSize: 15 }}>
-                open_in_new
-              </span>
               Edit in Studio
+              <svg
+                width={12}
+                height={12}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1={5} y1={12} x2={19} y2={12} />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+          ) : (
+            <Link
+              href="/studio"
+              className="flex-1 py-[9px] rounded-[10px] bg-[#1a1a1a] text-white text-xs font-semibold no-underline flex items-center justify-center gap-1.5 hover:opacity-85 transition-opacity"
+            >
+              Open Studio
+              <svg
+                width={12}
+                height={12}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1={5} y1={12} x2={19} y2={12} />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </Link>
           )}
-        </div>
-      </div>
-
-      {/* Info */}
-      <div style={{ padding: "14px 18px 18px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <div>
-          <div style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.85)", marginBottom: 4 }}>
-            {template.name}
-          </div>
-          <div style={{ fontFamily: "monospace", fontSize: 10.5, color: "rgba(255,255,255,0.2)", lineHeight: 1.6 }}>
-            {template.layers}
-          </div>
-        </div>
-        <div
-          style={{
-            fontFamily: "monospace",
-            fontSize: 10,
-            fontWeight: 500,
-            padding: "3px 10px",
-            borderRadius: 100,
-            whiteSpace: "nowrap",
-            marginTop: 2,
-            color: template.category === "dark" ? "rgba(196,181,253,0.4)" : "rgba(251,191,36,0.5)",
-            background: template.category === "dark" ? "rgba(139,92,246,0.06)" : "rgba(251,191,36,0.06)",
-          }}
-        >
-          {template.category === "dark" ? "DARK" : "LIGHT"}
+          <button
+            onClick={handleCopy}
+            className={`py-[9px] px-3.5 rounded-[10px] border font-mono text-xs font-medium flex items-center gap-[5px] cursor-pointer transition-all duration-200 ${
+              copyState
+                ? "bg-[rgba(22,163,74,0.06)] text-[#16a34a] border-[rgba(22,163,74,0.2)]"
+                : "bg-[#fafaf8] text-[#666] border-black/[0.08] hover:bg-[#f0f0ee] hover:text-[#1a1a1a]"
+            }`}
+          >
+            {copyState ? (
+              <>
+                <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                Copied
+              </>
+            ) : (
+              <>
+                <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x={9} y={9} width={13} height={13} rx={2} /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                Copy
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>
@@ -137,69 +129,81 @@ function TemplateCard({ template }: { template: Template }) {
 }
 
 export default function TemplatesPage() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const filtered = TEMPLATES.filter(
+    (t) => activeFilter === "all" || t.tags.includes(activeFilter)
+  );
+
+  const handleCopy = useCallback((name: string) => {
+    setToast(`${name} CSS copied to clipboard`);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2500);
+  }, []);
+
   return (
-    <div style={{ background: "#09090b", color: "#fff", minHeight: "100vh", fontFamily: "'Inter', sans-serif", WebkitFontSmoothing: "antialiased" }}>
-      {/* Nav */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 40px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(9,9,11,0.8)", backdropFilter: "blur(20px)", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-            <Logo size={26} active />
-            <span style={{ fontFamily: "monospace", fontSize: 14.5, fontWeight: 800, letterSpacing: "-0.03em", color: "#fff" }}>
-              GradientCraft
-            </span>
+    <div className="min-h-screen font-outfit" style={{ background: "#fafaf8", color: "#1a1a1a" }}>
+      <div className="max-w-[1280px] mx-auto px-8 py-12">
+        {/* Header */}
+        <header className="text-center mb-14">
+          <h1 className="text-[clamp(32px,4vw,44px)] font-bold tracking-[-0.03em] text-[#111] mb-2.5">
+            Template Library
+          </h1>
+          <p className="text-base text-[#888] max-w-[560px] mx-auto leading-relaxed">
+            Start from a beautiful premade background. Click Edit to customize every layer in the Studio, or copy the CSS instantly.
+          </p>
+        </header>
+
+        {/* Filters */}
+        <div className="flex justify-center gap-1.5 flex-wrap mb-10">
+          {FILTERS.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => setActiveFilter(f.value)}
+              className={`px-4 py-[7px] rounded-full border text-[13px] font-medium cursor-pointer transition-all duration-200 ${
+                activeFilter === f.value
+                  ? "bg-[#1a1a1a] text-white border-[#1a1a1a]"
+                  : "bg-white text-[#666] border-black/[0.08] hover:border-indigo-300/50 hover:text-indigo-500"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
+          {filtered.map((t) => (
+            <TemplateCard key={t.id} template={t} onCopy={handleCopy} />
+          ))}
+          {filtered.length === 0 && (
+            <div className="col-span-full text-center py-20 text-[#bbb]">
+              <p className="text-[17px] mb-1.5">No templates found</p>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="text-center pt-12 pb-6 text-[#999] text-[13px]">
+          Built with{" "}
+          <Link href="/studio" className="text-indigo-500 no-underline font-medium hover:underline">
+            GradientCraft Studio
           </Link>
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <Link href="/" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>Home</Link>
-            <span style={{ fontSize: 13, color: "#fff", fontWeight: 500 }}>Templates</span>
-            <Link href="/studio" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>Studio</Link>
-          </div>
+          {" "}· Each template is fully editable
         </div>
-        <Link
-          href="/studio"
-          style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 10, background: "#cc97ff", color: "#0e0e0f", fontSize: 13, fontWeight: 600, textDecoration: "none" }}
-        >
-          <span className="material-symbols-rounded" style={{ fontSize: 16 }}>brush</span>
-          Open Studio
-        </Link>
-      </nav>
-
-      {/* Header */}
-      <div style={{ padding: "48px 40px 0", maxWidth: 1320, margin: "0 auto" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 7, marginBottom: 20, padding: "5px 14px 5px 7px", borderRadius: 100, border: "1px solid rgba(139,92,246,0.2)", background: "rgba(139,92,246,0.06)", fontFamily: "monospace", fontSize: 11, color: "rgba(196,181,253,0.7)" }}>
-          <div style={{ width: 18, height: 18, borderRadius: 5, background: "conic-gradient(from 299deg, #5711a2, #8000ff, #8b1fff, #5711a2)" }} />
-          GradientCraft Templates
-        </div>
-        <h1 style={{ fontSize: 28, fontWeight: 700, letterSpacing: "-0.03em", marginBottom: 6, color: "#fff" }}>
-          Premade Backgrounds
-        </h1>
-        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", maxWidth: 520, lineHeight: 1.6, margin: 0 }}>
-          {DARK_TEMPLATES.length + LIGHT_TEMPLATES.length} production-ready CSS backgrounds. Hover a card to copy the CSS or open it in the Studio to edit.
-        </p>
       </div>
 
-      {/* Dark section */}
-      <div style={{ padding: "36px 40px 12px", maxWidth: 1320, margin: "0 auto", fontFamily: "monospace", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(139,92,246,0.5)" }}>
-        Dark Themes — {DARK_TEMPLATES.length} templates
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: 20, padding: "8px 40px 20px", maxWidth: 1320, margin: "0 auto" }}>
-        {DARK_TEMPLATES.map((t) => <TemplateCard key={t.id} template={t} />)}
-      </div>
-
-      {/* Light section */}
-      <div style={{ padding: "36px 40px 12px", maxWidth: 1320, margin: "0 auto", fontFamily: "monospace", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(251,191,36,0.5)" }}>
-        Light Themes — {LIGHT_TEMPLATES.length} templates
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: 20, padding: "8px 40px 48px", maxWidth: 1320, margin: "0 auto" }}>
-        {LIGHT_TEMPLATES.map((t) => <TemplateCard key={t.id} template={t} />)}
-      </div>
-
-      {/* Footer */}
-      <div style={{ textAlign: "center", padding: "0 40px 48px", fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.15)" }}>
-        Each template is editable in{" "}
-        <Link href="/studio" style={{ color: "rgba(196,181,253,0.3)", textDecoration: "none" }}>
-          GradientCraft Studio
-        </Link>
-        {" "}· Pick → Tweak → Copy CSS
+      {/* Toast */}
+      <div
+        className={`fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#1a1a1a] text-white py-3 px-5 rounded-xl text-[13px] font-medium flex items-center gap-2 shadow-[0_10px_40px_rgba(0,0,0,0.2)] z-[1000] transition-all duration-300 ${
+          toast ? "translate-y-0 opacity-100" : "translate-y-[120%] opacity-0"
+        }`}
+        style={{ transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)" }}
+      >
+        <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+        {toast}
       </div>
     </div>
   );
