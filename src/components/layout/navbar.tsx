@@ -107,6 +107,8 @@ export function Navbar({ hasActive, scrolled, onRandom }: Props) {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
           className={`md:hidden w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300 border-none cursor-pointer ${
             hasActive
               ? "text-white hover:bg-white/10"
@@ -123,6 +125,7 @@ export function Navbar({ hasActive, scrolled, onRandom }: Props) {
             href="https://github.com/Nandhu125/gradient-craft"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub repository"
             className={`w-[34px] h-[34px] flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${
               hasActive
                 ? "text-white/80 hover:bg-white/10 hover:text-white"
@@ -134,6 +137,7 @@ export function Navbar({ hasActive, scrolled, onRandom }: Props) {
 
           <button
             onClick={onRandom}
+            aria-label="Show a random gradient"
             className={`px-3 sm:px-4 py-[7px] rounded-full text-[13px] font-semibold cursor-pointer border-none flex items-center gap-2 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:scale-[1.03] hover:-translate-y-px hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] ${
               hasActive ? "bg-white text-[#111]" : "bg-[#111] text-white"
             }`}
