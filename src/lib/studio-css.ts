@@ -69,9 +69,10 @@ export function buildPatternSize(type: PatternType, size: number): string {
   }
 }
 
-export function buildNoiseValue(intensity: number): string {
+export function buildNoiseValue(intensity: number, opacity: number): string {
   const freq = (intensity * 0.8).toFixed(2);
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='4' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)' opacity='1'/></svg>`;
+  const op = opacity.toFixed(2);
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='4' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)' opacity='${op}'/></svg>`;
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
@@ -86,7 +87,7 @@ export function generateCSS(state: StudioState): string {
   const bgSizes: string[] = [];
 
   if (state.noise.enabled) {
-    bgImages.push(buildNoiseValue(state.noise.intensity));
+    bgImages.push(buildNoiseValue(state.noise.intensity, state.noise.opacity));
     bgSizes.push("300px 300px");
   }
 
@@ -207,8 +208,7 @@ export function computeNoiseStyle(
 ): CSSProperties {
   if (!enabled) return { display: "none" };
   return {
-    backgroundImage: buildNoiseValue(intensity),
+    backgroundImage: buildNoiseValue(intensity, opacity),
     backgroundSize: "300px 300px",
-    opacity,
   };
 }
