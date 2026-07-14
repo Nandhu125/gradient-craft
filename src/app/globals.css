@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Theming for the landing page's "active gradient" mode.
+   The page wrapper carries data-active="true|false" (set by HomeShell);
+   these variants let otherwise-static server components restyle without JS. */
+@custom-variant active (&:where([data-active="true"] *));
+@custom-variant inactive (&:where([data-active="false"] *));
+
 :root {
   --background: #fafaf8;
   --foreground: #111111;
