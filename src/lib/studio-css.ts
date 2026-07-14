@@ -95,8 +95,8 @@ export function generateCSS(state: StudioState): string {
     bgImages.push(
       buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
     );
-    const sz = buildPatternSize(state.pattern.type, state.pattern.size);
-    if (sz !== "auto") bgSizes.push(sz);
+    // Always push a size so bgSizes stays index-aligned with bgImages.
+    bgSizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
   }
 
   if (state.gradient.enabled) {
@@ -163,8 +163,8 @@ export function computePreviewStyle(state: StudioState): CSSProperties {
     bgImages.push(
       buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
     );
-    const sz = buildPatternSize(state.pattern.type, state.pattern.size);
-    if (sz !== "auto") bgSizes.push(sz);
+    // Always push a size so bgSizes stays index-aligned with bgImages.
+    bgSizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
   }
 
   if (state.gradient.enabled) {
