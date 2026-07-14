@@ -169,19 +169,23 @@ export function Hero({ hasActive }: Props) {
             </div>
 
             {/* Dot indicators */}
-            <div className="px-5 pb-4 flex items-center justify-center gap-1.5">
+            <div className="px-5 pb-4 flex items-center justify-center gap-0.5">
               {PREVIEW_GRADIENTS.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setPreviewIdx(i)}
                   aria-label={`Show gradient ${i + 1} of ${PREVIEW_GRADIENTS.length}`}
                   aria-current={i === previewIdx}
-                  className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer border-none ${
-                    i === previewIdx
-                      ? hasActive ? "bg-white w-4" : "bg-[#4f46e5] w-4"
-                      : hasActive ? "bg-white/30 hover:bg-white/50" : "bg-black/15 hover:bg-black/30"
-                  }`}
-                />
+                  className="group/dot flex items-center justify-center w-6 h-6 bg-transparent border-none cursor-pointer p-0"
+                >
+                  <span
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === previewIdx
+                        ? hasActive ? "bg-white w-4" : "bg-[#4f46e5] w-4"
+                        : hasActive ? "w-1.5 bg-white/30 group-hover/dot:bg-white/50" : "w-1.5 bg-black/15 group-hover/dot:bg-black/30"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>
