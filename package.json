@@ -15,6 +15,13 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "ios_saf >= 16.4"
+  ],
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "next": "16.1.6",
