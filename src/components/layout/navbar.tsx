@@ -57,7 +57,7 @@ export function Navbar({ hasActive, scrolled, onRandom }: Props) {
               : "bg-white/40 border-black/[0.06] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)]"
         }`}
       >
-        <Link href="/" className="flex items-center gap-2.5 no-underline mr-1">
+        <Link href="/" aria-label="GradientCraft home" className="flex items-center gap-2.5 no-underline mr-1">
           <Logo size={26} active={hasActive} />
           <span
             className={`font-mono text-[14.5px] font-extrabold tracking-[-0.03em] transition-colors duration-400 ease-in-out hidden sm:block ${
