@@ -41,8 +41,12 @@ export function GradientBackground({ activeGradient, animState }: Props) {
               }`}
               style={{
                 ...safe,
-                ...(isThis ? customAnimProps : {}),
-                animationPlayState: isThis && animState.paused ? "paused" : "running",
+                // Only the active layer animates. Every other preset is an
+                // invisible opacity-0 div, so disabling its animation avoids
+                // ~30 background-position animations churning the main thread.
+                ...(isThis
+                  ? { ...customAnimProps, animationPlayState: animState.paused ? "paused" : "running" }
+                  : { animationName: "none" }),
               }}
             />
           );
