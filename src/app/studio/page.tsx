@@ -87,7 +87,7 @@ function StudioInner() {
         {/* Top Navbar */}
         <nav className="flex items-center justify-between px-5 py-3 border-b border-[#484849]/40 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shrink-0">
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2.5 no-underline">
+            <Link href="/" aria-label="GradientCraft home" className="flex items-center gap-2.5 no-underline">
               <Logo size={26} active />
               <span className="font-mono text-[14.5px] font-extrabold tracking-[-0.03em] text-white hidden sm:block">
                 GradientCraft
