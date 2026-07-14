@@ -1,11 +1,5 @@
-"use client";
-
 import { GRADIENTS } from "@/data/gradients";
 import { safeStyle } from "@/lib/utils";
-
-interface Props {
-  hasActive: boolean;
-}
 
 const FEATURES = [
   {
@@ -66,36 +60,24 @@ function getGradient(id: string) {
   return GRADIENTS.find((g) => g.id === id)!;
 }
 
-export function UseCases({ hasActive }: Props) {
+export function UseCases() {
   return (
-    <section
-      className={`py-20 sm:py-28 px-5 sm:px-[4vw] relative z-[1] transition-colors duration-500 ${
-        hasActive ? "bg-transparent" : "bg-[#fafaf8]"
-      }`}
-    >
+    <section className="py-20 sm:py-28 px-5 sm:px-[4vw] relative z-[1] transition-colors duration-500 active:bg-transparent inactive:bg-[#fafaf8]">
       <div className="max-w-[1100px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
-          <div
-            className={`reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] ${
-              hasActive ? "bg-white/12 mix-blend-difference brightness-[2]" : "bg-white mix-blend-normal"
-            }`}
-          >
+          <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal">
             <div className="w-1.5 h-1.5 rounded-full bg-[#ec4899]" />
             <span className="font-mono text-[11px] font-bold text-[#ec4899] tracking-[0.15em] uppercase">
               What You Can Build
             </span>
           </div>
 
-          <h2
-            className={`reveal-node text-[clamp(28px,5vw,44px)] font-extrabold tracking-[-0.04em] leading-[1.15] mb-4 [animation-delay:0.1s] ${
-              hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
-            }`}
-          >
+          <h2 className="reveal-node text-[clamp(28px,5vw,44px)] font-extrabold tracking-[-0.04em] leading-[1.15] mb-4 [animation-delay:0.1s] active:text-white active:mix-blend-difference active:brightness-[2] inactive:text-[#111]">
             Four layer types, one output.
           </h2>
 
-          <p className={`reveal-node text-[15px] sm:text-[17px] max-w-[540px] mx-auto [animation-delay:0.15s] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
+          <p className="reveal-node text-[15px] sm:text-[17px] max-w-[540px] mx-auto [animation-delay:0.15s] active:text-white/50 inactive:text-[#888]">
             Each layer stacks on top of the previous one. Enable what you need, disable what you don&apos;t. The studio composes them into a single CSS block.
           </p>
         </div>
@@ -107,11 +89,7 @@ export function UseCases({ hasActive }: Props) {
             return (
               <div
                 key={gradientId}
-                className={`reveal-node rounded-[24px] overflow-hidden border backdrop-blur-[24px] transition-all duration-500 hover:-translate-y-1 group ${
-                  hasActive
-                    ? "bg-white/5 border-white/12"
-                    : "bg-white/80 border-black/[0.05] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)]"
-                }`}
+                className="reveal-node rounded-[24px] overflow-hidden border backdrop-blur-[24px] transition-all duration-500 hover:-translate-y-1 group active:bg-white/5 active:border-white/12 inactive:bg-white/80 inactive:border-black/[0.05] inactive:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.06)] inactive:hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)]"
                 style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
               >
                 <div className="relative h-[140px] sm:h-[160px] overflow-hidden">
@@ -123,10 +101,10 @@ export function UseCases({ hasActive }: Props) {
                 </div>
 
                 <div className="p-5">
-                  <h3 className={`text-[16px] font-bold mb-1 ${hasActive ? "text-white" : "text-[#111]"}`}>
+                  <h3 className="text-[16px] font-bold mb-1 active:text-white inactive:text-[#111]">
                     {label}
                   </h3>
-                  <p className={`text-[13px] leading-[1.6] ${hasActive ? "text-white/50" : "text-[#888]"}`}>
+                  <p className="text-[13px] leading-[1.6] active:text-white/50 inactive:text-[#888]">
                     {desc}
                   </p>
                 </div>
