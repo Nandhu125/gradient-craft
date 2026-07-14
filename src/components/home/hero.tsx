@@ -174,6 +174,8 @@ export function Hero({ hasActive }: Props) {
                 <button
                   key={i}
                   onClick={() => setPreviewIdx(i)}
+                  aria-label={`Show gradient ${i + 1} of ${PREVIEW_GRADIENTS.length}`}
+                  aria-current={i === previewIdx}
                   className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer border-none ${
                     i === previewIdx
                       ? hasActive ? "bg-white w-4" : "bg-[#4f46e5] w-4"
