@@ -68,7 +68,7 @@ export function UseCases() {
         <div className="text-center mb-12 sm:mb-16">
           <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal">
             <div className="w-1.5 h-1.5 rounded-full bg-[#ec4899]" />
-            <span className="font-mono text-[11px] font-bold text-[#ec4899] tracking-[0.15em] uppercase">
+            <span className="font-mono text-[11px] font-bold text-[#be185d] tracking-[0.15em] uppercase">
               What You Can Build
             </span>
           </div>
@@ -77,7 +77,7 @@ export function UseCases() {
             Four layer types, one output.
           </h2>
 
-          <p className="reveal-node text-[15px] sm:text-[17px] max-w-[540px] mx-auto [animation-delay:0.15s] active:text-white/50 inactive:text-[#888]">
+          <p className="reveal-node text-[15px] sm:text-[17px] max-w-[540px] mx-auto [animation-delay:0.15s] active:text-white/50 inactive:text-[#666]">
             Each layer stacks on top of the previous one. Enable what you need, disable what you don&apos;t. The studio composes them into a single CSS block.
           </p>
         </div>
@@ -104,7 +104,7 @@ export function UseCases() {
                   <h3 className="text-[16px] font-bold mb-1 active:text-white inactive:text-[#111]">
                     {label}
                   </h3>
-                  <p className="text-[13px] leading-[1.6] active:text-white/50 inactive:text-[#888]">
+                  <p className="text-[13px] leading-[1.6] active:text-white/50 inactive:text-[#666]">
                     {desc}
                   </p>
                 </div>
