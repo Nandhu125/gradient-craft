@@ -1,10 +1,4 @@
-"use client";
-
 import Link from "next/link";
-
-interface Props {
-  hasActive: boolean;
-}
 
 const STEPS = [
   {
@@ -44,35 +38,23 @@ const STEPS = [
   },
 ];
 
-export function HowItWorks({ hasActive }: Props) {
+export function HowItWorks() {
   return (
-    <section
-      className={`py-16 sm:py-24 px-5 sm:px-[4vw] relative z-[1] transition-colors duration-500 ${
-        hasActive ? "bg-transparent" : "bg-transparent"
-      }`}
-    >
+    <section className="py-16 sm:py-24 px-5 sm:px-[4vw] relative z-[1] bg-transparent">
       <div className="max-w-[900px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-14">
-          <div
-            className={`reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] ${
-              hasActive ? "bg-white/12 mix-blend-difference brightness-[2]" : "bg-white mix-blend-normal"
-            }`}
-          >
+          <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal">
             <div className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
             <span className="font-mono text-[11px] font-bold text-[#f59e0b] tracking-[0.15em] uppercase">
               How It Works
             </span>
           </div>
 
-          <h2
-            className={`reveal-node text-[clamp(28px,5vw,44px)] font-extrabold tracking-[-0.04em] leading-[1.15] [animation-delay:0.1s] ${
-              hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
-            }`}
-          >
+          <h2 className="reveal-node text-[clamp(28px,5vw,44px)] font-extrabold tracking-[-0.04em] leading-[1.15] [animation-delay:0.1s] active:text-white active:mix-blend-difference active:brightness-[2] inactive:text-[#111]">
             From blank canvas to finished background
             <br />
-            <span className={hasActive ? "opacity-50" : "opacity-30"}>in under a minute.</span>
+            <span className="active:opacity-50 inactive:opacity-30">in under a minute.</span>
           </h2>
         </div>
 
@@ -84,31 +66,19 @@ export function HowItWorks({ hasActive }: Props) {
               className="reveal-node text-center flex flex-col items-center"
               style={{ animationDelay: `${0.2 + i * 0.1}s` }}
             >
-              <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-500 ${
-                  hasActive
-                    ? "bg-white/10 text-white"
-                    : "bg-[#4f46e5]/[0.06] text-[#4f46e5]"
-                }`}
-              >
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-500 active:bg-white/10 active:text-white inactive:bg-[#4f46e5]/[0.06] inactive:text-[#4f46e5]">
                 {step.icon}
               </div>
 
-              <div className={`font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-2 ${
-                hasActive ? "text-white/30" : "text-[#bbb]"
-              }`}>
+              <div className="font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-2 active:text-white/30 inactive:text-[#bbb]">
                 Step {step.num}
               </div>
 
-              <h3 className={`text-[20px] font-bold tracking-[-0.02em] mb-2 ${
-                hasActive ? "text-white mix-blend-difference brightness-[2]" : "text-[#111]"
-              }`}>
+              <h3 className="text-[20px] font-bold tracking-[-0.02em] mb-2 active:text-white active:mix-blend-difference active:brightness-[2] inactive:text-[#111]">
                 {step.title}
               </h3>
 
-              <p className={`text-[14px] leading-[1.6] max-w-[260px] ${
-                hasActive ? "text-white/50" : "text-[#888]"
-              }`}>
+              <p className="text-[14px] leading-[1.6] max-w-[260px] active:text-white/50 inactive:text-[#888]">
                 {step.desc}
               </p>
             </div>
@@ -119,11 +89,7 @@ export function HowItWorks({ hasActive }: Props) {
         <div className="text-center reveal-node" style={{ animationDelay: "0.5s" }}>
           <Link
             href="/studio"
-            className={`inline-block px-7 py-3.5 rounded-full text-[15px] font-bold cursor-pointer transition-all duration-300 border-none hover:-translate-y-0.5 no-underline ${
-              hasActive
-                ? "bg-white/10 text-white hover:bg-white/20"
-                : "bg-[#4f46e5] text-white hover:bg-[#4338ca] shadow-[0_8px_24px_-8px_rgba(79,70,229,0.4)]"
-            }`}
+            className="inline-block px-7 py-3.5 rounded-full text-[15px] font-bold text-white cursor-pointer transition-all duration-300 border-none hover:-translate-y-0.5 no-underline active:bg-white/10 active:hover:bg-white/20 inactive:bg-[#4f46e5] inactive:hover:bg-[#4338ca] inactive:shadow-[0_8px_24px_-8px_rgba(79,70,229,0.4)]"
           >
             Open the Studio
           </Link>
