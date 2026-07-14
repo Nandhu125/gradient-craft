@@ -15,7 +15,7 @@ export function Footer() {
           <h2 className="font-mono text-[18px] sm:text-[20px] font-extrabold tracking-[-0.07em] mb-3 transition-all duration-500 active:text-white inactive:text-[#111]">
             GradientCraft
           </h2>
-          <p className="text-[15px] max-w-[380px] mx-auto leading-[1.6] text-center transition-all duration-500 active:text-white/60 inactive:text-[#888]">
+          <p className="text-[15px] max-w-[380px] mx-auto leading-[1.6] text-center transition-all duration-500 active:text-white/60 inactive:text-[#666]">
             The all-in-one CSS background composer.
             <br />
             Free, open source, zero dependencies.
@@ -27,7 +27,7 @@ export function Footer() {
               <a
                 key={feature}
                 href="/studio"
-                className="text-[11px] font-mono px-3 py-1.5 rounded-full transition-all duration-300 no-underline active:bg-white/8 active:text-white/50 active:hover:bg-white/15 active:hover:text-white/80 inactive:bg-black/[0.03] inactive:text-[#999] inactive:hover:bg-[#4f46e5]/[0.08] inactive:hover:text-[#4f46e5]"
+                className="text-[11px] font-mono px-3 py-1.5 rounded-full transition-all duration-300 no-underline active:bg-white/8 active:text-white/50 active:hover:bg-white/15 active:hover:text-white/80 inactive:bg-black/[0.03] inactive:text-[#666] inactive:hover:bg-[#4f46e5]/[0.08] inactive:hover:text-[#4f46e5]"
               >
                 {feature}
               </a>
@@ -40,9 +40,9 @@ export function Footer() {
 
         {/* Bottom: Copyright + Socials */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-5 text-[11px] font-mono uppercase tracking-[0.15em] transition-all duration-500 active:text-white/50 inactive:text-[#aaa]">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-5 text-[11px] font-mono uppercase tracking-[0.15em] transition-all duration-500 active:text-white/50 inactive:text-[#666]">
             <span>&copy; {new Date().getFullYear()} GradientCraft</span>
-            <span className="hidden sm:inline active:text-white/20 inactive:text-black/10">&middot;</span>
+            <span aria-hidden="true" className="hidden sm:inline active:text-white/50 inactive:text-black/60">&middot;</span>
             <span className="font-bold active:text-white/70 inactive:text-[#4f46e5]">MIT License</span>
           </div>
 
@@ -57,7 +57,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={soc.label}
-                className="flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-300 hover:-translate-y-0.5 active:bg-white/8 active:border-white/15 active:text-white/60 active:hover:bg-white/15 active:hover:text-white inactive:bg-transparent inactive:border-black/[0.06] inactive:text-[#999] inactive:hover:text-[#4f46e5] inactive:hover:bg-white inactive:hover:border-[#4f46e5]/20 inactive:hover:shadow-[0_4px_16px_rgba(79,70,229,0.1)]"
+                className="flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-300 hover:-translate-y-0.5 active:bg-white/8 active:border-white/15 active:text-white/60 active:hover:bg-white/15 active:hover:text-white inactive:bg-transparent inactive:border-black/[0.06] inactive:text-[#666] inactive:hover:text-[#4f46e5] inactive:hover:bg-white inactive:hover:border-[#4f46e5]/20 inactive:hover:shadow-[0_4px_16px_rgba(79,70,229,0.1)]"
               >
                 {soc.icon}
               </a>
