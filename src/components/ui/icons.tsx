@@ -138,3 +138,104 @@ export function HeartIcon({ size = 18, className }: { size?: number; className?:
     </Ic>
   );
 }
+
+export function RefreshIcon({ size = 16, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <polyline points="1 4 1 10 7 10" />
+      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+    </Ic>
+  );
+}
+
+export function CodeIcon({ size = 16, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </Ic>
+  );
+}
+
+export function ChevronDownIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <polyline points="6 9 12 15 18 9" />
+    </Ic>
+  );
+}
+
+export function EyeIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </Ic>
+  );
+}
+
+export function EyeOffIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </Ic>
+  );
+}
+
+export function PaletteIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+    </Ic>
+  );
+}
+
+export function GradientIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3 A9 9 0 0 0 12 21 Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function GridIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+    </Ic>
+  );
+}
+
+export function GrainIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <circle cx="5" cy="6" r="1.2" /><circle cx="12" cy="4" r="1.2" /><circle cx="19" cy="7" r="1.2" />
+      <circle cx="8" cy="11" r="1.2" /><circle cx="16" cy="12" r="1.2" /><circle cx="4" cy="16" r="1.2" />
+      <circle cx="12" cy="18" r="1.2" /><circle cx="20" cy="17" r="1.2" /><circle cx="11" cy="12" r="1.2" />
+    </svg>
+  );
+}
+
+export function AnimationIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function LayersIcon({ size = 18, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </Ic>
+  );
+}

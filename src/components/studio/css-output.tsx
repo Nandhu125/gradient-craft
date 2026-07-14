@@ -2,6 +2,7 @@
 
 import type { StudioState } from "@/types/studio";
 import { generateCSS } from "@/lib/studio-css";
+import { CheckIcon, CopyIcon, XIcon } from "@/components/ui/icons";
 
 interface Props {
   state: StudioState;
@@ -38,7 +39,7 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
         >
           <span
             className="text-[13px] font-semibold"
-            style={{ color: "#cc97ff", fontFamily: "'Manrope', sans-serif" }}
+            style={{ color: "#cc97ff", fontFamily: "var(--ff-manrope), 'Manrope', sans-serif" }}
           >
             Generated CSS
           </span>
@@ -51,9 +52,7 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
                 color: "#0e0e0f",
               }}
             >
-              <span className="material-symbols-rounded text-[14px]">
-                {copied ? "check" : "content_copy"}
-              </span>
+              {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
               {copied ? "Copied!" : "Copy"}
             </button>
             <button
@@ -61,7 +60,7 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
               className="w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-200 cursor-pointer border-none"
               style={{ color: "#999", background: "transparent" }}
             >
-              <span className="material-symbols-rounded text-[18px]">close</span>
+              <XIcon size={18} />
             </button>
           </div>
         </div>

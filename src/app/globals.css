@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #fafaf8;
   --foreground: #111111;
-  --fb: 'Outfit', -apple-system, sans-serif;
-  --fm: 'JetBrains Mono', 'SF Mono', monospace;
+  /* Font families are self-hosted via next/font — see src/app/layout.tsx.
+     --ff-* variables are injected onto <html> by the font loaders. */
+  --fb: var(--ff-outfit), -apple-system, sans-serif;
+  --fm: var(--ff-jetbrains), 'SF Mono', monospace;
 }
 
 @theme inline {
@@ -13,6 +14,8 @@
   --color-foreground: var(--foreground);
   --font-outfit: var(--fb);
   --font-mono: var(--fm);
+  --font-inter: var(--ff-inter), 'Inter', sans-serif;
+  --font-manrope: var(--ff-manrope), 'Manrope', sans-serif;
 
   --radius-10: 10px;
   --radius-14: 14px;

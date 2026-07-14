@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { StudioState, StudioTab } from "@/types/studio";
 import { Logo } from "@/components/ui/logo";
+import { RefreshIcon, CodeIcon, CheckIcon, CopyIcon } from "@/components/ui/icons";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
 import { TEMPLATES } from "@/data/templates";
@@ -81,7 +82,7 @@ function StudioInner() {
       <style>{ALL_KEYFRAMES}</style>
       <div
         className="h-screen flex flex-col overflow-hidden"
-        style={{ fontFamily: "'Inter', sans-serif", background: "#0e0e0f", color: "#fff" }}
+        style={{ fontFamily: "var(--ff-inter), 'Inter', sans-serif", background: "#0e0e0f", color: "#fff" }}
       >
         {/* Top Navbar */}
         <nav className="flex items-center justify-between px-5 py-3 border-b border-[#484849]/40 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shrink-0">
@@ -114,14 +115,14 @@ function StudioInner() {
               onClick={handleReset}
               className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#999] hover:text-[#ccc] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
             >
-              <span className="material-symbols-rounded text-[16px]">restart_alt</span>
+              <RefreshIcon size={16} />
               Reset
             </button>
             <button
               onClick={() => setShowCode(true)}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
             >
-              <span className="material-symbols-rounded text-[16px]">code</span>
+              <CodeIcon size={16} />
               View CSS
             </button>
             <button
@@ -135,12 +136,12 @@ function StudioInner() {
             >
               {copied ? (
                 <>
-                  <span className="material-symbols-rounded text-[16px]">check</span>
+                  <CheckIcon size={16} />
                   Copied!
                 </>
               ) : (
                 <>
-                  <span className="material-symbols-rounded text-[16px]">content_copy</span>
+                  <CopyIcon size={16} />
                   Copy CSS
                 </>
               )}

@@ -1,11 +1,24 @@
 "use client";
 
+import type { ComponentType } from "react";
 import type { StudioState, StudioTab } from "@/types/studio";
 import { BaseColorControls } from "./layers/base-color";
 import { GradientLayerControls } from "./layers/gradient-layer";
 import { PatternLayerControls } from "./layers/pattern-layer";
 import { NoiseLayerControls } from "./layers/noise-layer";
 import { AnimationLayerControls } from "./layers/animation-layer";
+import {
+  PaletteIcon,
+  GradientIcon,
+  GridIcon,
+  GrainIcon,
+  AnimationIcon,
+  EyeIcon,
+  EyeOffIcon,
+  ChevronDownIcon,
+} from "@/components/ui/icons";
+
+type IconComponent = ComponentType<{ size?: number; className?: string }>;
 
 interface Props {
   state: StudioState;
@@ -20,14 +33,14 @@ interface Props {
 const SECTIONS: {
   id: StudioTab;
   label: string;
-  icon: string;
+  icon: IconComponent;
   layerKey: keyof StudioState;
 }[] = [
-  { id: "base", label: "Base Color", icon: "palette", layerKey: "baseColor" },
-  { id: "gradient", label: "Gradient", icon: "gradient", layerKey: "gradient" },
-  { id: "pattern", label: "Pattern", icon: "grid_view", layerKey: "pattern" },
-  { id: "noise", label: "Noise / Grain", icon: "grain", layerKey: "noise" },
-  { id: "animation", label: "Animation", icon: "animation", layerKey: "animation" },
+  { id: "base", label: "Base Color", icon: PaletteIcon, layerKey: "baseColor" },
+  { id: "gradient", label: "Gradient", icon: GradientIcon, layerKey: "gradient" },
+  { id: "pattern", label: "Pattern", icon: GridIcon, layerKey: "pattern" },
+  { id: "noise", label: "Noise / Grain", icon: GrainIcon, layerKey: "noise" },
+  { id: "animation", label: "Animation", icon: AnimationIcon, layerKey: "animation" },
 ];
 
 export function ControlsPanel({
@@ -58,7 +71,7 @@ export function ControlsPanel({
       >
         <span
           className="text-[13px] font-semibold"
-          style={{ color: "#cc97ff", fontFamily: "'Manrope', sans-serif" }}
+          style={{ color: "#cc97ff", fontFamily: "var(--ff-manrope), 'Manrope', sans-serif" }}
         >
           Layers
         </span>
@@ -96,9 +109,7 @@ export function ControlsPanel({
                   }}
                   title={isEnabled ? "Hide layer" : "Show layer"}
                 >
-                  <span className="material-symbols-rounded text-[18px]">
-                    {isEnabled ? "visibility" : "visibility_off"}
-                  </span>
+                  {isEnabled ? <EyeIcon size={18} /> : <EyeOffIcon size={18} />}
                 </button>
 
                 {/* Label + icon — clickable to expand */}
@@ -106,11 +117,8 @@ export function ControlsPanel({
                   className="flex-1 flex items-center gap-2"
                   onClick={() => toggleSection(section.id)}
                 >
-                  <span
-                    className="material-symbols-rounded text-[18px]"
-                    style={{ color: isExpanded ? "#cc97ff" : "#999" }}
-                  >
-                    {section.icon}
+                  <span style={{ color: isExpanded ? "#cc97ff" : "#999" }} className="flex">
+                    <section.icon size={18} />
                   </span>
                   <span
                     className="text-[12.5px] font-medium"
@@ -122,14 +130,14 @@ export function ControlsPanel({
 
                 {/* Expand chevron */}
                 <span
-                  className="material-symbols-rounded text-[18px] transition-transform duration-200 cursor-pointer"
+                  className="flex transition-transform duration-200 cursor-pointer"
                   style={{
                     color: "#999",
                     transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
                   }}
                   onClick={() => toggleSection(section.id)}
                 >
-                  expand_more
+                  <ChevronDownIcon size={18} />
                 </span>
               </div>
 

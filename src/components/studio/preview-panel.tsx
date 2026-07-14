@@ -2,6 +2,7 @@
 
 import type { StudioState } from "@/types/studio";
 import { computePreviewStyle, computeNoiseStyle } from "@/lib/studio-css";
+import { LayersIcon } from "@/components/ui/icons";
 
 interface Props {
   state: StudioState;
@@ -12,7 +13,7 @@ export function PreviewPanel({ state }: Props) {
   const noiseStyle = computeNoiseStyle(
     state.noise.enabled,
     state.noise.intensity,
-    state.noise.opacity
+    state.noise.opacity,
   );
 
   const hasAnyLayer =
@@ -81,10 +82,10 @@ export function PreviewPanel({ state }: Props) {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
             <span
-              className="material-symbols-rounded text-[40px]"
               style={{ color: "rgba(204, 151, 255, 0.15)" }}
+              className="flex"
             >
-              layers
+              <LayersIcon size={40} />
             </span>
             <p
               className="text-sm font-medium"
