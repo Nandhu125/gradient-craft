@@ -34,10 +34,10 @@ export function About() {
           <h2 className="reveal-node text-[clamp(28px,5vw,44px)] font-extrabold tracking-[-0.04em] leading-[1.15] mb-4 [animation-delay:0.1s] active:text-white active:mix-blend-difference active:brightness-[2] inactive:text-[#111] inactive:mix-blend-normal inactive:brightness-100">
             The output is pure CSS.
             <br />
-            <span className="opacity-30">No runtime. No JavaScript. No bloat.</span>
+            <span className="opacity-60">No runtime. No JavaScript. No bloat.</span>
           </h2>
 
-          <p className="reveal-node text-[15px] sm:text-[17px] max-w-[520px] mx-auto [animation-delay:0.15s] active:text-white/50 active:mix-blend-difference active:brightness-[2] inactive:text-[#888]">
+          <p className="reveal-node text-[15px] sm:text-[17px] max-w-[520px] mx-auto [animation-delay:0.15s] active:text-white/50 active:mix-blend-difference active:brightness-[2] inactive:text-[#666]">
             Everything you create in the studio exports as standard CSS that works in any browser, any framework, any project. Zero dependencies in the final output.
           </p>
         </div>
@@ -67,12 +67,12 @@ export function About() {
               <div className="mt-8 sm:mt-10 flex items-end gap-4 sm:gap-5">
                 <div>
                   <div className="text-[32px] sm:text-[42px] font-extrabold text-[#4f46e5] font-mono leading-none">5</div>
-                  <div className="text-[9px] sm:text-[10px] text-[#999] font-mono uppercase tracking-[0.15em] mt-2">Layer Types</div>
+                  <div className="text-[9px] sm:text-[10px] text-[#666] font-mono uppercase tracking-[0.15em] mt-2">Layer Types</div>
                 </div>
                 <div className="flex-1 h-px bg-[#4f46e5]/10 mb-2.5" />
                 <div className="text-right">
                   <div className="text-[32px] sm:text-[42px] font-extrabold text-[#4f46e5] font-mono leading-none">0kb</div>
-                  <div className="text-[9px] sm:text-[10px] text-[#999] font-mono uppercase tracking-[0.15em] mt-2">JS in Output</div>
+                  <div className="text-[9px] sm:text-[10px] text-[#666] font-mono uppercase tracking-[0.15em] mt-2">JS in Output</div>
                 </div>
               </div>
             </div>
@@ -145,7 +145,7 @@ export function About() {
               <h3 className={`text-[14px] sm:text-[15px] font-bold ${heading}`}>
                 MIT Licensed
               </h3>
-              <p className="text-[10px] sm:text-[11px] font-mono mt-1.5 uppercase tracking-[0.1em] active:text-white/40 active:mix-blend-difference active:brightness-[2] inactive:text-[#999]">
+              <p className="text-[10px] sm:text-[11px] font-mono mt-1.5 uppercase tracking-[0.1em] active:text-white/40 active:mix-blend-difference active:brightness-[2] inactive:text-[#666]">
                 Free for personal &amp; commercial use
               </p>
             </div>
