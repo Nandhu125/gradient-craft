@@ -116,6 +116,8 @@ export function Hero({ hasActive }: Props) {
                   style={{
                     ...safeStyle(g.style),
                     opacity: i === previewIdx ? 1 : 0,
+                    // Only the visible slide animates; the rest are hidden.
+                    animationName: i === previewIdx ? undefined : "none",
                   }}
                 />
               ))}
