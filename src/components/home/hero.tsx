@@ -49,7 +49,7 @@ export function Hero({ hasActive }: Props) {
 
         {/* Headline */}
         <h1
-          className={`text-[clamp(26px,7vw,64px)] font-[800] leading-[1.1] sm:leading-[1.1] tracking-[-0.03em] mb-5 transition-colors duration-400 ease-in-out [animation-delay:0.1s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
+          className={`text-[clamp(26px,7vw,64px)] font-[800] leading-[1.1] sm:leading-[1.1] tracking-[-0.03em] mb-5 transition-colors duration-400 ease-in-out ${
             hasActive ? "text-white" : "text-[#111]"
           }`}
         >
