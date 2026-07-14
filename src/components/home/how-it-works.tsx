@@ -46,7 +46,7 @@ export function HowItWorks() {
         <div className="text-center mb-12 sm:mb-14">
           <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal">
             <div className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
-            <span className="font-mono text-[11px] font-bold text-[#f59e0b] tracking-[0.15em] uppercase">
+            <span className="font-mono text-[11px] font-bold text-[#b45309] tracking-[0.15em] uppercase">
               How It Works
             </span>
           </div>
@@ -54,7 +54,7 @@ export function HowItWorks() {
           <h2 className="reveal-node text-[clamp(28px,5vw,44px)] font-extrabold tracking-[-0.04em] leading-[1.15] [animation-delay:0.1s] active:text-white active:mix-blend-difference active:brightness-[2] inactive:text-[#111]">
             From blank canvas to finished background
             <br />
-            <span className="active:opacity-50 inactive:opacity-30">in under a minute.</span>
+            <span className="active:opacity-50 inactive:opacity-60">in under a minute.</span>
           </h2>
         </div>
 
@@ -70,7 +70,7 @@ export function HowItWorks() {
                 {step.icon}
               </div>
 
-              <div className="font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-2 active:text-white/30 inactive:text-[#bbb]">
+              <div className="font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-2 active:text-white/30 inactive:text-[#666]">
                 Step {step.num}
               </div>
 
@@ -78,7 +78,7 @@ export function HowItWorks() {
                 {step.title}
               </h3>
 
-              <p className="text-[14px] leading-[1.6] max-w-[260px] active:text-white/50 inactive:text-[#888]">
+              <p className="text-[14px] leading-[1.6] max-w-[260px] active:text-white/50 inactive:text-[#666]">
                 {step.desc}
               </p>
             </div>
