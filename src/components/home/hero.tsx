@@ -41,7 +41,7 @@ export function Hero({ hasActive }: Props) {
               Visual CSS Background Builder
             </span>
             <span className={`w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full ${hasActive ? "bg-white/40" : "bg-black/20"}`} />
-            <span className={`font-mono text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold ${hasActive ? "text-white/80" : "text-[#888]"}`}>
+            <span className={`font-mono text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold ${hasActive ? "text-white/80" : "text-[#666]"}`}>
               Free &amp; Open Source
             </span>
           </div>
@@ -150,7 +150,7 @@ export function Hero({ hasActive }: Props) {
                   <div className={`text-[13px] font-bold ${hasActive ? "text-white" : "text-[#111]"}`}>
                     25+ gradient presets included
                   </div>
-                  <div className={`text-[11px] ${hasActive ? "text-white/40" : "text-[#999]"}`}>
+                  <div className={`text-[11px] ${hasActive ? "text-white/40" : "text-[#666]"}`}>
                     Or build your own from scratch
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export function Hero({ hasActive }: Props) {
             </div>
           </div>
 
-          <p className={`text-[12px] mt-4 transition-colors duration-400 ${hasActive ? "text-white/40" : "text-[#aaa]"}`}>
+          <p className={`text-[12px] mt-4 transition-colors duration-400 ${hasActive ? "text-white/40" : "text-[#666]"}`}>
             No sign-up. No downloads. Works with any framework or plain HTML &amp; CSS.
           </p>
         </div>
