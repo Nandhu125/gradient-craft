@@ -79,17 +79,18 @@ export function buildNoiseValue(intensity: number, opacity: number): string {
 export function generateCSS(state: StudioState): string {
   const lines: string[] = [".background {"];
 
+  // Noise is emitted as a static ::after overlay (see below), so the main
+  // element needs a positioning context for it.
+  if (state.noise.enabled) {
+    lines.push("  position: relative;");
+  }
+
   if (state.baseColor.enabled) {
     lines.push(`  background-color: ${state.baseColor.color};`);
   }
 
   const bgImages: string[] = [];
   const bgSizes: string[] = [];
-
-  if (state.noise.enabled) {
-    bgImages.push(buildNoiseValue(state.noise.intensity, state.noise.opacity));
-    bgSizes.push("300px 300px");
-  }
 
   if (state.pattern.enabled) {
     bgImages.push(
@@ -137,6 +138,22 @@ export function generateCSS(state: StudioState): string {
   }
 
   lines.push("}");
+
+  // Static grain overlay — mirrors the preview, and keeps noise out of the
+  // animated background-image stack so it never pans with the gradient.
+  if (state.noise.enabled) {
+    lines.push("");
+    lines.push(".background::after {");
+    lines.push('  content: "";');
+    lines.push("  position: absolute;");
+    lines.push("  inset: 0;");
+    lines.push("  pointer-events: none;");
+    lines.push(
+      `  background-image: ${buildNoiseValue(state.noise.intensity, state.noise.opacity)};`
+    );
+    lines.push("  background-size: 300px 300px;");
+    lines.push("}");
+  }
 
   if (state.animation.enabled && state.animation.presetId) {
     const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
