@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { StudioState, StudioTab } from "@/types/studio";
 import { Logo } from "@/components/ui/logo";
-import { RefreshIcon, CodeIcon, CheckIcon, CopyIcon, ShareIcon, DownloadIcon } from "@/components/ui/icons";
+import { RefreshIcon, CodeIcon, CheckIcon, CopyIcon, ShareIcon, DownloadIcon, BookmarkIcon } from "@/components/ui/icons";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
 import { TEMPLATES } from "@/data/templates";
@@ -15,6 +15,7 @@ import { exportSvg, exportRaster, type RasterFormat } from "@/lib/studio-export"
 import { PreviewPanel } from "@/components/studio/preview-panel";
 import { ControlsPanel } from "@/components/studio/controls-panel";
 import { CssOutput } from "@/components/studio/css-output";
+import { SavedPanel } from "@/components/studio/saved-panel";
 
 function StudioInner() {
   const searchParams = useSearchParams();
@@ -37,6 +38,7 @@ function StudioInner() {
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
   const [showCode, setShowCode] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shareTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -172,6 +174,14 @@ function StudioInner() {
               Reset
             </button>
             <button
+              onClick={() => setShowSaved(true)}
+              aria-label="Saved compositions"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#999] hover:text-[#ccc] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
+            >
+              <BookmarkIcon size={16} />
+              <span className="hidden sm:inline">Saved</span>
+            </button>
+            <button
               onClick={() => setShowCode(true)}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
             >
@@ -295,11 +305,14 @@ function StudioInner() {
 
         {/* CSS Output Modal */}
         {showCode && (
-          <CssOutput
-            state={state}
-            onCopy={handleCopy}
-            copied={copied}
-            onClose={() => setShowCode(false)}
+          <CssOutput state={state} onClose={() => setShowCode(false)} />
+        )}
+
+        {showSaved && (
+          <SavedPanel
+            currentState={state}
+            onLoad={setState}
+            onClose={() => setShowSaved(false)}
           />
         )}
       </div>

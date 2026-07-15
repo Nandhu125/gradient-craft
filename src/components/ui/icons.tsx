@@ -36,6 +36,14 @@ export function ShareIcon({ size = 16, className }: { size?: number; className?:
   );
 }
 
+export function BookmarkIcon({ size = 16, className }: { size?: number; className?: string }) {
+  return (
+    <Ic size={size} className={className}>
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+    </Ic>
+  );
+}
+
 export function DownloadIcon({ size = 16, className }: { size?: number; className?: string }) {
   return (
     <Ic size={size} className={className}>

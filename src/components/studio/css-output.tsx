@@ -1,18 +1,41 @@
 "use client";
 
+import { useState, useRef, useCallback } from "react";
 import type { StudioState } from "@/types/studio";
-import { generateCSS } from "@/lib/studio-css";
+import { generateCSS, generateTailwind } from "@/lib/studio-css";
 import { CheckIcon, CopyIcon, XIcon } from "@/components/ui/icons";
 
 interface Props {
   state: StudioState;
-  onCopy: () => void;
-  copied: boolean;
   onClose: () => void;
 }
 
-export function CssOutput({ state, onCopy, copied, onClose }: Props) {
-  const css = generateCSS(state);
+type Format = "css" | "tailwind";
+
+export function CssOutput({ state, onClose }: Props) {
+  const [format, setFormat] = useState<Format>("css");
+  const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const code = format === "css" ? generateCSS(state) : generateTailwind(state);
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = code;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+    copyTimer.current = setTimeout(() => setCopied(false), 2000);
+  }, [code]);
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
@@ -37,15 +60,28 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
           className="flex items-center justify-between px-5 py-3.5 border-b"
           style={{ borderColor: "rgba(72, 72, 73, 0.3)" }}
         >
-          <span
-            className="text-[13px] font-semibold"
-            style={{ color: "#cc97ff", fontFamily: "var(--ff-manrope), 'Manrope', sans-serif" }}
+          {/* Format toggle */}
+          <div
+            className="flex items-center gap-0.5 rounded-lg p-0.5"
+            style={{ background: "#201f21", border: "1px solid rgba(72, 72, 73, 0.4)" }}
           >
-            Generated CSS
-          </span>
+            {(["css", "tailwind"] as const).map((f) => (
+              <button
+                key={f}
+                onClick={() => setFormat(f)}
+                className="px-3 py-1 rounded-md text-[12px] font-semibold border-none cursor-pointer transition-all duration-200"
+                style={{
+                  background: format === f ? "#cc97ff" : "transparent",
+                  color: format === f ? "#0e0e0f" : "#999",
+                }}
+              >
+                {f === "css" ? "CSS" : "Tailwind"}
+              </button>
+            ))}
+          </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={onCopy}
+              onClick={handleCopy}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold border-none transition-all duration-200 cursor-pointer"
               style={{
                 background: "#cc97ff",
@@ -71,7 +107,7 @@ export function CssOutput({ state, onCopy, copied, onClose }: Props) {
             className="text-[12.5px] leading-[1.7] font-mono whitespace-pre-wrap break-words m-0"
             style={{ color: "#ccc" }}
           >
-            <code>{css}</code>
+            <code>{code}</code>
           </pre>
         </div>
       </div>

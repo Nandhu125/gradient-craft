@@ -193,6 +193,70 @@ export function generateCSS(state: StudioState): string {
   return lines.join("\n");
 }
 
+// Tailwind arbitrary-value equivalent of generateCSS. Layered gradient
+// backgrounds don't map to named utilities, so we emit `bg-[...]` arbitrary
+// values (spaces underscore-escaped per Tailwind's JIT syntax). The ::after
+// noise overlay and @keyframes can't live in a utility class, so those are
+// surfaced as notes pointing back at the CSS output.
+export function generateTailwind(state: StudioState): string {
+  const classes: string[] = [];
+  const notes: string[] = [];
+  const esc = (v: string) => v.replace(/\s+/g, "_");
+
+  if (state.baseColor.enabled) {
+    classes.push(`bg-[${state.baseColor.color}]`);
+  }
+
+  const bgImages: string[] = [];
+  const bgSizes: string[] = [];
+
+  if (state.pattern.enabled) {
+    bgImages.push(
+      buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
+    );
+    bgSizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
+  }
+
+  if (state.gradient.enabled) {
+    bgImages.push(buildGradientValue(state.gradient));
+    bgSizes.push(
+      buildGradientSize(
+        state.gradient,
+        state.animation.enabled && !!state.animation.presetId
+      )
+    );
+  }
+
+  if (bgImages.length > 0) {
+    classes.push(`bg-[image:${esc(bgImages.join(", "))}]`);
+    classes.push(`bg-[length:${esc(bgSizes.join(", "))}]`);
+  }
+
+  if (state.animation.enabled && state.animation.presetId) {
+    const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
+    if (preset) {
+      const parts = preset.style.animation.split(" ");
+      const name = parts[0];
+      const dur = (parseFloat(parts[1] || "8") / state.animation.speed).toFixed(1);
+      classes.push(
+        `animate-[${name}_${dur}s_ease_infinite_${state.animation.direction}]`
+      );
+      notes.push(
+        `<!-- Register the "${name}" keyframes under theme.extend.keyframes in tailwind.config -->`
+      );
+    }
+  }
+
+  if (state.noise.enabled) {
+    notes.push(
+      "<!-- Noise uses an ::after grain overlay — not a utility class; copy the CSS output for it -->"
+    );
+  }
+
+  const markup = `<div class="${classes.join(" ")}"></div>`;
+  return notes.length > 0 ? `${notes.join("\n")}\n${markup}` : markup;
+}
+
 export function computePreviewStyle(state: StudioState): CSSProperties {
   const style: CSSProperties = {};
 
