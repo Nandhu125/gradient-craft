@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Navbar } from "@/components/layout/navbar";
 import { TEMPLATES, type Template } from "@/data/templates";
 
 const FILTERS = [
@@ -129,9 +131,17 @@ function TemplateCard({
 }
 
 export default function TemplatesPage() {
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("all");
   const [toast, setToast] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const filtered = TEMPLATES.filter(
     (t) => activeFilter === "all" || t.tags.includes(activeFilter)
@@ -145,6 +155,8 @@ export default function TemplatesPage() {
 
   return (
     <div className="min-h-screen font-outfit" style={{ background: "#fafaf8", color: "#1a1a1a" }}>
+      <Navbar hasActive={false} scrolled={scrolled} onRandom={() => router.push("/")} />
+
       <div className="max-w-[1280px] mx-auto px-8 py-12">
         {/* Header */}
         <header className="text-center mb-14">
