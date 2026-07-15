@@ -8,13 +8,29 @@ export interface GradientStop {
   position: number;
 }
 
+export interface MeshPoint {
+  color: string;
+  x: number;
+  y: number;
+}
+
 export interface GradientLayer {
   enabled: boolean;
-  type: "linear" | "radial" | "conic";
+  type: "linear" | "radial" | "conic" | "mesh";
   angle: number;
   stops: GradientStop[];
+  // Only used when type === "mesh". Optional so existing StudioState objects
+  // (e.g. embedded template states) stay valid without this field.
+  meshPoints?: MeshPoint[];
   presetId: string | null;
 }
+
+export const DEFAULT_MESH_POINTS: MeshPoint[] = [
+  { color: "#667eea", x: 20, y: 25 },
+  { color: "#764ba2", x: 80, y: 20 },
+  { color: "#f093fb", x: 25, y: 80 },
+  { color: "#4facfe", x: 80, y: 75 },
+];
 
 export type PatternType =
   | "dots"
@@ -68,6 +84,7 @@ export const DEFAULT_STUDIO_STATE: StudioState = {
       { color: "#667eea", position: 0 },
       { color: "#764ba2", position: 100 },
     ],
+    meshPoints: DEFAULT_MESH_POINTS,
     presetId: null,
   },
   pattern: {

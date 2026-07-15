@@ -1,6 +1,7 @@
 "use client";
 
-import type { GradientLayer, GradientStop } from "@/types/studio";
+import type { GradientLayer, GradientStop, MeshPoint } from "@/types/studio";
+import { DEFAULT_MESH_POINTS } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
 import { SliderRow, PillGroup } from "./shared";
 
@@ -50,6 +51,37 @@ export function GradientLayerControls({ layer, onChange }: Props) {
     onChange({ stops: layer.stops.filter((_, i) => i !== idx) });
   };
 
+  const meshPoints = layer.meshPoints ?? DEFAULT_MESH_POINTS;
+
+  const changeType = (v: GradientLayer["type"]) => {
+    // Seed points the first time mesh is selected so the editor has content.
+    if (v === "mesh" && !layer.meshPoints) {
+      onChange({ type: v, meshPoints: DEFAULT_MESH_POINTS });
+    } else {
+      onChange({ type: v });
+    }
+  };
+
+  const updatePoint = (idx: number, patch: Partial<MeshPoint>) => {
+    onChange({
+      meshPoints: meshPoints.map((p, i) => (i === idx ? { ...p, ...patch } : p)),
+    });
+  };
+
+  const addPoint = () => {
+    if (meshPoints.length >= 6) return;
+    onChange({ meshPoints: [...meshPoints, { color: "#ffffff", x: 50, y: 50 }] });
+  };
+
+  const removePoint = (idx: number) => {
+    if (meshPoints.length <= 2) return;
+    onChange({ meshPoints: meshPoints.filter((_, i) => i !== idx) });
+  };
+
+  const meshCss = meshPoints
+    .map((p) => `radial-gradient(at ${p.x}% ${p.y}%, ${p.color} 0px, transparent 55%)`)
+    .join(", ");
+
   const loadPreset = (id: string) => {
     const preset = GRADIENTS.find((g) => g.id === id);
     if (!preset) return;
@@ -82,10 +114,104 @@ export function GradientLayerControls({ layer, onChange }: Props) {
           { value: "linear" as const, label: "Linear" },
           { value: "radial" as const, label: "Radial" },
           { value: "conic" as const, label: "Conic" },
+          { value: "mesh" as const, label: "Mesh" },
         ]}
         selected={layer.type}
-        onChange={(v) => onChange({ type: v })}
+        onChange={changeType}
       />
+
+      {layer.type === "mesh" && (
+        <>
+          {/* Mesh live preview */}
+          <div
+            className="h-24 rounded-lg"
+            style={{
+              backgroundImage: meshCss,
+              border: "1px solid rgba(72, 72, 73, 0.4)",
+            }}
+          />
+
+          {/* Mesh Points */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
+                Mesh Points
+              </label>
+              {meshPoints.length < 6 && (
+                <button
+                  onClick={addPoint}
+                  className="text-[10.5px] font-medium border-none bg-transparent cursor-pointer transition-colors"
+                  style={{ color: "rgba(204, 151, 255, 0.7)" }}
+                >
+                  + Add
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              {meshPoints.map((point, idx) => (
+                <div
+                  key={idx}
+                  className="space-y-2 rounded-md p-2"
+                  style={{ background: "#201f21", border: "1px solid rgba(72, 72, 73, 0.4)" }}
+                >
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="color"
+                      value={point.color}
+                      onChange={(e) => updatePoint(idx, { color: e.target.value })}
+                      className="studio-color-input !w-8 !h-8 !rounded-md"
+                    />
+                    <input
+                      type="text"
+                      value={point.color}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updatePoint(idx, { color: v });
+                      }}
+                      className="w-[80px] rounded-md px-2 py-1.5 text-[11px] font-mono outline-none transition-colors"
+                      style={{
+                        background: "#18171a",
+                        border: "1px solid rgba(72, 72, 73, 0.4)",
+                        color: "#ccc",
+                      }}
+                      maxLength={7}
+                    />
+                    <span className="flex-1" />
+                    {meshPoints.length > 2 && (
+                      <button
+                        onClick={() => removePoint(idx)}
+                        className="w-6 h-6 flex items-center justify-center rounded border-none cursor-pointer transition-all text-[14px] bg-transparent"
+                        style={{ color: "#999" }}
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
+                  <SliderRow
+                    label="X"
+                    value={point.x}
+                    min={0}
+                    max={100}
+                    step={1}
+                    unit="%"
+                    onChange={(v) => updatePoint(idx, { x: v })}
+                  />
+                  <SliderRow
+                    label="Y"
+                    value={point.y}
+                    min={0}
+                    max={100}
+                    step={1}
+                    unit="%"
+                    onChange={(v) => updatePoint(idx, { y: v })}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
       {(layer.type === "linear" || layer.type === "conic") && (
         <SliderRow
@@ -100,6 +226,8 @@ export function GradientLayerControls({ layer, onChange }: Props) {
       )}
 
       {/* Color Stops */}
+      {layer.type !== "mesh" && (
+      <>
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
@@ -179,6 +307,8 @@ export function GradientLayerControls({ layer, onChange }: Props) {
           border: "1px solid rgba(72, 72, 73, 0.4)",
         }}
       />
+      </>
+      )}
 
       {/* Presets */}
       <div className="space-y-3">

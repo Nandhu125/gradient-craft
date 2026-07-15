@@ -4,6 +4,7 @@ import type {
   GradientLayer,
   PatternType,
 } from "@/types/studio";
+import { DEFAULT_MESH_POINTS } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
 
 function hexToRgba(hex: string, alpha: number): string {
@@ -14,7 +15,21 @@ function hexToRgba(hex: string, alpha: number): string {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+// CSS has no native mesh-gradient(); simulate it by stacking soft radial
+// gradients that fade to transparent, letting overlaps blend into a mesh.
+const MESH_FALLOFF = 55;
+
 export function buildGradientValue(g: GradientLayer): string {
+  if (g.type === "mesh") {
+    const points = g.meshPoints ?? DEFAULT_MESH_POINTS;
+    return points
+      .map(
+        (p) =>
+          `radial-gradient(at ${p.x}% ${p.y}%, ${p.color} 0px, transparent ${MESH_FALLOFF}%)`
+      )
+      .join(", ");
+  }
+
   const stops = g.stops
     .map((s) => `${s.color} ${s.position}%`)
     .join(", ");
@@ -27,6 +42,17 @@ export function buildGradientValue(g: GradientLayer): string {
     case "conic":
       return `conic-gradient(from ${g.angle}deg at center, ${stops})`;
   }
+}
+
+// A mesh emits N comma-separated radial layers, so its background-size must
+// list N matching entries to stay index-aligned with the image list.
+export function buildGradientSize(g: GradientLayer, animated: boolean): string {
+  const size = animated && g.type !== "mesh" ? "400% 400%" : "100% 100%";
+  if (g.type === "mesh") {
+    const count = (g.meshPoints ?? DEFAULT_MESH_POINTS).length;
+    return Array.from({ length: count }, () => size).join(", ");
+  }
+  return size;
 }
 
 export function buildPatternValue(
@@ -103,9 +129,10 @@ export function generateCSS(state: StudioState): string {
   if (state.gradient.enabled) {
     bgImages.push(buildGradientValue(state.gradient));
     bgSizes.push(
-      state.animation.enabled && state.animation.presetId
-        ? "400% 400%"
-        : "100% 100%"
+      buildGradientSize(
+        state.gradient,
+        state.animation.enabled && !!state.animation.presetId
+      )
     );
   }
 
@@ -187,9 +214,10 @@ export function computePreviewStyle(state: StudioState): CSSProperties {
   if (state.gradient.enabled) {
     bgImages.push(buildGradientValue(state.gradient));
     bgSizes.push(
-      state.animation.enabled && state.animation.presetId
-        ? "400% 400%"
-        : "100% 100%"
+      buildGradientSize(
+        state.gradient,
+        state.animation.enabled && !!state.animation.presetId
+      )
     );
   }
 
