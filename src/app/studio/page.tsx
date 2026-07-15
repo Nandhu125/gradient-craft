@@ -5,11 +5,12 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { StudioState, StudioTab } from "@/types/studio";
 import { Logo } from "@/components/ui/logo";
-import { RefreshIcon, CodeIcon, CheckIcon, CopyIcon } from "@/components/ui/icons";
+import { RefreshIcon, CodeIcon, CheckIcon, CopyIcon, ShareIcon } from "@/components/ui/icons";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
 import { TEMPLATES } from "@/data/templates";
 import { generateCSS } from "@/lib/studio-css";
+import { encodeState, decodeState } from "@/lib/studio-share";
 import { PreviewPanel } from "@/components/studio/preview-panel";
 import { ControlsPanel } from "@/components/studio/controls-panel";
 import { CssOutput } from "@/components/studio/css-output";
@@ -17,6 +18,12 @@ import { CssOutput } from "@/components/studio/css-output";
 function StudioInner() {
   const searchParams = useSearchParams();
   const getInitialState = (): StudioState => {
+    // A shared `?s=` token takes precedence over a `?template=` id.
+    const shared = searchParams.get("s");
+    if (shared) {
+      const decoded = decodeState(shared);
+      if (decoded) return decoded;
+    }
     const id = searchParams.get("template");
     if (id) {
       const tpl = TEMPLATES.find((t) => t.id === id);
@@ -27,8 +34,10 @@ function StudioInner() {
   const [state, setState] = useState<StudioState>(getInitialState);
   const [expandedSections, setExpandedSections] = useState<StudioTab[]>(["gradient"]);
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const shareTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateLayer = useCallback(
     <K extends keyof StudioState>(layer: K, patch: Partial<StudioState[K]>) => {
@@ -61,6 +70,27 @@ function StudioInner() {
     setCopied(true);
     if (copyTimer.current) clearTimeout(copyTimer.current);
     copyTimer.current = setTimeout(() => setCopied(false), 2000);
+  }, [state]);
+
+  const handleShare = useCallback(async () => {
+    const url = `${window.location.origin}${window.location.pathname}?s=${encodeState(state)}`;
+    // Reflect the shareable state in the address bar so a refresh keeps it.
+    window.history.replaceState(null, "", url);
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setShared(true);
+    if (shareTimer.current) clearTimeout(shareTimer.current);
+    shareTimer.current = setTimeout(() => setShared(false), 2000);
   }, [state]);
 
   const toggleSection = useCallback((tab: StudioTab) => {
@@ -124,6 +154,22 @@ function StudioInner() {
             >
               <CodeIcon size={16} />
               View CSS
+            </button>
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
+            >
+              {shared ? (
+                <>
+                  <CheckIcon size={16} />
+                  Link copied!
+                </>
+              ) : (
+                <>
+                  <ShareIcon size={16} />
+                  Share
+                </>
+              )}
             </button>
             <button
               onClick={handleCopy}
