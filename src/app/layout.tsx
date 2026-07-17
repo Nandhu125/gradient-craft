@@ -94,7 +94,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body>
         {children}
-        <Analytics />
+        {/* Vercel injects /_vercel/insights/script.js only on deployed
+            environments; rendering it in dev just 404s in the console. */}
+        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
   );
