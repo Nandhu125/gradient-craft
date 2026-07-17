@@ -48,7 +48,7 @@ function TemplateCard({
       <div className="p-4 px-[18px]">
         <div className="flex justify-between items-center mb-3">
           <span className="text-[15px] font-semibold text-[#1a1a1a]">{template.name}</span>
-          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.05em] text-[#999] bg-[#f4f4f2] px-2.5 py-[3px] rounded-full">
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.05em] text-[#666] bg-[#f4f4f2] px-2.5 py-[3px] rounded-full">
             {template.category}
           </span>
         </div>
@@ -56,7 +56,7 @@ function TemplateCard({
           {template.layers.map((l) => (
             <span
               key={l}
-              className="font-mono text-[10px] text-[#888] bg-[#f8f8f6] px-2 py-[3px] rounded-md border border-black/[0.04]"
+              className="font-mono text-[10px] text-[#666] bg-[#f8f8f6] px-2 py-[3px] rounded-md border border-black/[0.04]"
             >
               {l}
             </span>
@@ -163,7 +163,7 @@ export default function TemplatesPage() {
           <h1 className="text-[clamp(32px,4vw,44px)] font-bold tracking-[-0.03em] text-[#111] mb-2.5">
             Template Library
           </h1>
-          <p className="text-base text-[#888] max-w-[560px] mx-auto leading-relaxed">
+          <p className="text-base text-[#666] max-w-[560px] mx-auto leading-relaxed">
             Start from a beautiful premade background. Click Edit to customize every layer in the Studio, or copy the CSS instantly.
           </p>
         </header>
@@ -191,14 +191,14 @@ export default function TemplatesPage() {
             <TemplateCard key={t.id} template={t} onCopy={handleCopy} />
           ))}
           {filtered.length === 0 && (
-            <div className="col-span-full text-center py-20 text-[#bbb]">
+            <div className="col-span-full text-center py-20 text-[#666]">
               <p className="text-[17px] mb-1.5">No templates found</p>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="text-center pt-12 pb-6 text-[#999] text-[13px]">
+        <div className="text-center pt-12 pb-6 text-[#666] text-[13px]">
           Built with{" "}
           <Link href="/studio" className="text-indigo-500 no-underline font-medium hover:underline">
             GradientCraft Studio
