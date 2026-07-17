@@ -267,7 +267,7 @@ function StudioInner() {
         </nav>
 
         {/* Main Area — Preview + Single Right Sidebar */}
-        <div className="flex-1 flex overflow-hidden">
+        <main className="flex-1 flex overflow-hidden">
           {/* Preview Canvas */}
           <div className="flex-1 relative overflow-hidden">
             <PreviewPanel state={state} />
@@ -280,7 +280,7 @@ function StudioInner() {
             toggleSection={toggleSection}
             updateLayer={updateLayer}
           />
-        </div>
+        </main>
 
         {/* Bottom HUD */}
         <div className="flex items-center justify-between px-5 py-2.5 border-t border-[#484849]/40 bg-[#131314]/90 backdrop-blur-xl shrink-0">
