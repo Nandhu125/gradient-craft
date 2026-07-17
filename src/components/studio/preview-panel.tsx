@@ -67,14 +67,26 @@ export function PreviewPanel({ state }: Props) {
         />
       )}
 
-      {/* Label */}
+      {/* Label — self-contained scrim so it stays legible over any gradient */}
       <div className="absolute top-4 left-4 flex items-center gap-2">
-        <span
-          className="text-[10px] font-mono uppercase tracking-[0.15em]"
-          style={{ color: "rgba(204, 151, 255, 0.3)" }}
+        <div
+          className="flex items-center gap-2 rounded-full pl-2.5 pr-3 py-1.5 border border-white/15 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.25)]"
+          style={{ background: "rgba(14, 14, 15, 0.55)" }}
         >
-          Live Preview
-        </span>
+          <span className="relative flex h-2 w-2">
+            <span
+              className="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping"
+              style={{ background: "#cc97ff" }}
+            />
+            <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "#cc97ff" }} />
+          </span>
+          <span
+            className="text-[10px] font-mono uppercase tracking-[0.15em] font-semibold"
+            style={{ color: "rgba(255, 255, 255, 0.85)" }}
+          >
+            Live Preview
+          </span>
+        </div>
       </div>
 
       {/* Center indicator when nothing enabled */}
@@ -82,14 +94,14 @@ export function PreviewPanel({ state }: Props) {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
             <span
-              style={{ color: "rgba(204, 151, 255, 0.15)" }}
+              style={{ color: "rgba(204, 151, 255, 0.4)" }}
               className="flex"
             >
               <LayersIcon size={40} />
             </span>
             <p
               className="text-sm font-medium"
-              style={{ color: "rgba(204, 151, 255, 0.2)" }}
+              style={{ color: "rgba(204, 151, 255, 0.55)" }}
             >
               Enable a layer to start
             </p>
