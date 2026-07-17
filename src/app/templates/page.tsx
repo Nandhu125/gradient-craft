@@ -157,7 +157,7 @@ export default function TemplatesPage() {
     <div className="min-h-screen font-outfit" style={{ background: "#fafaf8", color: "#1a1a1a" }}>
       <Navbar hasActive={false} scrolled={scrolled} onRandom={() => router.push("/")} />
 
-      <div className="max-w-[1280px] mx-auto px-8 py-12">
+      <main className="max-w-[1280px] mx-auto px-8 py-12">
         {/* Header */}
         <header className="text-center mb-14">
           <h1 className="text-[clamp(32px,4vw,44px)] font-bold tracking-[-0.03em] text-[#111] mb-2.5">
@@ -200,12 +200,12 @@ export default function TemplatesPage() {
         {/* Footer */}
         <div className="text-center pt-12 pb-6 text-[#666] text-[13px]">
           Built with{" "}
-          <Link href="/studio" className="text-indigo-500 no-underline font-medium hover:underline">
+          <Link href="/studio" className="text-indigo-700 no-underline font-medium hover:underline">
             GradientCraft Studio
           </Link>
           {" "}· Each template is fully editable
         </div>
-      </div>
+      </main>
 
       {/* Toast */}
       <div
