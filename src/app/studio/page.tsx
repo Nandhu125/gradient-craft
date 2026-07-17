@@ -118,10 +118,15 @@ function StudioInner() {
     }
   }, [state]);
 
+  // Accordion keeps at most 2 sections open. Opening a 3rd evicts the
+  // oldest (FIFO) so the panel never stacks into an endless scroll.
+  const MAX_OPEN = 2;
   const toggleSection = useCallback((tab: StudioTab) => {
-    setExpandedSections((prev) =>
-      prev.includes(tab) ? prev.filter((t) => t !== tab) : [...prev, tab]
-    );
+    setExpandedSections((prev) => {
+      if (prev.includes(tab)) return prev.filter((t) => t !== tab);
+      const next = [...prev, tab];
+      return next.slice(-MAX_OPEN);
+    });
   }, []);
 
   const activeLayers = [
