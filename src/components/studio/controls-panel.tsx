@@ -26,7 +26,7 @@ interface Props {
   toggleSection: (tab: StudioTab) => void;
   updateLayer: <K extends keyof StudioState>(
     layer: K,
-    patch: Partial<StudioState[K]>
+    patch: Partial<StudioState[K]>,
   ) => void;
 }
 
@@ -37,10 +37,20 @@ const SECTIONS: {
   layerKey: keyof StudioState;
 }[] = [
   { id: "base", label: "Base Color", icon: PaletteIcon, layerKey: "baseColor" },
-  { id: "gradient", label: "Gradient", icon: GradientIcon, layerKey: "gradient" },
+  {
+    id: "gradient",
+    label: "Gradient",
+    icon: GradientIcon,
+    layerKey: "gradient",
+  },
   { id: "pattern", label: "Pattern", icon: GridIcon, layerKey: "pattern" },
   { id: "noise", label: "Noise / Grain", icon: GrainIcon, layerKey: "noise" },
-  { id: "animation", label: "Animation", icon: AnimationIcon, layerKey: "animation" },
+  {
+    id: "animation",
+    label: "Animation",
+    icon: AnimationIcon,
+    layerKey: "animation",
+  },
 ];
 
 export function ControlsPanel({
@@ -51,7 +61,9 @@ export function ControlsPanel({
 }: Props) {
   const toggleLayerEnabled = (layerKey: keyof StudioState) => {
     const current = state[layerKey].enabled;
-    updateLayer(layerKey, { enabled: !current } as Partial<StudioState[typeof layerKey]>);
+    updateLayer(layerKey, { enabled: !current } as Partial<
+      StudioState[typeof layerKey]
+    >);
   };
 
   return (
@@ -71,12 +83,16 @@ export function ControlsPanel({
       >
         <span
           className="text-[13px] font-semibold"
-          style={{ color: "#cc97ff", fontFamily: "var(--ff-manrope), 'Manrope', sans-serif" }}
+          style={{
+            color: "#cc97ff",
+            fontFamily: "var(--ff-manrope), 'Manrope', sans-serif",
+          }}
         >
           Layers
         </span>
         <span className="text-[10px] font-mono" style={{ color: "#999" }}>
-          {SECTIONS.filter((s) => state[s.layerKey].enabled).length}/5 active
+          {SECTIONS.filter((s) => state[s.layerKey].enabled).length}/
+          {SECTIONS.length} active
         </span>
       </div>
 
@@ -90,10 +106,12 @@ export function ControlsPanel({
             <div key={section.id}>
               {/* Section Header */}
               <div
-                className="flex items-center gap-3 px-5 py-3 cursor-pointer select-none transition-colors duration-150 border-b"
+                className="flex items-center gap-3 px-5 cursor-pointer select-none transition-colors duration-150 border-b"
                 style={{
                   borderColor: "rgba(72, 72, 73, 0.2)",
-                  background: isExpanded ? "rgba(204, 151, 255, 0.04)" : "transparent",
+                  background: isExpanded
+                    ? "rgba(204, 151, 255, 0.04)"
+                    : "transparent",
                 }}
               >
                 {/* Visibility toggle (eye) */}
@@ -102,9 +120,11 @@ export function ControlsPanel({
                     e.stopPropagation();
                     toggleLayerEnabled(section.layerKey);
                   }}
-                  className="w-7 h-7 flex items-center justify-center rounded-md border-none cursor-pointer transition-all duration-200"
+                  className="w-fit flex items-center justify-center rounded-md border-none cursor-pointer transition-all duration-200"
                   style={{
-                    background: isEnabled ? "rgba(204, 151, 255, 0.12)" : "transparent",
+                    background: isEnabled
+                      ? "rgba(204, 151, 255, 0.12)"
+                      : "transparent",
                     color: isEnabled ? "#cc97ff" : "#666",
                   }}
                   title={isEnabled ? "Hide layer" : "Show layer"}
@@ -114,14 +134,17 @@ export function ControlsPanel({
 
                 {/* Label + icon — clickable to expand */}
                 <div
-                  className="flex-1 flex items-center gap-2"
+                  className="flex-1 flex items-center gap-2 py-4"
                   onClick={() => toggleSection(section.id)}
                 >
-                  <span style={{ color: isExpanded ? "#cc97ff" : "#999" }} className="flex">
+                  <span
+                    style={{ color: isExpanded ? "#cc97ff" : "#999" }}
+                    className="flex"
+                  >
                     <section.icon size={18} />
                   </span>
                   <span
-                    className="text-[12.5px] font-medium"
+                    className="text-[12.5px] font-medium leading-none"
                     style={{ color: isExpanded ? "#fff" : "#ccc" }}
                   >
                     {section.label}
