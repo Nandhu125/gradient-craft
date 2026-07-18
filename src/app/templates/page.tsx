@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
+import { copyToClipboard } from "@/lib/utils";
 import { TEMPLATES, type Template } from "@/data/templates";
 
 const FILTERS = [
@@ -26,17 +27,7 @@ function TemplateCard({
 
   const handleCopy = useCallback(async () => {
     const css = `/* ${template.name} — Made with GradientCraft */\n${template.css}`;
-    try {
-      await navigator.clipboard.writeText(css);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = css;
-      ta.style.cssText = "position:fixed;opacity:0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-    }
+    await copyToClipboard(css);
     setCopyState(true);
     onCopy(template.name);
     setTimeout(() => setCopyState(false), 2000);

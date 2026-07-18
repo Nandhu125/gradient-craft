@@ -10,6 +10,7 @@ import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
 import { TEMPLATES } from "@/data/templates";
 import { generateCSS } from "@/lib/studio-css";
+import { copyToClipboard } from "@/lib/utils";
 import { encodeState, decodeState } from "@/lib/studio-share";
 import { exportSvg, exportRaster, type RasterFormat } from "@/lib/studio-export";
 import { PreviewPanel } from "@/components/studio/preview-panel";
@@ -58,19 +59,7 @@ function StudioInner() {
   }, []);
 
   const handleCopy = useCallback(async () => {
-    const css = generateCSS(state);
-    try {
-      await navigator.clipboard.writeText(css);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = css;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-    }
+    await copyToClipboard(generateCSS(state));
     setCopied(true);
     if (copyTimer.current) clearTimeout(copyTimer.current);
     copyTimer.current = setTimeout(() => setCopied(false), 2000);
@@ -80,18 +69,7 @@ function StudioInner() {
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeState(state)}`;
     // Reflect the shareable state in the address bar so a refresh keeps it.
     window.history.replaceState(null, "", url);
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = url;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-    }
+    await copyToClipboard(url);
     setShared(true);
     if (shareTimer.current) clearTimeout(shareTimer.current);
     shareTimer.current = setTimeout(() => setShared(false), 2000);
