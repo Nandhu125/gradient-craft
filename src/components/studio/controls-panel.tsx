@@ -106,7 +106,7 @@ export function ControlsPanel({
             <div key={section.id}>
               {/* Section Header */}
               <div
-                className="flex items-center gap-3 px-5 cursor-pointer select-none transition-colors duration-150 border-b"
+                className="flex items-center gap-3 px-5 transition-colors duration-150 border-b"
                 style={{
                   borderColor: "rgba(72, 72, 73, 0.2)",
                   background: isExpanded
@@ -127,6 +127,8 @@ export function ControlsPanel({
                       : "transparent",
                     color: isEnabled ? "#cc97ff" : "#666",
                   }}
+                  aria-label={`${isEnabled ? "Hide" : "Show"} ${section.label} layer`}
+                  aria-pressed={isEnabled}
                   title={isEnabled ? "Hide layer" : "Show layer"}
                 >
                   {isEnabled ? <EyeIcon size={18} /> : <EyeOffIcon size={18} />}
