@@ -12,6 +12,8 @@ export function LayerToggle({ label, enabled, onToggle }: LayerToggleProps) {
       <span className="text-[13px] font-semibold text-white/90">{label}</span>
       <button
         onClick={onToggle}
+        aria-label={label}
+        aria-pressed={enabled}
         className="studio-toggle"
         data-on={enabled ? "true" : "false"}
       >
@@ -58,6 +60,7 @@ export function SliderRow({
         max={max}
         step={step}
         value={value}
+        aria-label={label}
         onChange={(e) => onChange(parseFloat(e.target.value))}
         className="studio-slider"
       />
@@ -88,6 +91,7 @@ export function PillGroup<T extends string>({
           <button
             key={opt.value}
             onClick={() => onChange(opt.value)}
+            aria-pressed={selected === opt.value}
             className="px-3 py-1.5 rounded-lg text-[11.5px] font-medium border cursor-pointer transition-all duration-200"
             style={{
               background: selected === opt.value ? "rgba(204, 151, 255, 0.12)" : "transparent",
