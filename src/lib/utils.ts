@@ -30,10 +30,3 @@ export async function copyToClipboard(text: string): Promise<void> {
     document.body.removeChild(ta);
   }
 }
-
-export function textMix(hasActive: boolean) {
-  return {
-    mixBlendMode: hasActive ? ("difference" as const) : ("normal" as const),
-    filter: hasActive ? "brightness(2)" : "none",
-  };
-}
