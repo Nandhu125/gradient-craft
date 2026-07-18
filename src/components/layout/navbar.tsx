@@ -89,6 +89,8 @@ export function Navbar({ hasActive, scrolled, onRandom }: Props) {
               }}
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
+              onFocus={() => setHoveredIdx(i)}
+              onBlur={() => setHoveredIdx(null)}
               className={`relative z-[1] px-4 py-2 text-[13.5px] font-medium no-underline transition-colors duration-300 ease-in-out whitespace-nowrap ${
                 hasActive
                   ? hoveredIdx === i
