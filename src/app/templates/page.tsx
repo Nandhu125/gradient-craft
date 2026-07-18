@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { copyToClipboard } from "@/lib/utils";
+import { useScrolled } from "@/lib/use-scrolled";
 import { TEMPLATES, type Template } from "@/data/templates";
 
 const FILTERS = [
@@ -103,14 +104,8 @@ export default function TemplatesPage() {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("all");
   const [toast, setToast] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useScrolled();
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const filtered = TEMPLATES.filter(
     (t) => activeFilter === "all" || t.tags.includes(activeFilter)

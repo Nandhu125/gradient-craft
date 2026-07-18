@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import type { ReactNode } from "react";
 import type { Gradient, AnimationState } from "@/types";
 import { GRADIENTS } from "@/data/gradients";
+import { useScrolled } from "@/lib/use-scrolled";
 import { GradientBackground } from "@/components/gradients/gradient-background";
 import { AnimationControls } from "@/components/gradients/animation-controls";
 import { Navbar } from "@/components/layout/navbar";
@@ -24,7 +25,7 @@ interface Props {
  * in globals.css). Only genuinely interactive islands hydrate here.
  */
 export function HomeShell({ children, footer }: Props) {
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useScrolled();
   const [activeGradient, setActiveGradient] = useState<Gradient | null>(null);
   const [controlsOpen, setControlsOpen] = useState(false);
   const [animState, setAnimState] = useState<AnimationState>({
@@ -35,12 +36,6 @@ export function HomeShell({ children, footer }: Props) {
   });
 
   const hasActive = !!activeGradient;
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleRandom = useCallback(() => {
     const available = GRADIENTS.filter((g) => g.id !== activeGradient?.id);
