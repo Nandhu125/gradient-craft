@@ -4,6 +4,7 @@ import type {
   GradientLayer,
   PatternType,
 } from "@/types/studio";
+import type { Gradient } from "@/types";
 import { DEFAULT_MESH_POINTS } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
 
@@ -102,6 +103,47 @@ export function buildNoiseValue(intensity: number, opacity: number): string {
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
+// Index-aligned background-image / background-size lists shared by the CSS,
+// Tailwind, and preview outputs. Stack order: pattern (top) → gradient.
+function buildLayerStack(state: StudioState): { images: string[]; sizes: string[] } {
+  const images: string[] = [];
+  const sizes: string[] = [];
+
+  if (state.pattern.enabled) {
+    images.push(
+      buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
+    );
+    // Always push a size so sizes stays index-aligned with images.
+    sizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
+  }
+
+  if (state.gradient.enabled) {
+    images.push(buildGradientValue(state.gradient));
+    sizes.push(
+      buildGradientSize(
+        state.gradient,
+        state.animation.enabled && !!state.animation.presetId
+      )
+    );
+  }
+
+  return { images, sizes };
+}
+
+// Resolves the active animation preset into its keyframe name and
+// speed-adjusted duration (1 decimal), or null when no preset is active.
+function resolveAnimation(
+  state: StudioState
+): { name: string; duration: string; preset: Gradient } | null {
+  if (!state.animation.enabled || !state.animation.presetId) return null;
+  const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
+  if (!preset) return null;
+  const parts = preset.style.animation.split(" ");
+  const name = parts[0] ?? "";
+  const duration = (parseFloat(parts[1] || "8") / state.animation.speed).toFixed(1);
+  return { name, duration, preset };
+}
+
 export function generateCSS(state: StudioState): string {
   const lines: string[] = [".background {"];
 
@@ -115,26 +157,7 @@ export function generateCSS(state: StudioState): string {
     lines.push(`  background-color: ${state.baseColor.color};`);
   }
 
-  const bgImages: string[] = [];
-  const bgSizes: string[] = [];
-
-  if (state.pattern.enabled) {
-    bgImages.push(
-      buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
-    );
-    // Always push a size so bgSizes stays index-aligned with bgImages.
-    bgSizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
-  }
-
-  if (state.gradient.enabled) {
-    bgImages.push(buildGradientValue(state.gradient));
-    bgSizes.push(
-      buildGradientSize(
-        state.gradient,
-        state.animation.enabled && !!state.animation.presetId
-      )
-    );
-  }
+  const { images: bgImages, sizes: bgSizes } = buildLayerStack(state);
 
   if (bgImages.length > 0) {
     if (bgImages.length === 1) {
@@ -151,17 +174,11 @@ export function generateCSS(state: StudioState): string {
     }
   }
 
-  if (state.animation.enabled && state.animation.presetId) {
-    const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
-    if (preset) {
-      const parts = preset.style.animation.split(" ");
-      const name = parts[0];
-      const origDur = parseFloat(parts[1] || "8");
-      const dur = (origDur / state.animation.speed).toFixed(1);
-      lines.push(
-        `  animation: ${name} ${dur}s ease infinite ${state.animation.direction};`
-      );
-    }
+  const anim = resolveAnimation(state);
+  if (anim) {
+    lines.push(
+      `  animation: ${anim.name} ${anim.duration}s ease infinite ${state.animation.direction};`
+    );
   }
 
   lines.push("}");
@@ -182,12 +199,9 @@ export function generateCSS(state: StudioState): string {
     lines.push("}");
   }
 
-  if (state.animation.enabled && state.animation.presetId) {
-    const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
-    if (preset) {
-      lines.push("");
-      lines.push(preset.keyframes);
-    }
+  if (anim) {
+    lines.push("");
+    lines.push(anim.preset.keyframes);
   }
 
   return lines.join("\n");
@@ -207,44 +221,21 @@ export function generateTailwind(state: StudioState): string {
     classes.push(`bg-[${state.baseColor.color}]`);
   }
 
-  const bgImages: string[] = [];
-  const bgSizes: string[] = [];
-
-  if (state.pattern.enabled) {
-    bgImages.push(
-      buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
-    );
-    bgSizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
-  }
-
-  if (state.gradient.enabled) {
-    bgImages.push(buildGradientValue(state.gradient));
-    bgSizes.push(
-      buildGradientSize(
-        state.gradient,
-        state.animation.enabled && !!state.animation.presetId
-      )
-    );
-  }
+  const { images: bgImages, sizes: bgSizes } = buildLayerStack(state);
 
   if (bgImages.length > 0) {
     classes.push(`bg-[image:${esc(bgImages.join(", "))}]`);
     classes.push(`bg-[length:${esc(bgSizes.join(", "))}]`);
   }
 
-  if (state.animation.enabled && state.animation.presetId) {
-    const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
-    if (preset) {
-      const parts = preset.style.animation.split(" ");
-      const name = parts[0];
-      const dur = (parseFloat(parts[1] || "8") / state.animation.speed).toFixed(1);
-      classes.push(
-        `animate-[${name}_${dur}s_ease_infinite_${state.animation.direction}]`
-      );
-      notes.push(
-        `<!-- Register the "${name}" keyframes under theme.extend.keyframes in tailwind.config -->`
-      );
-    }
+  const anim = resolveAnimation(state);
+  if (anim) {
+    classes.push(
+      `animate-[${anim.name}_${anim.duration}s_ease_infinite_${state.animation.direction}]`
+    );
+    notes.push(
+      `<!-- Register the "${anim.name}" keyframes under theme.extend.keyframes in tailwind.config -->`
+    );
   }
 
   if (state.noise.enabled) {
@@ -264,26 +255,7 @@ export function computePreviewStyle(state: StudioState): CSSProperties {
     style.backgroundColor = state.baseColor.color;
   }
 
-  const bgImages: string[] = [];
-  const bgSizes: string[] = [];
-
-  if (state.pattern.enabled) {
-    bgImages.push(
-      buildPatternValue(state.pattern.type, state.pattern.color, state.pattern.opacity)
-    );
-    // Always push a size so bgSizes stays index-aligned with bgImages.
-    bgSizes.push(buildPatternSize(state.pattern.type, state.pattern.size));
-  }
-
-  if (state.gradient.enabled) {
-    bgImages.push(buildGradientValue(state.gradient));
-    bgSizes.push(
-      buildGradientSize(
-        state.gradient,
-        state.animation.enabled && !!state.animation.presetId
-      )
-    );
-  }
+  const { images: bgImages, sizes: bgSizes } = buildLayerStack(state);
 
   if (bgImages.length > 0) {
     style.backgroundImage = bgImages.join(", ");
@@ -292,19 +264,13 @@ export function computePreviewStyle(state: StudioState): CSSProperties {
     style.backgroundSize = bgSizes.join(", ");
   }
 
-  if (state.animation.enabled && state.animation.presetId) {
-    const preset = GRADIENTS.find((g) => g.id === state.animation.presetId);
-    if (preset) {
-      const parts = preset.style.animation.split(" ");
-      const name = parts[0] ?? "";
-      const origDur = parseFloat(parts[1] || "8");
-      const dur = origDur / state.animation.speed;
-      style.animationName = name;
-      style.animationDuration = `${dur.toFixed(1)}s`;
-      style.animationTimingFunction = "ease";
-      style.animationIterationCount = "infinite";
-      style.animationDirection = state.animation.direction;
-    }
+  const anim = resolveAnimation(state);
+  if (anim) {
+    style.animationName = anim.name;
+    style.animationDuration = `${anim.duration}s`;
+    style.animationTimingFunction = "ease";
+    style.animationIterationCount = "infinite";
+    style.animationDirection = state.animation.direction;
   }
 
   return style;
