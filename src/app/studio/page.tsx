@@ -320,6 +320,16 @@ function StudioInner() {
             onClose={() => setShowSaved(false)}
           />
         )}
+
+        {/* Announce clipboard actions to screen readers — the button-label
+            swap alone isn't reliably read out. */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {copied
+            ? "CSS copied to clipboard"
+            : shared
+              ? "Share link copied to clipboard"
+              : ""}
+        </div>
       </div>
     </>
   );
