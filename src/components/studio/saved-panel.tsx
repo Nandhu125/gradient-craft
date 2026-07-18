@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { StudioState } from "@/types/studio";
 import { computePreviewStyle } from "@/lib/studio-css";
 import {
@@ -32,15 +32,26 @@ export function SavedPanel({ currentState, onLoad, onClose }: Props) {
   const handleSaveCurrent = () => setSaves(addSave(currentState));
   const handleDelete = (id: string) => setSaves(deleteSave(id));
 
+  // Close on Escape — expected for any modal dialog.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
       <div
         className="absolute inset-0 backdrop-blur-sm"
         style={{ background: "rgba(0, 0, 0, 0.7)" }}
         onClick={onClose}
+        aria-hidden="true"
       />
 
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Saved compositions"
         className="relative w-full max-w-[620px] rounded-2xl overflow-hidden animate-[fadeInUp_0.3s_cubic-bezier(0.16,1,0.3,1)_both]"
         style={{
           background: "#131314",
@@ -70,6 +81,7 @@ export function SavedPanel({ currentState, onLoad, onClose }: Props) {
             </button>
             <button
               onClick={onClose}
+              aria-label="Close"
               className="w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-200 cursor-pointer border-none"
               style={{ color: "#999", background: "transparent" }}
             >
@@ -98,12 +110,14 @@ export function SavedPanel({ currentState, onLoad, onClose }: Props) {
                       ...thumbStyle(s.state),
                       border: "1px solid rgba(72, 72, 73, 0.4)",
                     }}
+                    aria-label="Load this composition"
                     title="Load this composition"
                   />
                   <button
                     onClick={() => handleDelete(s.id)}
                     className="absolute top-1.5 right-1.5 w-6 h-6 flex items-center justify-center rounded-md border-none cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                     style={{ background: "rgba(0,0,0,0.6)", color: "#fff" }}
+                    aria-label="Delete composition"
                     title="Delete"
                   >
                     <XIcon size={13} />
