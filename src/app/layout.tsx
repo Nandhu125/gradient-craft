@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Outfit, JetBrains_Mono, Inter, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -84,6 +84,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+};
+
+// Tints the mobile browser chrome to match the app's neutral surface.
+export const viewport: Viewport = {
+  themeColor: "#fafaf8",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
