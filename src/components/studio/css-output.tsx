@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import type { StudioState } from "@/types/studio";
 import { generateCSS, generateTailwind } from "@/lib/studio-css";
 import { CheckIcon, CopyIcon, XIcon } from "@/components/ui/icons";
@@ -18,6 +18,13 @@ export function CssOutput({ state, onClose }: Props) {
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const code = format === "css" ? generateCSS(state) : generateTailwind(state);
+
+  // Close on Escape — expected for any modal dialog.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -44,10 +51,14 @@ export function CssOutput({ state, onClose }: Props) {
         className="absolute inset-0 backdrop-blur-sm"
         style={{ background: "rgba(0, 0, 0, 0.7)" }}
         onClick={onClose}
+        aria-hidden="true"
       />
 
       {/* Modal */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Export code"
         className="relative w-full max-w-[600px] rounded-2xl overflow-hidden animate-[fadeInUp_0.3s_cubic-bezier(0.16,1,0.3,1)_both]"
         style={{
           background: "#131314",
@@ -93,6 +104,7 @@ export function CssOutput({ state, onClose }: Props) {
             </button>
             <button
               onClick={onClose}
+              aria-label="Close"
               className="w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-200 cursor-pointer border-none"
               style={{ color: "#999", background: "transparent" }}
             >
