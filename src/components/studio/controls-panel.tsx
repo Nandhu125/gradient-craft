@@ -132,10 +132,13 @@ export function ControlsPanel({
                   {isEnabled ? <EyeIcon size={18} /> : <EyeOffIcon size={18} />}
                 </button>
 
-                {/* Label + icon — clickable to expand */}
-                <div
-                  className="flex-1 flex items-center gap-2 py-4"
+                {/* Label + icon + chevron — one button so the accordion is
+                    operable by keyboard, not just mouse. */}
+                <button
+                  type="button"
                   onClick={() => toggleSection(section.id)}
+                  aria-expanded={isExpanded}
+                  className="flex-1 flex items-center gap-2 py-4 bg-transparent border-none cursor-pointer text-left"
                 >
                   <span
                     style={{ color: isExpanded ? "#cc97ff" : "#999" }}
@@ -149,19 +152,16 @@ export function ControlsPanel({
                   >
                     {section.label}
                   </span>
-                </div>
-
-                {/* Expand chevron */}
-                <span
-                  className="flex transition-transform duration-200 cursor-pointer"
-                  style={{
-                    color: "#999",
-                    transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-                  }}
-                  onClick={() => toggleSection(section.id)}
-                >
-                  <ChevronDownIcon size={18} />
-                </span>
+                  <span
+                    className="flex ml-auto transition-transform duration-200"
+                    style={{
+                      color: "#999",
+                      transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <ChevronDownIcon size={18} />
+                  </span>
+                </button>
               </div>
 
               {/* Section Content */}
