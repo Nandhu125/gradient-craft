@@ -69,6 +69,30 @@
   ::selection {
     background: rgba(79, 70, 229, 0.15);
   }
+
+  /* Keyboard focus ring — many buttons use border-none and had no visible
+     focus indicator, leaving keyboard users unable to see where they are. */
+  :focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Honor the OS "reduce motion" setting. Decorative and preview animations
+   are stilled to a single static frame; the exported CSS is unaffected. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @layer components {
