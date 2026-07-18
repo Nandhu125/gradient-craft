@@ -177,7 +177,7 @@ export default function TemplatesPage() {
               className={`px-4 py-[7px] rounded-full border text-[13px] font-medium cursor-pointer transition-all duration-200 ${
                 activeFilter === f.value
                   ? "bg-[#1a1a1a] text-white border-[#1a1a1a]"
-                  : "bg-white text-[#666] border-black/[0.08] hover:border-indigo-300/50 hover:text-indigo-500"
+                  : "bg-white text-[#666] border-black/[0.08] hover:border-indigo-400/60 hover:text-indigo-700"
               }`}
             >
               {f.label}
@@ -209,6 +209,8 @@ export default function TemplatesPage() {
 
       {/* Toast */}
       <div
+        role="status"
+        aria-live="polite"
         className={`fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#1a1a1a] text-white py-3 px-5 rounded-xl text-[13px] font-medium flex items-center gap-2 shadow-[0_10px_40px_rgba(0,0,0,0.2)] z-[1000] transition-all duration-300 ${
           toast ? "translate-y-0 opacity-100" : "translate-y-[120%] opacity-0"
         }`}
