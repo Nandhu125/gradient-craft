@@ -54,47 +54,25 @@ function TemplateCard({
           ))}
         </div>
         <div className="flex gap-2">
-          {template.studioState ? (
-            <Link
-              href={`/studio?template=${template.id}`}
-              className="flex-1 py-[9px] rounded-[10px] bg-[#1a1a1a] text-white text-xs font-semibold no-underline flex items-center justify-center gap-1.5 hover:opacity-85 transition-opacity"
+          <Link
+            href={template.studioState ? `/studio?template=${template.id}` : "/studio"}
+            className="flex-1 py-[9px] rounded-[10px] bg-[#1a1a1a] text-white text-xs font-semibold no-underline flex items-center justify-center gap-1.5 hover:opacity-85 transition-opacity"
+          >
+            {template.studioState ? "Edit in Studio" : "Open Studio"}
+            <svg
+              width={12}
+              height={12}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Edit in Studio
-              <svg
-                width={12}
-                height={12}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1={5} y1={12} x2={19} y2={12} />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
-          ) : (
-            <Link
-              href="/studio"
-              className="flex-1 py-[9px] rounded-[10px] bg-[#1a1a1a] text-white text-xs font-semibold no-underline flex items-center justify-center gap-1.5 hover:opacity-85 transition-opacity"
-            >
-              Open Studio
-              <svg
-                width={12}
-                height={12}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1={5} y1={12} x2={19} y2={12} />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
-          )}
+              <line x1={5} y1={12} x2={19} y2={12} />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
           <button
             onClick={handleCopy}
             className={`py-[9px] px-3.5 rounded-[10px] border font-mono text-xs font-medium flex items-center gap-[5px] cursor-pointer transition-all duration-200 ${
