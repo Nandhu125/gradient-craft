@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { StudioState } from "@/types/studio";
+import { useEscapeKey } from "@/lib/use-escape-key";
 import { computePreviewStyle } from "@/lib/studio-css";
 import {
   loadSaves,
@@ -32,12 +33,7 @@ export function SavedPanel({ currentState, onLoad, onClose }: Props) {
   const handleSaveCurrent = () => setSaves(addSave(currentState));
   const handleDelete = (id: string) => setSaves(deleteSave(id));
 
-  // Close on Escape — expected for any modal dialog.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  useEscapeKey(onClose);
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">

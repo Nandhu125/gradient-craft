@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 import type { StudioState } from "@/types/studio";
 import { generateCSS, generateTailwind } from "@/lib/studio-css";
 import { copyToClipboard } from "@/lib/utils";
+import { useEscapeKey } from "@/lib/use-escape-key";
 import { CheckIcon, CopyIcon, XIcon } from "@/components/ui/icons";
 
 interface Props {
@@ -20,12 +21,7 @@ export function CssOutput({ state, onClose }: Props) {
 
   const code = format === "css" ? generateCSS(state) : generateTailwind(state);
 
-  // Close on Escape — expected for any modal dialog.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  useEscapeKey(onClose);
 
   const handleCopy = useCallback(async () => {
     await copyToClipboard(code);
