@@ -1,28 +1,5 @@
 "use client";
 
-interface LayerToggleProps {
-  label: string;
-  enabled: boolean;
-  onToggle: () => void;
-}
-
-export function LayerToggle({ label, enabled, onToggle }: LayerToggleProps) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-[13px] font-semibold text-white/90">{label}</span>
-      <button
-        onClick={onToggle}
-        aria-label={label}
-        aria-pressed={enabled}
-        className="studio-toggle"
-        data-on={enabled ? "true" : "false"}
-      >
-        <span className="studio-toggle-knob" />
-      </button>
-    </div>
-  );
-}
-
 interface SliderRowProps {
   label: string;
   value: number;

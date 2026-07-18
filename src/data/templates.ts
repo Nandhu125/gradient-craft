@@ -300,6 +300,3 @@ background-position: 0 0, 12px 12px, 0 0;`,
     },
   },
 ];
-
-export const DARK_TEMPLATES = TEMPLATES.filter((t) => t.category === "dark");
-export const LIGHT_TEMPLATES = TEMPLATES.filter((t) => t.category === "light");
