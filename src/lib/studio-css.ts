@@ -19,7 +19,7 @@ function hexToRgba(hex: string, alpha: number): string {
 // gradients that fade to transparent, letting overlaps blend into a mesh.
 const MESH_FALLOFF = 55;
 
-export function buildGradientValue(g: GradientLayer): string {
+function buildGradientValue(g: GradientLayer): string {
   if (g.type === "mesh") {
     const points = g.meshPoints ?? DEFAULT_MESH_POINTS;
     return points
@@ -46,7 +46,7 @@ export function buildGradientValue(g: GradientLayer): string {
 
 // A mesh emits N comma-separated radial layers, so its background-size must
 // list N matching entries to stay index-aligned with the image list.
-export function buildGradientSize(g: GradientLayer, animated: boolean): string {
+function buildGradientSize(g: GradientLayer, animated: boolean): string {
   const size = animated && g.type !== "mesh" ? "400% 400%" : "100% 100%";
   if (g.type === "mesh") {
     const count = (g.meshPoints ?? DEFAULT_MESH_POINTS).length;
