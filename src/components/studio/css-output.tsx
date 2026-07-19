@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import type { StudioState } from "@/types/studio";
 import { generateCSS, generateTailwind } from "@/lib/studio-css";
 import { copyToClipboard } from "@/lib/utils";
 import { useEscapeKey } from "@/lib/use-escape-key";
+import { useTimedFlag } from "@/lib/use-timed-flag";
 import { CheckIcon, CopyIcon, XIcon } from "@/components/ui/icons";
 
 interface Props {
@@ -16,8 +17,7 @@ type Format = "css" | "tailwind";
 
 export function CssOutput({ state, onClose }: Props) {
   const [format, setFormat] = useState<Format>("css");
-  const [copied, setCopied] = useState(false);
-  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [copied, flagCopied] = useTimedFlag();
 
   const code = format === "css" ? generateCSS(state) : generateTailwind(state);
 
@@ -25,10 +25,8 @@ export function CssOutput({ state, onClose }: Props) {
 
   const handleCopy = useCallback(async () => {
     await copyToClipboard(code);
-    setCopied(true);
-    if (copyTimer.current) clearTimeout(copyTimer.current);
-    copyTimer.current = setTimeout(() => setCopied(false), 2000);
-  }, [code]);
+    flagCopied();
+  }, [code, flagCopied]);
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
