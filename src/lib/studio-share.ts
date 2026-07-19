@@ -1,4 +1,6 @@
 import type { StudioState } from "@/types/studio";
+import { DEFAULT_STUDIO_STATE } from "@/types/studio";
+import { TEMPLATES } from "@/data/templates";
 
 // Serialize a StudioState into a compact, URL-safe token for the `?s=` param.
 // The token is base64url of the UTF-8 JSON — no padding, no reserved chars.
@@ -13,6 +15,24 @@ export function encodeState(state: StudioState): string {
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+}
+
+// Resolves the Studio's initial state from URL params. A shared `?s=` token
+// takes precedence over a `?template=` id; falls back to the default state.
+export function resolveInitialState(
+  params: { get(key: string): string | null }
+): StudioState {
+  const shared = params.get("s");
+  if (shared) {
+    const decoded = decodeState(shared);
+    if (decoded) return decoded;
+  }
+  const id = params.get("template");
+  if (id) {
+    const tpl = TEMPLATES.find((t) => t.id === id);
+    if (tpl?.studioState) return tpl.studioState;
+  }
+  return DEFAULT_STUDIO_STATE;
 }
 
 // Inverse of encodeState. Returns null for anything that isn't a well-formed
