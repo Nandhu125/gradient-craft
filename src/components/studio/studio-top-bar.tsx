@@ -73,17 +73,12 @@ export function StudioTopBar({
         </ToolbarButton>
         <ExportMenu state={state} />
         <ToolbarButton onClick={onShare}>
-          {shared ? (
-            <>
-              <CheckIcon size={16} />
-              Link copied!
-            </>
-          ) : (
-            <>
-              <ShareIcon size={16} />
-              Share
-            </>
-          )}
+          <ActionLabel
+            active={shared}
+            activeLabel="Link copied!"
+            idleIcon={<ShareIcon size={16} />}
+            idleLabel="Share"
+          />
         </ToolbarButton>
         <button
           onClick={onCopy}
@@ -94,20 +89,41 @@ export function StudioTopBar({
             boxShadow: "0 0 20px rgba(204, 151, 255, 0.3)",
           }}
         >
-          {copied ? (
-            <>
-              <CheckIcon size={16} />
-              Copied!
-            </>
-          ) : (
-            <>
-              <CopyIcon size={16} />
-              Copy CSS
-            </>
-          )}
+          <ActionLabel
+            active={copied}
+            activeLabel="Copied!"
+            idleIcon={<CopyIcon size={16} />}
+            idleLabel="Copy CSS"
+          />
         </button>
       </div>
     </nav>
+  );
+}
+
+// Shared icon+label body for the Share / Copy buttons: swaps to a check mark
+// and confirmation text once the action fires.
+function ActionLabel({
+  active,
+  activeLabel,
+  idleIcon,
+  idleLabel,
+}: {
+  active: boolean;
+  activeLabel: string;
+  idleIcon: ReactNode;
+  idleLabel: string;
+}) {
+  return active ? (
+    <>
+      <CheckIcon size={16} />
+      {activeLabel}
+    </>
+  ) : (
+    <>
+      {idleIcon}
+      {idleLabel}
+    </>
   );
 }
 
