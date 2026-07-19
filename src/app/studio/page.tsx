@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, Suspense } from "react";
+import { useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { StudioState, StudioTab } from "@/types/studio";
@@ -8,10 +8,11 @@ import { Logo } from "@/components/ui/logo";
 import { RefreshIcon, CodeIcon, CheckIcon, CopyIcon, ShareIcon, DownloadIcon, BookmarkIcon } from "@/components/ui/icons";
 import { DEFAULT_STUDIO_STATE } from "@/types/studio";
 import { ALL_KEYFRAMES } from "@/data/gradients";
-import { TEMPLATES } from "@/data/templates";
 import { generateCSS } from "@/lib/studio-css";
 import { copyToClipboard } from "@/lib/utils";
-import { encodeState, decodeState } from "@/lib/studio-share";
+import { useTimedFlag } from "@/lib/use-timed-flag";
+import { useAccordion } from "@/lib/use-accordion";
+import { encodeState, resolveInitialState } from "@/lib/studio-share";
 import { exportSvg, exportRaster, type RasterFormat } from "@/lib/studio-export";
 import { PreviewPanel } from "@/components/studio/preview-panel";
 import { ControlsPanel } from "@/components/studio/controls-panel";
@@ -20,29 +21,15 @@ import { SavedPanel } from "@/components/studio/saved-panel";
 
 function StudioInner() {
   const searchParams = useSearchParams();
-  const getInitialState = (): StudioState => {
-    // A shared `?s=` token takes precedence over a `?template=` id.
-    const shared = searchParams.get("s");
-    if (shared) {
-      const decoded = decodeState(shared);
-      if (decoded) return decoded;
-    }
-    const id = searchParams.get("template");
-    if (id) {
-      const tpl = TEMPLATES.find((t) => t.id === id);
-      if (tpl?.studioState) return tpl.studioState;
-    }
-    return DEFAULT_STUDIO_STATE;
-  };
-  const [state, setState] = useState<StudioState>(getInitialState);
-  const [expandedSections, setExpandedSections] = useState<StudioTab[]>(["gradient"]);
-  const [copied, setCopied] = useState(false);
-  const [shared, setShared] = useState(false);
+  const [state, setState] = useState<StudioState>(() =>
+    resolveInitialState(searchParams)
+  );
+  const [expandedSections, toggleSection] = useAccordion<StudioTab>(["gradient"]);
+  const [copied, flagCopied] = useTimedFlag();
+  const [shared, flagShared] = useTimedFlag();
   const [showCode, setShowCode] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
-  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const shareTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateLayer = useCallback(
     <K extends keyof StudioState>(layer: K, patch: Partial<StudioState[K]>) => {
@@ -60,20 +47,16 @@ function StudioInner() {
 
   const handleCopy = useCallback(async () => {
     await copyToClipboard(generateCSS(state));
-    setCopied(true);
-    if (copyTimer.current) clearTimeout(copyTimer.current);
-    copyTimer.current = setTimeout(() => setCopied(false), 2000);
-  }, [state]);
+    flagCopied();
+  }, [state, flagCopied]);
 
   const handleShare = useCallback(async () => {
     const url = `${window.location.origin}${window.location.pathname}?s=${encodeState(state)}`;
     // Reflect the shareable state in the address bar so a refresh keeps it.
     window.history.replaceState(null, "", url);
     await copyToClipboard(url);
-    setShared(true);
-    if (shareTimer.current) clearTimeout(shareTimer.current);
-    shareTimer.current = setTimeout(() => setShared(false), 2000);
-  }, [state]);
+    flagShared();
+  }, [state, flagShared]);
 
   const handleExportRaster = useCallback(
     async (format: RasterFormat) => {
@@ -95,17 +78,6 @@ function StudioInner() {
       /* export failed (rare) — no-op */
     }
   }, [state]);
-
-  // Accordion keeps at most 2 sections open. Opening a 3rd evicts the
-  // oldest (FIFO) so the panel never stacks into an endless scroll.
-  const MAX_OPEN = 2;
-  const toggleSection = useCallback((tab: StudioTab) => {
-    setExpandedSections((prev) => {
-      if (prev.includes(tab)) return prev.filter((t) => t !== tab);
-      const next = [...prev, tab];
-      return next.slice(-MAX_OPEN);
-    });
-  }, []);
 
   const activeLayers = [
     state.baseColor.enabled && "Base",
