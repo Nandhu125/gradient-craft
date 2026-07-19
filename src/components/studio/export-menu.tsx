@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { StudioState } from "@/types/studio";
 import { exportSvg, exportRaster, type RasterFormat } from "@/lib/studio-export";
 import { DownloadIcon } from "@/components/ui/icons";
+import { ToolbarButton } from "@/components/studio/toolbar-button";
 
 // Toolbar "Export" button with a PNG/WebP/SVG dropdown. Owns its own open
 // state and swallows the rare-browser export failures so the caller only
@@ -37,13 +38,10 @@ export function ExportMenu({ state }: { state: StudioState }) {
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
-      >
+      <ToolbarButton onClick={() => setOpen((v) => !v)}>
         <DownloadIcon size={16} />
         Export
-      </button>
+      </ToolbarButton>
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />

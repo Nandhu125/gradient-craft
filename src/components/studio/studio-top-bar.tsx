@@ -12,6 +12,7 @@ import {
   BookmarkIcon,
 } from "@/components/ui/icons";
 import { ExportMenu } from "@/components/studio/export-menu";
+import { ToolbarButton } from "@/components/studio/toolbar-button";
 
 interface Props {
   state: StudioState;
@@ -63,33 +64,24 @@ export function StudioTopBar({
       </div>
 
       <div className="flex items-center gap-2.5">
-        <button
-          onClick={onReset}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#999] hover:text-[#ccc] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
-        >
+        <ToolbarButton variant="ghost" className="hidden sm:flex" onClick={onReset}>
           <RefreshIcon size={16} />
           Reset
-        </button>
-        <button
+        </ToolbarButton>
+        <ToolbarButton
+          variant="ghost"
           onClick={onShowSaved}
           aria-label="Saved compositions"
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12.5px] font-medium bg-transparent hover:bg-[#201f21] text-[#999] hover:text-[#ccc] border border-[#484849]/30 transition-all duration-200 cursor-pointer"
         >
           <BookmarkIcon size={16} />
           <span className="hidden sm:inline">Saved</span>
-        </button>
-        <button
-          onClick={onShowCode}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
-        >
+        </ToolbarButton>
+        <ToolbarButton onClick={onShowCode}>
           <CodeIcon size={16} />
           View CSS
-        </button>
+        </ToolbarButton>
         <ExportMenu state={state} />
-        <button
-          onClick={onShare}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-medium bg-[#201f21] hover:bg-[#2a292b] text-[#ccc] hover:text-white border border-[#484849]/40 transition-all duration-200 cursor-pointer"
-        >
+        <ToolbarButton onClick={onShare}>
           {shared ? (
             <>
               <CheckIcon size={16} />
@@ -101,7 +93,7 @@ export function StudioTopBar({
               Share
             </>
           )}
-        </button>
+        </ToolbarButton>
         <button
           onClick={onCopy}
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[12.5px] font-semibold border-none transition-all duration-200 cursor-pointer"
