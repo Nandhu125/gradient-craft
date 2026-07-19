@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import type { StudioState } from "@/types/studio";
 import { Logo } from "@/components/ui/logo";
@@ -47,18 +48,8 @@ export function StudioTopBar({
           </span>
         </Link>
         <div className="hidden sm:flex items-center gap-4">
-          <Link
-            href="/"
-            className="text-[13px] font-medium text-[#ccc] hover:text-white no-underline transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/templates"
-            className="text-[13px] font-medium text-[#ccc] hover:text-white no-underline transition-colors"
-          >
-            Templates
-          </Link>
+          <NavLink href="/">Home</NavLink>
+          <NavLink href="/templates">Templates</NavLink>
           <span className="text-[13px] font-medium text-white">Studio</span>
         </div>
       </div>
@@ -117,5 +108,17 @@ export function StudioTopBar({
         </button>
       </div>
     </nav>
+  );
+}
+
+// The two secondary page links in the toolbar share one skin.
+function NavLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="text-[13px] font-medium text-[#ccc] hover:text-white no-underline transition-colors"
+    >
+      {children}
+    </Link>
   );
 }
