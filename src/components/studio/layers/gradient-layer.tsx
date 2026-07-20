@@ -3,7 +3,7 @@
 import type { GradientLayer, GradientStop, MeshPoint } from "@/types/studio";
 import { DEFAULT_MESH_POINTS } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
-import { SliderRow, PillGroup } from "./shared";
+import { SliderRow, PillGroup, ColorSwatchInput } from "./shared";
 
 interface Props {
   layer: GradientLayer;
@@ -156,26 +156,10 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                   style={{ background: "#201f21", border: "1px solid rgba(72, 72, 73, 0.4)" }}
                 >
                   <div className="flex items-center gap-2">
-                    <input
-                      type="color"
-                      value={point.color}
-                      onChange={(e) => updatePoint(idx, { color: e.target.value })}
-                      className="studio-color-input !w-8 !h-8 !rounded-md"
-                    />
-                    <input
-                      type="text"
-                      value={point.color}
-                      onChange={(e) => {
-                        const v = e.target.value;
-                        if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updatePoint(idx, { color: v });
-                      }}
-                      className="w-[80px] rounded-md px-2 py-1.5 text-[11px] font-mono outline-none transition-colors"
-                      style={{
-                        background: "#18171a",
-                        border: "1px solid rgba(72, 72, 73, 0.4)",
-                        color: "#ccc",
-                      }}
-                      maxLength={7}
+                    <ColorSwatchInput
+                      color={point.color}
+                      onChange={(color) => updatePoint(idx, { color })}
+                      hexBg="#18171a"
                     />
                     <span className="flex-1" />
                     {meshPoints.length > 2 && (
@@ -247,27 +231,9 @@ export function GradientLayerControls({ layer, onChange }: Props) {
         <div className="space-y-2">
           {layer.stops.map((stop, idx) => (
             <div key={idx} className="flex items-center gap-2">
-              <input
-                type="color"
-                value={stop.color}
-                onChange={(e) => updateStop(idx, { color: e.target.value })}
-                className="studio-color-input !w-8 !h-8 !rounded-md"
-              />
-              <input
-                type="text"
-                value={stop.color}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  if (/^#[0-9a-fA-F]{0,6}$/.test(v))
-                    updateStop(idx, { color: v });
-                }}
-                className="w-[80px] rounded-md px-2 py-1.5 text-[11px] font-mono outline-none transition-colors"
-                style={{
-                  background: "#201f21",
-                  border: "1px solid rgba(72, 72, 73, 0.4)",
-                  color: "#ccc",
-                }}
-                maxLength={7}
+              <ColorSwatchInput
+                color={stop.color}
+                onChange={(color) => updateStop(idx, { color })}
               />
               <input
                 type="range"

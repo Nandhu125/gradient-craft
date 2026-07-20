@@ -45,6 +45,48 @@ export function SliderRow({
   );
 }
 
+interface ColorSwatchInputProps {
+  color: string;
+  onChange: (color: string) => void;
+  // Studio surfaces the hex text field on two different panels (#201f21 vs
+  // #18171a); the swatch is identical.
+  hexBg?: string;
+}
+
+// Native color swatch paired with an editable hex text field. Rejects text
+// that isn't a valid (partial) hex so users can type freely.
+export function ColorSwatchInput({
+  color,
+  onChange,
+  hexBg = "#201f21",
+}: ColorSwatchInputProps) {
+  return (
+    <>
+      <input
+        type="color"
+        value={color}
+        onChange={(e) => onChange(e.target.value)}
+        className="studio-color-input !w-8 !h-8 !rounded-md"
+      />
+      <input
+        type="text"
+        value={color}
+        onChange={(e) => {
+          const v = e.target.value;
+          if (/^#[0-9a-fA-F]{0,6}$/.test(v)) onChange(v);
+        }}
+        className="w-[80px] rounded-md px-2 py-1.5 text-[11px] font-mono outline-none transition-colors"
+        style={{
+          background: hexBg,
+          border: "1px solid rgba(72, 72, 73, 0.4)",
+          color: "#ccc",
+        }}
+        maxLength={7}
+      />
+    </>
+  );
+}
+
 interface PillGroupProps<T extends string> {
   label: string;
   options: { value: T; label: string }[];
