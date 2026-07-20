@@ -3,7 +3,7 @@
 import type { GradientLayer, GradientStop, MeshPoint } from "@/types/studio";
 import { DEFAULT_MESH_POINTS } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
-import { SliderRow, PillGroup, ColorSwatchInput } from "./shared";
+import { SliderRow, PillGroup, ColorSwatchInput, SectionHeader, RemoveButton } from "./shared";
 
 interface Props {
   layer: GradientLayer;
@@ -133,20 +133,10 @@ export function GradientLayerControls({ layer, onChange }: Props) {
 
           {/* Mesh Points */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
-                Mesh Points
-              </label>
-              {meshPoints.length < 6 && (
-                <button
-                  onClick={addPoint}
-                  className="text-[10.5px] font-medium border-none bg-transparent cursor-pointer transition-colors"
-                  style={{ color: "rgba(204, 151, 255, 0.7)" }}
-                >
-                  + Add
-                </button>
-              )}
-            </div>
+            <SectionHeader
+              label="Mesh Points"
+              onAdd={meshPoints.length < 6 ? addPoint : undefined}
+            />
 
             <div className="space-y-3">
               {meshPoints.map((point, idx) => (
@@ -163,13 +153,7 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                     />
                     <span className="flex-1" />
                     {meshPoints.length > 2 && (
-                      <button
-                        onClick={() => removePoint(idx)}
-                        className="w-6 h-6 flex items-center justify-center rounded border-none cursor-pointer transition-all text-[14px] bg-transparent"
-                        style={{ color: "#999" }}
-                      >
-                        ×
-                      </button>
+                      <RemoveButton onClick={() => removePoint(idx)} />
                     )}
                   </div>
                   <SliderRow
@@ -213,20 +197,10 @@ export function GradientLayerControls({ layer, onChange }: Props) {
       {layer.type !== "mesh" && (
       <>
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
-            Color Stops
-          </label>
-          {layer.stops.length < 6 && (
-            <button
-              onClick={addStop}
-              className="text-[10.5px] font-medium border-none bg-transparent cursor-pointer transition-colors"
-              style={{ color: "rgba(204, 151, 255, 0.7)" }}
-            >
-              + Add
-            </button>
-          )}
-        </div>
+        <SectionHeader
+          label="Color Stops"
+          onAdd={layer.stops.length < 6 ? addStop : undefined}
+        />
 
         <div className="space-y-2">
           {layer.stops.map((stop, idx) => (
@@ -250,13 +224,7 @@ export function GradientLayerControls({ layer, onChange }: Props) {
                 {stop.position}%
               </span>
               {layer.stops.length > 2 && (
-                <button
-                  onClick={() => removeStop(idx)}
-                  className="w-6 h-6 flex items-center justify-center rounded border-none cursor-pointer transition-all text-[14px] bg-transparent"
-                  style={{ color: "#999" }}
-                >
-                  ×
-                </button>
+                <RemoveButton onClick={() => removeStop(idx)} />
               )}
             </div>
           ))}

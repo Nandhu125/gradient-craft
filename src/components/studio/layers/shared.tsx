@@ -45,6 +45,47 @@ export function SliderRow({
   );
 }
 
+// Small "×" button for removing a repeated row (a stop or mesh point).
+export function RemoveButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="Remove"
+      className="w-6 h-6 flex items-center justify-center rounded border-none cursor-pointer transition-all text-[14px] bg-transparent"
+      style={{ color: "#999" }}
+    >
+      ×
+    </button>
+  );
+}
+
+// Section label with an optional "+ Add" affordance on the right. Pass `onAdd`
+// only when adding is allowed (e.g. under a max) — omit it to hide the button.
+export function SectionHeader({
+  label,
+  onAdd,
+}: {
+  label: string;
+  onAdd?: () => void;
+}) {
+  return (
+    <div className="flex items-center justify-between">
+      <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
+        {label}
+      </label>
+      {onAdd && (
+        <button
+          onClick={onAdd}
+          className="text-[10.5px] font-medium border-none bg-transparent cursor-pointer transition-colors"
+          style={{ color: "rgba(204, 151, 255, 0.7)" }}
+        >
+          + Add
+        </button>
+      )}
+    </div>
+  );
+}
+
 interface ColorSwatchInputProps {
   color: string;
   onChange: (color: string) => void;
