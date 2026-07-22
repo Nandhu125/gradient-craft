@@ -74,8 +74,10 @@ export function buildPatternValue(
       return `repeating-linear-gradient(45deg, transparent, transparent 10px, ${c} 10px, ${c} 11px)`;
     case "checkerboard":
       return `conic-gradient(${c} 25%, transparent 25%, transparent 50%, ${c} 50%, ${c} 75%, transparent 75%)`;
-    case "crosses":
-      return `linear-gradient(${c} 1px, transparent 1px), linear-gradient(90deg, ${c} 1px, transparent 1px)`;
+    case "crosses": {
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path d='M10 7v6M7 10h6' stroke='${c}' stroke-width='1.5'/></svg>`;
+      return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+    }
   }
 }
 
@@ -92,7 +94,7 @@ export function buildPatternSize(type: PatternType, size: number): string {
     case "checkerboard":
       return `${size}px ${size}px`;
     case "crosses":
-      return `${size}px ${size}px, ${size}px ${size}px`;
+      return `${size}px ${size}px`;
   }
 }
 
