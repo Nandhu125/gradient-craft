@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Runtime is **Bun** (see `bun.lock`). There is no test suite.
+Runtime is **Bun** (see `bun.lock`). Tests run on Bun's built-in runner (`bun test`); coverage is `src/lib/studio-css.test.ts`, the CSS generation engine.
 
 ```bash
 bun install        # install deps
@@ -12,6 +12,7 @@ bun dev            # dev server → http://localhost:3000
 bun run build      # production build (also the fastest way to typecheck)
 bun start          # serve production build
 bun run lint       # eslint (next core-web-vitals)
+bun test           # unit tests (bun:test)
 ```
 
 No standalone `tsc` script — rely on `bun run build` or the editor for type errors.
