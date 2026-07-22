@@ -55,6 +55,18 @@ describe("buildPatternValue", () => {
       "rgba(255,136,0,0.5)"
     );
   });
+
+  test("expands 3-digit shorthand hex", () => {
+    expect(buildPatternValue("dots", "#f80", 0.5)).toContain(
+      "rgba(255,136,0,0.5)"
+    );
+  });
+
+  test("non-hex color passes through instead of emitting rgba(NaN)", () => {
+    const v = buildPatternValue("dots", "red", 0.5);
+    expect(v).not.toContain("NaN");
+    expect(v).toContain("red");
+  });
 });
 
 describe("buildPatternSize", () => {

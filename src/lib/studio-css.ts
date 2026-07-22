@@ -9,7 +9,13 @@ import { DEFAULT_MESH_POINTS } from "@/types/studio";
 import { GRADIENTS } from "@/data/gradients";
 
 function hexToRgba(hex: string, alpha: number): string {
-  const h = hex.replace("#", "");
+  let h = hex.replace("#", "");
+  if (h.length === 3) {
+    h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  }
+  // Non-hex input (e.g. a named color) can't be folded into rgba(); pass it
+  // through unchanged rather than emitting rgba(NaN,…) and rendering nothing.
+  if (!/^[0-9a-fA-F]{6}$/.test(h)) return hex;
   const r = parseInt(h.substring(0, 2), 16);
   const g = parseInt(h.substring(2, 4), 16);
   const b = parseInt(h.substring(4, 6), 16);
