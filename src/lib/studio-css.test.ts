@@ -200,7 +200,7 @@ describe("computePreviewStyle", () => {
     );
     // background-size is paren-free, so its comma-count is the layer count.
     expect(String(style.backgroundSize).split(",").length).toBe(2);
-    expect(style.backgroundImage).toContain("radial-gradient"); // pattern
-    expect(style.backgroundImage).toContain("linear-gradient"); // gradient
+    expect(style.backgroundImage).toContain("radial-gradient");
+    expect(style.backgroundImage).toContain("linear-gradient");
   });
 });
