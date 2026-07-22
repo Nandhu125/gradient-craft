@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://gradientcraft.fun/sitemap.xml",
+    sitemap: "https://www.gradientcraft.fun/sitemap.xml",
   };
 }

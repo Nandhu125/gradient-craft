@@ -30,7 +30,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gradientcraft.fun"),
+  metadataBase: new URL("https://www.gradientcraft.fun"),
   title: "GradientCraft · CSS Background Studio",
   description: "The all-in-one CSS background composer. Layer gradients, patterns, noise, and animations visually — then copy production-ready CSS. Free and open source.",
   keywords: [
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "GradientCraft · CSS Background Studio",
     description: "Layer gradients, patterns, noise, and animations visually. Copy production-ready CSS.",
-    url: "https://gradientcraft.fun",
+    url: "https://www.gradientcraft.fun",
     siteName: "GradientCraft",
     locale: "en_US",
     type: "website",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://gradientcraft.fun",
+    canonical: "https://www.gradientcraft.fun",
   },
   robots: {
     index: true,
