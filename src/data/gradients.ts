@@ -330,4 +330,14 @@ export const GRADIENTS: Gradient[] = [
 
 export const CATEGORIES = ["All", "Aurora", "Warm", "Cool", "Neon", "Pastel", "Shimmer"];
 
-export const ALL_KEYFRAMES = GRADIENTS.map((g) => g.keyframes).join("\n");
+// Registry of every preset's @keyframes, injected once via a raw <style> tag.
+// Keyed by keyframe name so two presets reusing a name emit a single block
+// instead of duplicate, conflicting CSS.
+export const ALL_KEYFRAMES = Array.from(
+  new Map(
+    GRADIENTS.map((g) => [
+      g.keyframes.match(/@keyframes\s+(\S+)/)?.[1] ?? g.id,
+      g.keyframes,
+    ])
+  ).values()
+).join("\n");
