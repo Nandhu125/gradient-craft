@@ -53,7 +53,6 @@ export function GradientBackground({ activeGradient, animState }: Props) {
         })}
       </div>
 
-      {/* Ambient blob — only when no active gradient */}
       {!hasActive && (
         <div className="fixed inset-0 pointer-events-none z-0">
           <div className="absolute top-[-12%] right-[-8%] w-1/2 h-1/2 bg-[radial-gradient(circle,_rgba(140,120,200,0.04)_0%,_transparent_70%)] rounded-full" />

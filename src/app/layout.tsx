@@ -86,7 +86,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Tints the mobile browser chrome to match the app's neutral surface.
 export const viewport: Viewport = {
   themeColor: "#fafaf8",
 };

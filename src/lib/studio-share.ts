@@ -17,8 +17,6 @@ export function encodeState(state: StudioState): string {
     .replace(/=+$/, "");
 }
 
-// Resolves the Studio's initial state from URL params. A shared `?s=` token
-// takes precedence over a `?template=` id; falls back to the default state.
 export function resolveInitialState(
   params: { get(key: string): string | null }
 ): StudioState {

@@ -30,7 +30,6 @@ export function AnimationLayerControls({
         </div>
       )}
 
-      {/* Preset selector */}
       <div className="space-y-2">
         <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Animation Preset

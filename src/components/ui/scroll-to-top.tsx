@@ -41,12 +41,10 @@ export function ScrollToTop({ hasActive }: Props) {
       }`}
     >
       <div className="relative w-12 h-12 sm:w-[52px] sm:h-[52px]">
-        {/* Progress ring */}
         <svg
           className="absolute inset-0 w-full h-full -rotate-90"
           viewBox="0 0 44 44"
         >
-          {/* Track */}
           <circle
             cx="22"
             cy="22"
@@ -57,7 +55,6 @@ export function ScrollToTop({ hasActive }: Props) {
             }`}
             strokeWidth="2"
           />
-          {/* Progress */}
           <circle
             cx="22"
             cy="22"
@@ -78,7 +75,6 @@ export function ScrollToTop({ hasActive }: Props) {
           </defs>
         </svg>
 
-        {/* Center button */}
         <div
           className={`absolute inset-[4px] rounded-full grid place-items-center backdrop-blur-[12px] backdrop-saturate-[180%] transition-all duration-300 group-hover:scale-110 group-active:scale-95 ${
             hasActive
@@ -90,7 +86,6 @@ export function ScrollToTop({ hasActive }: Props) {
         </div>
       </div>
 
-      {/* Percentage tooltip on hover */}
       <div
         className={`absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${
           hasActive

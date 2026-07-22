@@ -27,7 +27,6 @@ export function Hero({ hasActive }: Props) {
       className="relative z-[1] overflow-hidden px-5 sm:px-[4vw] flex justify-center text-center min-h-[85vh] sm:min-h-[80vh] items-center py-20 sm:py-0"
     >
       <div className="max-w-[1000px] mx-auto relative z-[2] flex flex-col items-center w-full">
-        {/* Badge */}
         <div className="animate-[reveal_0.8s_cubic-bezier(0.16,1,0.3,1)_both] mb-6 sm:mb-8 w-fit">
           <div
             className={`inline-flex items-center gap-2 sm:gap-3 pr-4 sm:pr-5 pl-3 sm:pl-4 py-1.5 rounded-full border text-[11px] sm:text-[13px] font-medium transition-colors duration-400 backdrop-blur-[10px] shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${
@@ -47,7 +46,6 @@ export function Hero({ hasActive }: Props) {
           </div>
         </div>
 
-        {/* Headline */}
         <h1
           className={`text-[clamp(26px,7vw,64px)] font-[800] leading-[1.1] sm:leading-[1.1] tracking-[-0.03em] mb-5 transition-colors duration-400 ease-in-out ${
             hasActive ? "text-white" : "text-[#111]"
@@ -59,7 +57,6 @@ export function Hero({ hasActive }: Props) {
           </span>
         </h1>
 
-        {/* Subtitle */}
         <p
           className={`text-[15px] sm:text-[clamp(16px,2vw,19px)] leading-[1.65] max-w-[580px] mx-auto mb-8 transition-colors duration-400 ease-in-out [animation-delay:0.2s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both] ${
             hasActive ? "text-white/70" : "text-[#666]"
@@ -69,7 +66,6 @@ export function Hero({ hasActive }: Props) {
           Preview changes live, then copy production-ready CSS in one click.
         </p>
 
-        {/* CTAs */}
         <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-10 [animation-delay:0.3s] w-full sm:w-auto animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both]">
           <Link
             href="/studio"
@@ -98,7 +94,6 @@ export function Hero({ hasActive }: Props) {
           </a>
         </div>
 
-        {/* Interactive Preview Card */}
         <div className="w-full max-w-[680px] [animation-delay:0.4s] animate-[reveal_1s_cubic-bezier(0.16,1,0.3,1)_both]">
           <div
             className={`rounded-[24px] overflow-hidden border backdrop-blur-[24px] transition-all duration-500 ${
@@ -107,7 +102,6 @@ export function Hero({ hasActive }: Props) {
                 : "bg-white/80 border-black/[0.06] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]"
             }`}
           >
-            {/* Cycling gradient preview */}
             <div className="relative h-[200px] sm:h-[240px] overflow-hidden">
               {PREVIEW_GRADIENTS.map((g, i) => (
                 <div
@@ -121,7 +115,6 @@ export function Hero({ hasActive }: Props) {
                   }}
                 />
               ))}
-              {/* Layer stack indicator */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="flex flex-col gap-1.5 px-5 py-3 rounded-2xl bg-black/25 backdrop-blur-sm border border-white/15">
                   {["Gradient", "Pattern", "Noise", "Animation"].map((layer, i) => (
@@ -136,7 +129,6 @@ export function Hero({ hasActive }: Props) {
               </div>
             </div>
 
-            {/* Info bar */}
             <div className={`px-5 py-4 flex items-center justify-between ${hasActive ? "border-t border-white/10" : "border-t border-black/[0.06]"}`}>
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-1">
@@ -170,7 +162,6 @@ export function Hero({ hasActive }: Props) {
               </Link>
             </div>
 
-            {/* Dot indicators */}
             <div className="px-5 pb-4 flex items-center justify-center gap-0.5">
               {PREVIEW_GRADIENTS.map((_, i) => (
                 <button

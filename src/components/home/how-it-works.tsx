@@ -42,7 +42,6 @@ export function HowItWorks() {
   return (
     <section className="py-16 sm:py-24 px-5 sm:px-[4vw] relative z-[1] bg-transparent">
       <div className="max-w-[900px] mx-auto">
-        {/* Header */}
         <div className="text-center mb-12 sm:mb-14">
           <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal">
             <div className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
@@ -58,7 +57,6 @@ export function HowItWorks() {
           </h2>
         </div>
 
-        {/* Steps */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-12">
           {STEPS.map((step, i) => (
             <div
@@ -85,7 +83,6 @@ export function HowItWorks() {
           ))}
         </div>
 
-        {/* CTA */}
         <div className="text-center reveal-node" style={{ animationDelay: "0.5s" }}>
           <Link
             href="/studio"

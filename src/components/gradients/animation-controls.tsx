@@ -114,7 +114,6 @@ export function AnimationControls({
         </div>
       </div>
 
-      {/* Pill bar */}
       <div className="bg-black/55 backdrop-blur-2xl rounded-xl py-2.5 px-4 flex items-center gap-2.5 text-white text-[13px] font-medium font-outfit shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
         <div 
           className="w-5 h-5 rounded-[25%] shrink-0" 

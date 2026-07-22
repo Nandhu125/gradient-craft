@@ -93,10 +93,8 @@ export function GradientLayerControls({ layer, onChange }: Props) {
         />
       )}
 
-      {/* Color Stops */}
       {layer.type !== "mesh" && <StopsEditor layer={layer} onChange={onChange} />}
 
-      {/* Presets */}
       <PresetSwatches activeId={layer.presetId} onLoad={loadPreset} />
     </div>
   );

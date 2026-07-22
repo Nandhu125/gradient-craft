@@ -22,7 +22,6 @@ export function About() {
       </div>
 
       <div className="max-w-[1100px] mx-auto relative">
-        {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
           <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal inactive:brightness-100">
             <div className="w-1.5 h-1.5 rounded-full bg-[#4f46e5]" />
@@ -43,7 +42,6 @@ export function About() {
         </div>
 
         <div className="bento-grid gap-4 sm:gap-5">
-          {/* Main card */}
           <div className="bento-span-2 bento-row-2 reveal-node" style={{ animationDelay: "0.2s" }}>
             <div className={`h-full p-6 sm:p-10 flex flex-col justify-between ${card}`}>
               <div>
@@ -78,7 +76,6 @@ export function About() {
             </div>
           </div>
 
-          {/* CSS Output card */}
           <div className="bento-span-2 reveal-node" style={{ animationDelay: "0.3s" }}>
             <div className={`p-6 sm:p-8 h-full ${card}`}>
               <div className="flex flex-col sm:flex-row gap-5 sm:gap-6 items-start sm:items-center mb-5">
@@ -100,8 +97,8 @@ export function About() {
 
               <div className="rounded-xl p-4 font-mono text-[11px] sm:text-[12px] leading-[1.7] overflow-hidden active:bg-white/5 active:text-white/70 inactive:bg-[#1a1a2e] inactive:text-[#a5b4fc]">
                 <div><span className="text-[#c084fc]">background-image</span>:</div>
-                <div className="pl-4 text-[#e2e8f0]/60">url(&quot;data:image/svg+xml,...&quot;), {/* noise */}</div>
-                <div className="pl-4 text-[#e2e8f0]/60">radial-gradient(...), {/* dots pattern */}</div>
+                <div className="pl-4 text-[#e2e8f0]/60">url(&quot;data:image/svg+xml,...&quot;),</div>
+                <div className="pl-4 text-[#e2e8f0]/60">radial-gradient(...),</div>
                 <div className="pl-4 text-[#e2e8f0]/60">linear-gradient(135deg, #667eea, #764ba2);</div>
                 <div><span className="text-[#c084fc]">background-color</span>: #0a0a0a;</div>
                 <div><span className="text-[#c084fc]">animation</span>: gradient 8s ease infinite;</div>
@@ -109,7 +106,6 @@ export function About() {
             </div>
           </div>
 
-          {/* What's included */}
           <div className="reveal-node" style={{ animationDelay: "0.4s" }}>
             <div className={`p-6 sm:p-8 flex flex-col justify-center items-center text-center h-full ${card}`}>
               <div className="text-[#4f46e5] mb-3">
@@ -134,7 +130,6 @@ export function About() {
             </div>
           </div>
 
-          {/* MIT Open Source */}
           <div className="reveal-node" style={{ animationDelay: "0.5s" }}>
             <div className={`p-6 sm:p-8 flex flex-col justify-center items-center text-center h-full ${card}`}>
               <div className="text-[#4f46e5] mb-3">

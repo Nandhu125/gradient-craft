@@ -2,9 +2,6 @@
 
 import type { StudioState } from "@/types/studio";
 
-// Bottom HUD: a live summary of which layers are active, the gradient's first
-// few stop swatches, and a mobile-only Reset (the toolbar Reset is hidden on
-// small screens).
 export function StudioStatusBar({
   state,
   onReset,

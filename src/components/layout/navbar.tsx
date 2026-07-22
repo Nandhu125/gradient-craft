@@ -106,7 +106,6 @@ export function Navbar({ hasActive, scrolled, onRandom }: Props) {
           ))}
         </div>
 
-        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}

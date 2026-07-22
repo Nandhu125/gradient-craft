@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 
-/** Tracks whether the window has scrolled past `threshold` px (default 20).
-    Shared by the landing shell and the templates page navbar. */
 export function useScrolled(threshold = 20): boolean {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {

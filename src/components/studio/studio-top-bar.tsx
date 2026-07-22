@@ -26,8 +26,6 @@ interface Props {
   onCopy: () => void;
 }
 
-// Studio's top toolbar: brand + page nav on the left, the composition actions
-// (reset, saved, view CSS, export, share, copy) on the right.
 export function StudioTopBar({
   state,
   copied,
@@ -101,8 +99,6 @@ export function StudioTopBar({
   );
 }
 
-// Shared icon+label body for the Share / Copy buttons: swaps to a check mark
-// and confirmation text once the action fires.
 function ActionLabel({
   active,
   activeLabel,
@@ -127,7 +123,6 @@ function ActionLabel({
   );
 }
 
-// The two secondary page links in the toolbar share one skin.
 function NavLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link

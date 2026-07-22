@@ -6,9 +6,6 @@ import { exportSvg, exportRaster, type RasterFormat } from "@/lib/studio-export"
 import { DownloadIcon } from "@/components/ui/icons";
 import { ToolbarButton } from "@/components/studio/toolbar-button";
 
-// Toolbar "Export" button with a PNG/WebP/SVG dropdown. Owns its own open
-// state and swallows the rare-browser export failures so the caller only
-// passes the current StudioState.
 export function ExportMenu({ state }: { state: StudioState }) {
   const [open, setOpen] = useState(false);
 

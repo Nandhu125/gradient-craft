@@ -30,7 +30,6 @@ export function CssOutput({ state, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 backdrop-blur-sm"
         style={{ background: "rgba(0, 0, 0, 0.7)" }}
@@ -38,7 +37,6 @@ export function CssOutput({ state, onClose }: Props) {
         aria-hidden="true"
       />
 
-      {/* Modal */}
       <div
         role="dialog"
         aria-modal="true"
@@ -50,12 +48,10 @@ export function CssOutput({ state, onClose }: Props) {
           boxShadow: "0 0 40px rgba(204, 151, 255, 0.1)",
         }}
       >
-        {/* Header */}
         <div
           className="flex items-center justify-between px-5 py-3.5 border-b"
           style={{ borderColor: "rgba(72, 72, 73, 0.3)" }}
         >
-          {/* Format toggle */}
           <div
             className="flex items-center gap-0.5 rounded-lg p-0.5"
             style={{ background: "#201f21", border: "1px solid rgba(72, 72, 73, 0.4)" }}
@@ -97,7 +93,6 @@ export function CssOutput({ state, onClose }: Props) {
           </div>
         </div>
 
-        {/* Code */}
         <div className="p-5 max-h-[60vh] overflow-y-auto scrollbar-hide">
           <pre
             className="text-[12.5px] leading-[1.7] font-mono whitespace-pre-wrap break-words m-0"

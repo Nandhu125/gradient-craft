@@ -45,7 +45,6 @@ export function SliderRow({
   );
 }
 
-// Small "×" button for removing a repeated row (a stop or mesh point).
 export function RemoveButton({ onClick }: { onClick: () => void }) {
   return (
     <button
@@ -59,8 +58,6 @@ export function RemoveButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-// Section label with an optional "+ Add" affordance on the right. Pass `onAdd`
-// only when adding is allowed (e.g. under a max) — omit it to hide the button.
 export function SectionHeader({
   label,
   onAdd,
@@ -94,8 +91,6 @@ interface ColorSwatchInputProps {
   hexBg?: string;
 }
 
-// Native color swatch paired with an editable hex text field. Rejects text
-// that isn't a valid (partial) hex so users can type freely.
 export function ColorSwatchInput({
   color,
   onChange,

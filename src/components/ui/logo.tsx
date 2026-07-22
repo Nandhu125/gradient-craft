@@ -26,7 +26,6 @@ export function Logo({ size = 32, active = false }: { size?: number; active?: bo
       </defs>
 
       <g className="transition-all duration-500 ease-in-out" filter="url(#cube-shadow)">
-        {/* left */}
         <path
           d="M5.5 10.5 L16 16.5 L16 28 L5.5 22 Z"
           fill="url(#face-left)"
@@ -37,7 +36,6 @@ export function Logo({ size = 32, active = false }: { size?: number; active?: bo
             active ? "-translate-x-[1.5px] translate-y-[0.8px]" : "translate-x-0 translate-y-0"
           }`}
         />
-        {/* right */}
         <path
           d="M16 16.5 L26.5 10.5 L26.5 22 L16 28 Z"
           fill="url(#face-right)"
@@ -48,7 +46,6 @@ export function Logo({ size = 32, active = false }: { size?: number; active?: bo
             active ? "translate-x-[1.5px] translate-y-[0.8px]" : "translate-x-0 translate-y-0"
           }`}
         />
-        {/* top */}
         <path
           d="M16 4.5 L26.5 10.5 L16 16.5 L5.5 10.5 Z"
           fill="url(#face-top)"

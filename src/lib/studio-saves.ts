@@ -27,7 +27,6 @@ function persist(list: SavedComposition[]) {
   }
 }
 
-// Prepend a snapshot of the current state; newest first, capped at MAX.
 export function addSave(state: StudioState): SavedComposition[] {
   const id =
     typeof crypto !== "undefined" && crypto.randomUUID

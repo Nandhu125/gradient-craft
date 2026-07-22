@@ -12,9 +12,7 @@ import { Hero } from "@/components/home/hero";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 interface Props {
-  /** Static, server-rendered sections placed inside <main> after the hero. */
   children: ReactNode;
-  /** Server-rendered footer (kept out of the client bundle). */
   footer: ReactNode;
 }
 

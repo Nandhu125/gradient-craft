@@ -7,7 +7,6 @@ export function Footer() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(79,70,229,0.03)_0%,transparent_70%)] blur-[40px] pointer-events-none z-0 active:hidden" />
 
       <div className="max-w-[1000px] mx-auto relative z-[1]">
-        {/* Top: Logo + CTA */}
         <div className="flex flex-col items-center mb-12 sm:mb-16">
           <div className="inline-flex p-3 rounded-[20px] backdrop-blur-[12px] mb-4 transition-all duration-500 active:shadow-[0_4px_20px_rgba(0,0,0,0.1)] inactive:shadow-[0_4px_12px_rgba(0,0,0,0.01)]">
             <Logo size={36} />
@@ -21,7 +20,6 @@ export function Footer() {
             Free, open source, zero dependencies.
           </p>
 
-          {/* Quick links */}
           <div className="flex flex-wrap justify-center gap-2 mt-6">
             {["Gradients", "Patterns", "Noise", "Animation", "CSS Export"].map((feature) => (
               <a
@@ -35,10 +33,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px mb-8 active:bg-white/10 inactive:bg-black/[0.04]" />
 
-        {/* Bottom: Copyright + Socials */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-5 text-[11px] font-mono uppercase tracking-[0.15em] transition-all duration-500 active:text-white/50 inactive:text-[#666]">
             <span>&copy; {new Date().getFullYear()} GradientCraft</span>

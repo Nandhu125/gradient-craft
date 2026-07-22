@@ -8,8 +8,6 @@ interface Props {
   onChange: (patch: Partial<GradientLayer>) => void;
 }
 
-// Editor for the linear/radial/conic types: an editable list of color stops
-// (colour + position) capped at 2–6, plus a live gradient preview bar.
 export function StopsEditor({ layer, onChange }: Props) {
   const updateStop = (idx: number, patch: Partial<GradientStop>) => {
     const stops = layer.stops.map((s, i) =>
@@ -70,7 +68,6 @@ export function StopsEditor({ layer, onChange }: Props) {
         </div>
       </div>
 
-      {/* Gradient Preview Bar */}
       <div
         className="h-3 rounded-full"
         style={{

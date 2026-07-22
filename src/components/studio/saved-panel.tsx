@@ -55,7 +55,6 @@ export function SavedPanel({ currentState, onLoad, onClose }: Props) {
           boxShadow: "0 0 40px rgba(204, 151, 255, 0.1)",
         }}
       >
-        {/* Header */}
         <div
           className="flex items-center justify-between px-5 py-3.5 border-b"
           style={{ borderColor: "rgba(72, 72, 73, 0.3)" }}
@@ -86,7 +85,6 @@ export function SavedPanel({ currentState, onLoad, onClose }: Props) {
           </div>
         </div>
 
-        {/* Grid */}
         <div className="p-5 max-h-[60vh] overflow-y-auto scrollbar-hide">
           {saves.length === 0 ? (
             <p className="text-[13px] text-center py-10" style={{ color: "#777" }}>

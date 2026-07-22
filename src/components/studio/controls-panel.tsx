@@ -76,7 +76,6 @@ export function ControlsPanel({
         borderColor: "rgba(72, 72, 73, 0.4)",
       }}
     >
-      {/* Panel Title */}
       <div
         className="flex items-center justify-between px-5 py-3 shrink-0 border-b"
         style={{ borderColor: "rgba(72, 72, 73, 0.3)" }}
@@ -96,7 +95,6 @@ export function ControlsPanel({
         </span>
       </div>
 
-      {/* Accordion Sections */}
       <div className="flex-1 overflow-y-auto scrollbar-hide">
         {SECTIONS.map((section) => {
           const isExpanded = expandedSections.includes(section.id);
@@ -104,7 +102,6 @@ export function ControlsPanel({
 
           return (
             <div key={section.id}>
-              {/* Section Header */}
               <div
                 className="flex items-center gap-3 px-5 transition-colors duration-150 border-b"
                 style={{
@@ -114,7 +111,6 @@ export function ControlsPanel({
                     : "transparent",
                 }}
               >
-                {/* Visibility toggle (eye) */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -166,7 +162,6 @@ export function ControlsPanel({
                 </button>
               </div>
 
-              {/* Section Content */}
               {isExpanded && (
                 <div
                   className="px-5 py-4 border-b"

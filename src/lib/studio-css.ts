@@ -130,8 +130,6 @@ function buildLayerStack(state: StudioState): { images: string[]; sizes: string[
   return { images, sizes };
 }
 
-// Resolves the active animation preset into its keyframe name and
-// speed-adjusted duration (1 decimal), or null when no preset is active.
 function resolveAnimation(
   state: StudioState
 ): { name: string; duration: string; preset: Gradient } | null {

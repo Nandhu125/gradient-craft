@@ -64,7 +64,6 @@ export function UseCases() {
   return (
     <section className="py-20 sm:py-28 px-5 sm:px-[4vw] relative z-[1] transition-colors duration-500 active:bg-transparent inactive:bg-[#fafaf8]">
       <div className="max-w-[1100px] mx-auto">
-        {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
           <div className="reveal-node inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] active:bg-white/12 active:mix-blend-difference active:brightness-[2] inactive:bg-white inactive:mix-blend-normal">
             <div className="w-1.5 h-1.5 rounded-full bg-[#ec4899]" />
@@ -82,7 +81,6 @@ export function UseCases() {
           </p>
         </div>
 
-        {/* Feature Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           {FEATURES.map(({ gradientId, label, desc, overlay }, idx) => {
             const g = getGradient(gradientId);

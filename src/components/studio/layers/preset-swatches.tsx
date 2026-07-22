@@ -7,8 +7,6 @@ interface Props {
   onLoad: (id: string) => void;
 }
 
-// The first dozen library gradients as clickable swatches; the active preset
-// gets a highlighted ring.
 export function PresetSwatches({ activeId, onLoad }: Props) {
   return (
     <div className="space-y-3">

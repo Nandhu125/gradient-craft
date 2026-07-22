@@ -62,7 +62,6 @@ function StudioInner() {
         className="h-screen flex flex-col overflow-hidden"
         style={{ fontFamily: "var(--ff-inter), 'Inter', sans-serif", background: "#0e0e0f", color: "#fff" }}
       >
-        {/* Top Navbar */}
         <StudioTopBar
           state={state}
           copied={copied}
@@ -74,14 +73,11 @@ function StudioInner() {
           onCopy={handleCopy}
         />
 
-        {/* Main Area — Preview + Single Right Sidebar */}
         <main className="flex-1 flex overflow-hidden">
-          {/* Preview Canvas */}
           <div className="flex-1 relative overflow-hidden">
             <PreviewPanel state={state} />
           </div>
 
-          {/* Right Sidebar — Accordion Layers */}
           <ControlsPanel
             state={state}
             expandedSections={expandedSections}
@@ -90,10 +86,8 @@ function StudioInner() {
           />
         </main>
 
-        {/* Bottom HUD */}
         <StudioStatusBar state={state} onReset={handleReset} />
 
-        {/* CSS Output Modal */}
         {showCode && (
           <CssOutput state={state} onClose={() => setShowCode(false)} />
         )}

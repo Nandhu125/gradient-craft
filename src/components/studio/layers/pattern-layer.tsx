@@ -33,7 +33,6 @@ function patternPreviewStyle(type: PatternType) {
 export function PatternLayerControls({ layer, onChange }: Props) {
   return (
     <div className="space-y-5">
-      {/* Pattern selector */}
       <div className="space-y-2">
         <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Style
@@ -75,7 +74,6 @@ export function PatternLayerControls({ layer, onChange }: Props) {
         onChange={(v) => onChange({ size: v })}
       />
 
-      {/* Color */}
       <div className="space-y-2">
         <label className="text-[11px] font-medium uppercase tracking-wider" style={{ color: "#999" }}>
           Color

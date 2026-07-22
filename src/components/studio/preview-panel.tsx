@@ -24,7 +24,6 @@ export function PreviewPanel({ state }: Props) {
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Ambient orbs — always visible behind everything */}
       <div
         className="absolute w-[300px] h-[300px] rounded-full opacity-20 blur-[100px]"
         style={{
@@ -53,13 +52,11 @@ export function PreviewPanel({ state }: Props) {
         }}
       />
 
-      {/* Composed background layers */}
       <div
         className="absolute inset-0 transition-all duration-300"
         style={style}
       />
 
-      {/* Noise overlay */}
       {state.noise.enabled && (
         <div
           className="absolute inset-0 pointer-events-none"
@@ -67,7 +64,6 @@ export function PreviewPanel({ state }: Props) {
         />
       )}
 
-      {/* Label — self-contained scrim so it stays legible over any gradient */}
       <div className="absolute top-4 left-4 flex items-center gap-2">
         <div
           className="flex items-center gap-2 rounded-full pl-2.5 pr-3 py-1.5 border border-white/15 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.25)]"
@@ -89,7 +85,6 @@ export function PreviewPanel({ state }: Props) {
         </div>
       </div>
 
-      {/* Center indicator when nothing enabled */}
       {!hasAnyLayer && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">

@@ -9,8 +9,6 @@ interface Props {
   onChange: (patch: Partial<GradientLayer>) => void;
 }
 
-// Editor for the mesh gradient type: a live preview plus per-point color and
-// X/Y position controls. Points fall back to the defaults until edited.
 export function MeshEditor({ layer, onChange }: Props) {
   const meshPoints = layer.meshPoints ?? DEFAULT_MESH_POINTS;
 
@@ -36,7 +34,6 @@ export function MeshEditor({ layer, onChange }: Props) {
 
   return (
     <>
-      {/* Mesh live preview */}
       <div
         className="h-24 rounded-lg"
         style={{
@@ -45,7 +42,6 @@ export function MeshEditor({ layer, onChange }: Props) {
         }}
       />
 
-      {/* Mesh Points */}
       <div className="space-y-3">
         <SectionHeader
           label="Mesh Points"
