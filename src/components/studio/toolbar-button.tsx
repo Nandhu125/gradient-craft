@@ -19,7 +19,7 @@ export function ToolbarButton({
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
   return (
-    <button className={`${className} ${BASE} ${VARIANTS[variant]}`} {...props}>
+    <button type="button" className={`${className} ${BASE} ${VARIANTS[variant]}`} {...props}>
       {children}
     </button>
   );
