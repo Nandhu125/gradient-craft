@@ -243,44 +243,6 @@
     box-shadow: 0 0 8px rgba(204, 151, 255, 0.4);
     cursor: pointer;
   }
-
-  /* Studio glass panel */
-  .studio-glass {
-    background: rgba(14, 14, 15, 0.4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(204, 151, 255, 0.08);
-  }
-
-  /* Studio toggle — purple */
-  .studio-toggle {
-    position: relative;
-    width: 40px;
-    height: 22px;
-    border-radius: 11px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  .studio-toggle[data-on="true"] {
-    background: #cc97ff;
-  }
-  .studio-toggle[data-on="false"] {
-    background: rgba(255, 255, 255, 0.12);
-  }
-  .studio-toggle .studio-toggle-knob {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: white;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .studio-toggle[data-on="true"] .studio-toggle-knob {
-    transform: translateX(18px);
-  }
 }
 
 @keyframes fadeInUp {
