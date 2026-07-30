@@ -71,15 +71,6 @@ export function XIcon({ size = 16, className }: { size?: number; className?: str
   );
 }
 
-export function SearchIcon({ size = 16, className }: { size?: number; className?: string }) {
-  return (
-    <Ic size={size} className={className}>
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-    </Ic>
-  );
-}
-
 export function ArrowUpIcon({ size = 15, className }: { size?: number; className?: string }) {
   return (
     <Ic size={size} className={className}>
@@ -145,14 +136,6 @@ export function MenuIcon({ size = 18, className }: { size?: number; className?: 
       <line x1="3" y1="12" x2="21" y2="12" />
       <line x1="3" y1="6" x2="21" y2="6" />
       <line x1="3" y1="18" x2="21" y2="18" />
-    </Ic>
-  );
-}
-
-export function HeartIcon({ size = 18, className }: { size?: number; className?: string }) {
-  return (
-    <Ic size={size} className={className}>
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </Ic>
   );
 }
