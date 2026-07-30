@@ -35,7 +35,7 @@ export function resolveInitialState(
 
 // Inverse of encodeState. Returns null for anything that isn't a well-formed
 // StudioState token so the caller can fall back to a default/template state.
-export function decodeState(param: string): StudioState | null {
+function decodeState(param: string): StudioState | null {
   try {
     const b64 = param.replace(/-/g, "+").replace(/_/g, "/");
     const bin = atob(b64);
