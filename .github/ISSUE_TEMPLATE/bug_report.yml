@@ -1,0 +1,34 @@
+name: Bug report
+description: Something in the Studio or Collection renders or exports incorrectly
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open /studio
+        2. Enable the pattern layer, pick "crosses"
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: css
+    attributes:
+      label: Copied CSS (for a rendering/export bug)
+      description: Paste the output from Copy CSS so the layer stack can be reproduced exactly.
+      render: css
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & version
+      placeholder: Chrome 120, Safari 17, ...
+    validations:
+      required: true
