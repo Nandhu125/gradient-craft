@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { StudioState } from "@/types/studio";
 import { exportSvg, exportRaster, type RasterFormat } from "@/lib/studio-export";
 import { DownloadIcon } from "@/components/ui/icons";
 import { ToolbarButton } from "@/components/studio/toolbar-button";
+import { useEscapeKey } from "@/lib/use-escape-key";
 
 export function ExportMenu({ state }: { state: StudioState }) {
   const [open, setOpen] = useState(false);
+  useEscapeKey(useCallback(() => setOpen(false), []));
 
   const raster = async (format: RasterFormat) => {
     setOpen(false);
