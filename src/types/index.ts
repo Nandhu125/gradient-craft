@@ -9,8 +9,6 @@ export interface GradientStyle {
 export interface Gradient {
   id: string;
   name: string;
-  category: string;
-  tags: string[];
   css: string;
   keyframes: string;
   style: GradientStyle;

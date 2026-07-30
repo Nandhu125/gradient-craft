@@ -42,7 +42,7 @@ All output flows through pure functions here — there is no runtime style mutat
 
 ### Animation keyframes are injected globally
 
-Preset `@keyframes` live only as strings on each `Gradient` in `gradients.ts`. They are concatenated into `ALL_KEYFRAMES` and injected via a raw `<style>{ALL_KEYFRAMES}</style>` tag in **both** `src/app/page.tsx` and `src/app/studio/page.tsx`. An animation will silently not run if its keyframes aren't in that registry — a new animated preset must define its `keyframes` string there. `CATEGORIES` (also in `gradients.ts`) drives the Collection's category filter and must list any new `category` value.
+Preset `@keyframes` live only as strings on each `Gradient` in `gradients.ts`. They are concatenated into `ALL_KEYFRAMES` and injected via a raw `<style>{ALL_KEYFRAMES}</style>` tag in **both** `src/app/page.tsx` and `src/app/studio/page.tsx`. An animation will silently not run if its keyframes aren't in that registry — a new animated preset must define its `keyframes` string there.
 
 ### Dynamic-style safety
 
