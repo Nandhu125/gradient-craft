@@ -1,0 +1,212 @@
+"use client";
+
+import type { ComponentType } from "react";
+import type { StudioState, StudioTab } from "@/types/studio";
+import { BaseColorControls } from "./layers/base-color";
+import { GradientLayerControls } from "./layers/gradient-layer";
+import { PatternLayerControls } from "./layers/pattern-layer";
+import { NoiseLayerControls } from "./layers/noise-layer";
+import { AnimationLayerControls } from "./layers/animation-layer";
+import {
+  PaletteIcon,
+  GradientIcon,
+  GridIcon,
+  GrainIcon,
+  AnimationIcon,
+  EyeIcon,
+  EyeOffIcon,
+  ChevronDownIcon,
+} from "@/components/ui/icons";
+
+type IconComponent = ComponentType<{ size?: number; className?: string }>;
+
+interface Props {
+  state: StudioState;
+  expandedSections: StudioTab[];
+  toggleSection: (tab: StudioTab) => void;
+  updateLayer: <K extends keyof StudioState>(
+    layer: K,
+    patch: Partial<StudioState[K]>,
+  ) => void;
+}
+
+const SECTIONS: {
+  id: StudioTab;
+  label: string;
+  icon: IconComponent;
+  layerKey: keyof StudioState;
+}[] = [
+  { id: "base", label: "Base Color", icon: PaletteIcon, layerKey: "baseColor" },
+  {
+    id: "gradient",
+    label: "Gradient",
+    icon: GradientIcon,
+    layerKey: "gradient",
+  },
+  { id: "pattern", label: "Pattern", icon: GridIcon, layerKey: "pattern" },
+  { id: "noise", label: "Noise / Grain", icon: GrainIcon, layerKey: "noise" },
+  {
+    id: "animation",
+    label: "Animation",
+    icon: AnimationIcon,
+    layerKey: "animation",
+  },
+];
+
+export function ControlsPanel({
+  state,
+  expandedSections,
+  toggleSection,
+  updateLayer,
+}: Props) {
+  const toggleLayerEnabled = (layerKey: keyof StudioState) => {
+    const current = state[layerKey].enabled;
+    updateLayer(layerKey, { enabled: !current } as Partial<
+      StudioState[typeof layerKey]
+    >);
+  };
+
+  return (
+    <div
+      className="w-full lg:w-[340px] flex flex-col overflow-hidden shrink-0 border-l"
+      style={{
+        background: "rgba(14, 14, 15, 0.6)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderColor: "rgba(72, 72, 73, 0.4)",
+      }}
+    >
+      <div
+        className="flex items-center justify-between px-5 py-3 shrink-0 border-b"
+        style={{ borderColor: "rgba(72, 72, 73, 0.3)" }}
+      >
+        <span
+          className="text-[13px] font-semibold"
+          style={{
+            color: "#cc97ff",
+            fontFamily: "var(--ff-manrope), 'Manrope', sans-serif",
+          }}
+        >
+          Layers
+        </span>
+        <span className="text-[10px] font-mono" style={{ color: "#999" }}>
+          {SECTIONS.filter((s) => state[s.layerKey].enabled).length}/
+          {SECTIONS.length} active
+        </span>
+      </div>
+
+      <div className="flex-1 overflow-y-auto scrollbar-hide">
+        {SECTIONS.map((section) => {
+          const isExpanded = expandedSections.includes(section.id);
+          const isEnabled = state[section.layerKey].enabled;
+
+          return (
+            <div key={section.id}>
+              <div
+                className="flex items-center gap-3 px-5 transition-colors duration-150 border-b"
+                style={{
+                  borderColor: "rgba(72, 72, 73, 0.2)",
+                  background: isExpanded
+                    ? "rgba(204, 151, 255, 0.04)"
+                    : "transparent",
+                }}
+              >
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLayerEnabled(section.layerKey);
+                  }}
+                  className="w-fit flex items-center justify-center rounded-md border-none cursor-pointer transition-all duration-200"
+                  style={{
+                    background: isEnabled
+                      ? "rgba(204, 151, 255, 0.12)"
+                      : "transparent",
+                    color: isEnabled ? "#cc97ff" : "#666",
+                  }}
+                  aria-label={`${isEnabled ? "Hide" : "Show"} ${section.label} layer`}
+                  aria-pressed={isEnabled}
+                  title={isEnabled ? "Hide layer" : "Show layer"}
+                >
+                  {isEnabled ? <EyeIcon size={18} /> : <EyeOffIcon size={18} />}
+                </button>
+
+                {/* Label + icon + chevron — one button so the accordion is
+                    operable by keyboard, not just mouse. */}
+                <button
+                  type="button"
+                  onClick={() => toggleSection(section.id)}
+                  aria-expanded={isExpanded}
+                  className="flex-1 flex items-center gap-2 py-4 bg-transparent border-none cursor-pointer text-left"
+                >
+                  <span
+                    style={{ color: isExpanded ? "#cc97ff" : "#999" }}
+                    className="flex"
+                  >
+                    <section.icon size={18} />
+                  </span>
+                  <span
+                    className="text-[12.5px] font-medium leading-none"
+                    style={{ color: isExpanded ? "#fff" : "#ccc" }}
+                  >
+                    {section.label}
+                  </span>
+                  <span
+                    className="flex ml-auto transition-transform duration-200"
+                    style={{
+                      color: "#999",
+                      transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <ChevronDownIcon size={18} />
+                  </span>
+                </button>
+              </div>
+
+              {isExpanded && (
+                <div
+                  className="px-5 py-4 border-b"
+                  style={{
+                    borderColor: "rgba(72, 72, 73, 0.2)",
+                    background: "rgba(204, 151, 255, 0.02)",
+                  }}
+                >
+                  {section.id === "base" && (
+                    <BaseColorControls
+                      layer={state.baseColor}
+                      onChange={(patch) => updateLayer("baseColor", patch)}
+                    />
+                  )}
+                  {section.id === "gradient" && (
+                    <GradientLayerControls
+                      layer={state.gradient}
+                      onChange={(patch) => updateLayer("gradient", patch)}
+                    />
+                  )}
+                  {section.id === "pattern" && (
+                    <PatternLayerControls
+                      layer={state.pattern}
+                      onChange={(patch) => updateLayer("pattern", patch)}
+                    />
+                  )}
+                  {section.id === "noise" && (
+                    <NoiseLayerControls
+                      layer={state.noise}
+                      onChange={(patch) => updateLayer("noise", patch)}
+                    />
+                  )}
+                  {section.id === "animation" && (
+                    <AnimationLayerControls
+                      layer={state.animation}
+                      onChange={(patch) => updateLayer("animation", patch)}
+                      gradientEnabled={state.gradient.enabled}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
